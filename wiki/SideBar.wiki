@@ -1,4 +1,5 @@
 #summary Wiki sidebar
 
   * Developer Guide
-    * [GettingStarted Getting Started][http://code.google.com/p/comp3111h-2012-spring/w/list All Wiki Pages]
+    * [GettingStarted Getting Started]
+[http://code.google.com/p/comp3111h-2012-spring/w/list All Wiki Pages]
