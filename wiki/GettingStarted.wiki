@@ -31,7 +31,7 @@ For more information, please refer to http://developer.android.com/sdk/eclipse-a
 == Installing SVN Plugin for Eclipse ==
 Similar steps with installing ADT plugin. Just one different stuff: enter "Subclipse" for the Name and "http://subclipse.tigris.org/update_1.0.x" for the Location after seleting Help > Install New Software....
 
-== Checkout Projects from SVN ==
+== Checkout Project from SVN ==
   # In Eclipse, select File > Import....
   # Select Other > Checkout Projects from SVN. Click Next.
   # Select "Create a new repository location". Click Next.
@@ -39,8 +39,11 @@ Similar steps with installing ADT plugin. Just one different stuff: enter "Subcl
      * Note: For non-members, please use "http" instead of "https", since "https" asks for password to commit changes, while "http" checks out read-only version of the project.
   # Select all folders. Click Finish.
   
+== Updating Project ==
+In Eclipse, choose the directories or files you want to update. Right-click and select Team > Update.
+  
 == Committing Changes to the Repository ==
 This part is for project members only.
-  # Choose the directories or files you want to commit. Right-click and select Team > Commit.
+  # In Eclipse, choose the directories or files you want to commit. Right-click and select Team > Commit.
   # Eclipse displays the Commit dialog, which summarizes your changes. Click OK.
   # A dialog will pop out asking for username and password. Username is your Google Code account. Password can be found at https://code.google.com/hosting/settings.
