@@ -1,4 +1,4 @@
 #summary Wiki sidebar
 
-Developer Guide
-  * GettingStarted
+  * Developer Guide
+    * GettingStarted
