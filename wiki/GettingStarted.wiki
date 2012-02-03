@@ -1,4 +1,4 @@
-#summary How to install Eclipse, Android SDK and SVN; Check-out and check-in issues.
+#summary How to install Eclipse, Android SDK and SVN; Checkout and checkin issues.
 
 = Getting Started =
 
@@ -30,3 +30,11 @@ For more information, please refer to http://developer.android.com/sdk/eclipse-a
 
 == Installing SVN Plugin for Eclipse ==
 Similar steps with installing ADT plugin. Just one different stuff: enter "Subclipse" for the Name and "http://subclipse.tigris.org/update_1.0.x" for the Location after seleting Help > Install New Software....
+
+== Checkout Projects from SVN ==
+  # In Eclipse, select File > Import....
+  # Select Other > Checkout Projects from SVN. Click Next.
+  # Select "Create a new repository location". Click Next.
+  # For the URL, enter https://comp3111h-2012-spring.googlecode.com/svn/
+     * Note: For non-members, please use "http" instead of "https".
+  # Select all folders. Click Finish.
