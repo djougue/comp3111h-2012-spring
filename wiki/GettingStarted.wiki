@@ -1,4 +1,4 @@
-#Getting Started: Install Android SDK and SVN
+#
 
 = Introduction =
 
