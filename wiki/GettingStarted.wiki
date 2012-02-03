@@ -1,4 +1,4 @@
-#summary Install Eclipse, Android SDK and SVN; Check-out and check-in issues.
+#summary How to install Eclipse, Android SDK and SVN; Check-out and check-in issues.
 
 = Introduction =
 
