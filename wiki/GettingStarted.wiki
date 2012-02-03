@@ -26,5 +26,4 @@ Android SDK can be downloaded from http://developer.android.com/sdk/index.html.
      * Note: If you get a security warning saying that the authenticity or validity of the software can't be established, click OK.
   # When the installation completes, restart Eclipse.
   # A window will pop out automatically when you restart Eclipse. Choose "Using Existing SDK Location", and browse the directory of Android SDK which you downloaded just now.
-
-  * For more information, please refer to http://developer.android.com/sdk/eclipse-adt.html
+For more information, please refer to http://developer.android.com/sdk/eclipse-adt.html
