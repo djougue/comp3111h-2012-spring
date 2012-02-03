@@ -47,4 +47,3 @@ This part is for project members only.
   # In Eclipse, choose the directories or files you want to commit. Right-click and select Team > Commit.
   # Eclipse displays the Commit dialog, which summarizes your changes. Click OK.
   # A dialog will pop out asking for username and password. Username is your Google Code account. Password can be found at https://code.google.com/hosting/settings.
-Note: Wiki articles can also be managed by SVN.
