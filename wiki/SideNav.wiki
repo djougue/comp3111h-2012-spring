@@ -1,4 +1,6 @@
 #summary Wiki sidebar
+#labels Phase-Implementation
 
-  * [GettingStarted Getting Started]
+  * Developers' Guide
+    * [GettingStarted Getting Started]
   * [http://code.google.com/p/comp3111h-2012-spring/w/list All Wiki Pages]
