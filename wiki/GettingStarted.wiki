@@ -1,4 +1,4 @@
-#summary How to install Eclipse, Android SDK and SVN; Checkout and checkin issues.
+#summary How to install Eclipse, Android SDK and SVN; Checkout, updating and committing issues.
 
 = Getting Started =
 
@@ -36,5 +36,11 @@ Similar steps with installing ADT plugin. Just one different stuff: enter "Subcl
   # Select Other > Checkout Projects from SVN. Click Next.
   # Select "Create a new repository location". Click Next.
   # For the URL, enter https://comp3111h-2012-spring.googlecode.com/svn/
-     * Note: For non-members, please use "http" instead of "https".
+     * Note: For non-members, please use "http" instead of "https", since "https" asks for password to commit changes, while "http" checks out read-only version of the project.
   # Select all folders. Click Finish.
+  
+== Committing Changes to the Repository ==
+This part is for project members only.
+  # Choose the directories or files you want to commit. Right-click and select Team > Commit.
+  # Eclipse displays the Commit dialog, which summarizes your changes. Click OK.
+  # A dialog will pop out asking for username and password. Username is your Google Code account. Password can be found at https://code.google.com/hosting/settings.
