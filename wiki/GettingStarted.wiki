@@ -1,4 +1,5 @@
 #summary How to install Eclipse, Android SDK and SVN; Checkout, updating and committing issues.
+#labels Phase-Implementation
 
 = Getting Started =
 
