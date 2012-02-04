@@ -1,5 +1,4 @@
 #summary Wiki sidebar
-#labels Phase-Implementation
 
   * Developers' Guide
     * [GettingStarted Getting Started]
