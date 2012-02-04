@@ -39,7 +39,7 @@ Similar steps with installing ADT plugin. Just one different stuff: enter "Subcl
      * Note: For non-members, please use "http" instead of "https", since "https" asks for password to commit changes, while "http" checks out read-only version of the project.
   # Select all folders. Click Finish.
   
-== Updating Project ==
+== Updating Project from SVN ==
 In Eclipse, choose the directories or files you want to update. Right-click and select Team > Update.
   
 == Committing Changes to the Repository ==
@@ -47,3 +47,6 @@ This part is for project members only.
   # In Eclipse, choose the directories or files you want to commit. Right-click and select Team > Commit.
   # Eclipse displays the Commit dialog, which summarizes your changes. Click OK.
   # A dialog will pop out asking for username and password. Username is your Google Code account. Password can be found at https://code.google.com/hosting/settings.
+
+== More About Android SDK ==
+You are highly recommended to read this page ("Hello, World!") to begin your development using Android SDK: http://developer.android.com/resources/tutorials/hello-world.html. 
