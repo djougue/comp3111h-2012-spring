@@ -50,4 +50,4 @@ This part is for project members only.
   # A dialog will pop out asking for username and password. Username is your Google Code account. Password can be found at https://code.google.com/hosting/settings.
 
 == More About Android SDK ==
-You are highly recommended to read this page ("Hello, World!") to begin your development using Android SDK: http://developer.android.com/resources/tutorials/hello-world.html. 
+You are highly recommended to read [http://developer.android.com/resources/tutorials/hello-world.html this page] ("Hello, Android!") to begin your development using Android SDK. This small testing code is under tmp directory. You should select Run > Run to test if your Android ADT works.
