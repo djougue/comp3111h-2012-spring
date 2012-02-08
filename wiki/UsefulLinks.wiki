@@ -3,10 +3,10 @@
 
 = Useful Links =
 
-== Server and Database Management ==
-  * [http://www.apachefriends.org/zh_tw/xampp.html XAMPP] (Chinese)
+  * Server and Database Management
+    * [http://www.apachefriends.org/zh_tw/xampp.html XAMPP] (Chinese)
 
-== SQLite ==
-  * [http://developer.android.com/reference/android/database/sqlite/package-summary.html android.database.sqlite]
-  * [http://www.barebonescoder.com/2010/05/android-development-database-management/ Android Development – Database Management]
-  * [http://sourceforge.net/projects/asqlitemanager/ Download Android SQLite Manager]
+  * SQLite
+    * [http://developer.android.com/reference/android/database/sqlite/package-summary.html android.database.sqlite]
+    * [http://www.barebonescoder.com/2010/05/android-development-database-management/ Android Development – Database Management]
+    * [http://sourceforge.net/projects/asqlitemanager/ Download Android SQLite Manager]
