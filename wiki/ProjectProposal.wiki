@@ -56,6 +56,8 @@ Within each module, we classify the features we want to achieve into different p
 || TU, Jia || jtu || CPEG || 2 || Database developer ||
 || ZHENG, Zichen || zzheng || CPEG || 2 || UI developer ||
 
+You can also check http://code.google.com/p/comp3111h-2012-spring/people/list.
+
 == Development Tools ==
   * Eclipse
   * Android SDK
