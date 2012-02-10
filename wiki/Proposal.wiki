@@ -65,7 +65,7 @@ Within each module, we classify the features we want to achieve into different p
      * MySQL
      * PHP
      * Perl
-   * DroidDraw, a user interface designer
+   * [http://www.droiddraw.org/ DroidDraw], a user interface designer
 
 == Development Schedule ==
 || *Deadline* || *Week* || *Task* ||
