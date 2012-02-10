@@ -1,7 +1,7 @@
 #summary Introduction and plan of this project, including developers’ roles, project description, development tools, and project management schedule.
 #labels Featured
 
-= Welcome to ezMeal =
+= Welcome to ezMeal - Project Proposal =
   * [ProjectProposal#Introduction Introduction]
   * [ProjectProposal#Project_Description Project Description]
     * [ProjectProposal#Login Login]
