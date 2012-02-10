@@ -13,6 +13,7 @@ This is an eternal question for all students, faculties and staff on our campus.
 Besides all the functionality mentioned above, a brand new feature “SHAKE” is introduced for those who have a hard time making decision on food. When the user “SHAKE”s the cell phone, *ezMeal* automatically recommends a dish for you based on the popularity of all dishes, the price, dietary restrictions, and even your personal taste. Through this intelligent food recommendation engine, users can also “like” or “dislike” a dish. This would change the rankings of all the food, and helps the engine to make a more personalized recommendation for the user next time.
 
 == Group Members & Roles ==
+
 || *Name* || *ITSC* || *Department* || *Year* || *Roles* ||
 || MA, Fangchang || fma || CPEG || 2 || Server administrator & Database developer ||
 || LU, Xietong || xlu || CPEG || 2 || UI developer ||
