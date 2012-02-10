@@ -29,6 +29,7 @@ This is an eternal question for all students, faculties and staff on our campus.
 
 Besides all the functionality mentioned above, a brand new feature “SHAKE” is introduced for those who have a hard time making decision on food. When the user “SHAKE”s the cell phone, *ezMeal* automatically recommends a dish for you based on the popularity of all dishes, the price, dietary restrictions, and even your personal taste. Through this intelligent food recommendation engine, users can also “like” or “dislike” a dish. This would change the rankings of all the food, and helps the engine to make a more personalized recommendation for the user next time.
 
+----
 = Project Description =
 == Login ==
 As this is an interactive application, people share their thoughts and writing reviews inside the app. So an account is needed to enable the customization and prevent irresponsible words. A guest can only explore the menu but not ranking and writing reviews. Students are required to use their ITSC as account name. An activation email would be automatically sent to sqmail containing the URL to activate the account.
@@ -54,6 +55,7 @@ News is a real time system that shows newly written comments and uploaded photos
 == Rice Friend (Optional) ==
 Rice Friend is another real time system that enables users to invite other users to eat together. Users can invite their friends to eat at the same restaurant, or to pick the same dishes. Of course, the person being invited has the freedom to “reject” the invitation.
 
+----
 = User Interface =
 We are contributing to implement a very user friendly interface. In the center of the homepage, there are buttons for main modules and functions, i.e. searching, rankings, personal taste, SHAKE, etc. On the top, a log in button is shown. A line of rolling text is located on the bottom of the screen, showing the news and share from other users. By shaking your device, a random dish and its related information will pop out. For pages of each dish, you can easily find out the canteen that serves this dish, its ranking according to different classifications, its photos uploaded by users, as well as comments. You can also upload your own photos and comment on it.
 
