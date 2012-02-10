@@ -3,6 +3,21 @@
 
 = Welcome to ezMeal =
   * [ProjectProposal#Introduction Introduction]
+  * [ProjectProposal#Project_Description Project Description]
+    * [ProjectProposal#Login Login]
+    * [ProjectProposal#Searching Searching]
+    * [ProjectProposal#Classification Classification]
+    * [ProjectProposal#Rankings Rankings]
+    * [ProjectProposal#Personal_Taste Personal Taste]
+    * [ProjectProposal#SHAKE SHAKE]
+    * [ProjectProposal#News_(Optional) News (Optional)]
+    * [ProjectProposal#Rice_Friend_(Optional) Rice Friend (Optional)]
+  * [ProjectProposal#User_Interface User Interface]
+  * [ProjectProposal#Database Database]
+  * [ProjectProposal#Project_Management_Plan Project Management Plan]
+  * [ProjectProposal#Group_Members_&_Roles Group Members & Roles]
+  * [ProjectProposal#Development_Tools Development Tools]
+  * [ProjectProposal#Development_Schedule Development Schedule]
 
 = Introduction =
 “What to Eat in UST?”
