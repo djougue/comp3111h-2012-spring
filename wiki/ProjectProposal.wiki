@@ -3,7 +3,7 @@
 
 = Welcome to ezMeal =
 
-== Introduction(Ma Fangchang) ==
+== Introduction ==
 “What to Eat in UST?”
 
 This is an eternal question for all students, faculties and staff on our campus. It is common that people stand around the recipe board at LG7 for over 5 minutes without a clue. To help answer it, an Android application *ezMeal* (pronounced “easy meal”) is developed.
