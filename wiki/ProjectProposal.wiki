@@ -5,7 +5,7 @@
 
 == Introduction(Ma Fangchang) ==
 “What to Eat in UST?”
- 
+
 This is an eternal question for all students, faculties and staff on our campus. It is common that people stand around the recipe board at LG7 for over 5 minutes without a clue. To help answer it, an Android application *ezMeal* (pronounced “easy meal”) is developed.
 
 *ezMeal* is a dinning guide designed specifically for people studying or working in HKUST. It offers recipes of restaurants on campus, classifies food according to their tastes and prices, generates a popularity ranking, and enables users to choose what to eat based on the dishes review written by other UST students and faculties.
