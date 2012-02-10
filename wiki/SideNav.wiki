@@ -3,5 +3,5 @@
   * [ProjectProposal Proposal]
   * Developers' Guide
     * [GettingStarted Getting Started]
-  * [UsefulLinks Useful Links]
+    * [UsefulLinks Useful Links]
   * [http://code.google.com/p/comp3111h-2012-spring/w/list All Wiki Pages]
