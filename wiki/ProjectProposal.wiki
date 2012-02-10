@@ -2,6 +2,7 @@
 #labels Featured
 
 = Welcome to ezMeal =
+  * [ProjectProposal#Introduction Introduction]
 
 = Introduction =
 “What to Eat in UST?”
