@@ -1,6 +1,6 @@
 #summary Wiki sidebar
 
-  * Proposal
+  * ProjectProposal
   * Developers' Guide
     * [GettingStarted Getting Started]
   * [UsefulLinks Useful Links]
