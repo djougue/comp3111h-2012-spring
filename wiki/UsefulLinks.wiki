@@ -1,5 +1,4 @@
 #summary Useful links for development use.
-#labels Featured
 
 = Useful Links =
 
