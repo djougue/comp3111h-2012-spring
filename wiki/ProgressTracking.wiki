@@ -4,9 +4,9 @@
 = Progress Tracking =
 
 || *Deadline* || *Week* || *Task* || *Status* || *Date of Completion* ||
-|| 19 Feb || 4 || Finish the homepage UI design || In progress... || ||
+|| 19 Feb || 4 || Finish the homepage UI design || <font color="#0000FF">In progress...</font> || ||
 || 26 Feb || 5 || Finish the modification of the homepage UI || || ||
-|| 26 Feb || 5 || Build up the server || In progress... || ||
+|| 26 Feb || 5 || Build up the server || <font color="#0000FF">In progress...</font>. || ||
 || 26 Feb || 5 || Prepare the database to store canteen and dish information || || ||
 || 5 Mar || 6 || Presentation || || ||
 || 5 Mar || 6 || Finish the first version of UI prototype || || ||
