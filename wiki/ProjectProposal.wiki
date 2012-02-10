@@ -11,14 +11,6 @@ This is an eternal question for all students, faculties and staff on our campus.
 *ezMeal* is a dinning guide designed specifically for people studying or working in HKUST. It offers recipes of restaurants on campus, classifies food according to their tastes and prices, generates a popularity ranking, and enables users to choose what to eat based on the dishes review written by other UST students and faculties.
 
 Besides all the functionality mentioned above, a brand new feature “SHAKE” is introduced for those who have a hard time making decision on food. When the user “SHAKE”s the cell phone, *ezMeal* automatically recommends a dish for you based on the popularity of all dishes, the price, dietary restrictions, and even your personal taste. Through this intelligent food recommendation engine, users can also “like” or “dislike” a dish. This would change the rankings of all the food, and helps the engine to make a more personalized recommendation for the user next time.
-
-== Group Members & Roles ==
-== ==
-|| *Name* || *ITSC* || *Department* || *Year* || *Roles* ||
-|| MA, Fangchang || fma || CPEG || 2 || Server administrator & Database developer ||
-|| LU, Xietong || xlu || CPEG || 2 || UI developer ||
-|| TU, Jia || jtu || CPEG || 2 || Database developer ||
-|| ZHENG, Zichen || zzheng || CPEG || 2 || UI developer ||
 
 == Project Description ==
 === Login ===
@@ -56,6 +48,13 @@ We are going to use PHASED software development process but together with some c
 We divided the whole application into several modules running simutaneously, such as GUI, Database and Server, and assigned the tasks to specific people, possibly one or two according to the complexity, so we can fulfill the whole system incrementally and iteratively. We also considered the communication interface between the module, so the modularity of the system can be achieved and the complexity is reduced. The functionality of the whole application will be built in parallel according to the modularizing and become richer and richer by adding features to the program one by one.
 Within each module, we classify the features we want to achieve into different priority level. Each time we peak the most important one from the product backlog subject to the team capacity and finish the design, coding, testing in one sprint. During the sprint the people in charge of the task would communication regularly to improve the efficiency and correctness, as well as update the sprint backlog and burndown chart  daily by estimating the remaining work. Moreover, between the parallel running modules people meet every other day to report the progress and review the difficulties they met together with the solution.
 
+
+== Group Members & Roles ==
+|| *Name* || *ITSC* || *Department* || *Year* || *Roles* ||
+|| MA, Fangchang || fma || CPEG || 2 || Server administrator & Database developer ||
+|| LU, Xietong || xlu || CPEG || 2 || UI developer ||
+|| TU, Jia || jtu || CPEG || 2 || Database developer ||
+|| ZHENG, Zichen || zzheng || CPEG || 2 || UI developer ||
 
 == Development Tools ==
   * Eclipse
