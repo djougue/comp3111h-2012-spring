@@ -6,5 +6,5 @@
     * [GettingStarted Getting Started]
     * [UsefulLinks Useful Links]
   * Minutes
-    * [Minutes0208 08/02/2012]
+    * [Minutes0208 08, Feb]
   * [http://code.google.com/p/comp3111h-2012-spring/w/list All Wiki Pages]
