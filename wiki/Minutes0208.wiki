@@ -1,9 +1,8 @@
 #summary Minutes of the meeting held on 8th Feb, 2012.
 
 = Minutes of 8th Feb =
-  * [Minutes0208#TODO TODO]
-    * [Minutes0208#Proposal Proposal]
-  * [Minutes0208#Other_Issues Other Issues]
+  * Discuss division of work on the proposal.
+  * Discuss technical issues.
 
 ----
 
