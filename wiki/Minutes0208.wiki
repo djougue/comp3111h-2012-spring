@@ -7,7 +7,7 @@
 ----
 
 = TODO =
-== Proposal ==
+== Division of Work on Proposal ==
   * Group members and their roles (Lu)
   * Introduction (Ma)
   * Project description
