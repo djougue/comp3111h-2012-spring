@@ -9,7 +9,7 @@ public class RankingActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         TextView textview = new TextView(this);
-        textview.setText("This is the Ranking tab");
+        textview.setText("Ranking tab testing...");
         setContentView(textview);
     }
 }

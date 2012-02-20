@@ -9,7 +9,7 @@ public class MenuActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         TextView textview = new TextView(this);
-        textview.setText("This is the Menu tab");
+        textview.setText("Menu tab testing...");
         setContentView(textview);
     }
 }

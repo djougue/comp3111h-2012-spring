@@ -9,7 +9,7 @@ public class SearchActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         TextView textview = new TextView(this);
-        textview.setText("This is the Search tab...");
+        textview.setText("Search tab testing...");
         setContentView(textview);
     }
 }
