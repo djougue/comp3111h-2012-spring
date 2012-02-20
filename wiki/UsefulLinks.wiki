@@ -9,3 +9,6 @@
     * [http://developer.android.com/reference/android/database/sqlite/package-summary.html android.database.sqlite]
     * [http://www.barebonescoder.com/2010/05/android-development-database-management/ Android Development – Database Management]
     * [http://sourceforge.net/projects/asqlitemanager/ Download Android SQLite Manager]
+
+  * SVN
+    * [http://developer.51cto.com/art/201005/202282.htm Solve SVN Update/Commit Conflict Problem] (Chinese)
