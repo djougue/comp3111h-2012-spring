@@ -1,4 +1,4 @@
-#summary Wiki sidebar
+#summary Wiki sidebar.
 
   * [ProjectProposal Project Proposal]
   * [ProgressTracking Progress Tracking]
