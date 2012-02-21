@@ -6,11 +6,11 @@
 
 = What to Write =
   # Customer registration (by Tu)
-    # User ID (ITSC account)
-    # The user ID should be unique
-    # Length of the code
-    # Forget password
-    # Nickname (for the comment system)
+    * User ID (ITSC account)
+    * The user ID should be unique
+    * Length of the code
+    * Forget password
+    * Nickname (for the comment system)
   # Browsing and searching of items offered for sale (by Tu)
   # Comment and picture uploading system (by Zheng)
   # Rating system (by Zheng)
