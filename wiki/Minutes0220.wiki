@@ -21,9 +21,9 @@
 = Specifications =
 
 == Customer Registration ==
-  * no “must registration”
-  * uses ITSC account instead
-  * has limitation on password length (6-10, for example)
+  * No “must registration”
+  * Uses ITSC account instead
+  * Has limitation on password length (6-10, for example)
 
 == Browsing and Searching ==
   * Compared to the sample: no auction time and so on
@@ -41,11 +41,11 @@
   * Update/refresh immediately
 
 == System Management ==
-  * a php website
-  * login username and password
-  * report generation (reference a)
-  * tables of dishes
-  * button for adding and deleting dish
+  * A php website
+  * Login username and password
+  * Report generation
+  * Tables of dishes
+  * Button for adding and deleting dish
 
 = Other Issues =
   * All reports due on 11pm, 21st Feb. Submit to Lu.
