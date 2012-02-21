@@ -1,0 +1,65 @@
+=Customer registration=
+The user could register an account to store the personal data, such as favors, shaking history, etc. Registration involves entering the following personal information: username, password, nickname, contact telephone numbers, and msn. The first three are required while others are optional. 
+  *The student ITSC is used as username and also serves as email address. Upon registration, a confirm email with a link would be sent to the ITSC email address automatically. The account will be activated only after clicking the link. 
+  *Nickname is what the user wants to be called and what appears in the comments window of the dishes. The nickname should be between 6 and 10 characters and contain only letters and numbers. The check should be done during the registration process. 
+  *The customer should create a password with English letters and numbers during registration, which should be at least 8 characters, at most 15 characters and contain at least one number and one letter.
+After registration, the users should be able to change any of the above information except for their username since this is how the system identifies a user. Login is done by using the matched account (aka ITSC) and password. In case that the user forget the password, an email for resetting the password would be sent to the ITSC email address automatically upon “forget password” request.
+ 
+=Browsing and searching of items offered for sale=
+Each item should have its own web page that shows the item’s name, picture, favor, canteen, price, available time, rating and comments. 
+  *The name may be identical for several dishes but belong to belong to different canteen. 
+  *Favor is the style of the dish, such as spicy, vegetarian and so on. 
+  *Available time is the period during which the dish is available. For example, some dishes are only offered as breakfast while some are exclusive only for dinner. 
+  *Rating is the average of all rating of the dish.
+  *Comments come from the uses who have taken the dishes before. The nicknames are displayed for comments. 
+  *There should be a button for user to upload the pictures. 
+Anyone, both registered and anonymous, should be able to browse and filter the dishes. For easier browsing, the dishes are grouped into categories. The available categories are canteen and available time. 
+In addition to browsing, it should be possible to filter the dishes based on some criteria. The allowed filters include dish name, favor, canteen, price, available time and rating. By adding filters, the users could restrict the result to meet specific requirements. If more than one criterion is specified, then the filtering result should match all specified restrictions. 
+The results of browsing or filtering should be displayed in a tabular format showing the dish thumbnail, if any, name, price, canteen and available time. It should be possible to order the dishes by price and group by canteen or available time. From this display of dishes it should be possible to go directly to a dish’s web page. 
+
+= Comments and Picture Uploading System =
+On the page of each dish, an album of pictures of the dish and users’ comments to it are shown.  Also, the system will automatically choose one picture from the album of each dish and cut it into a small square one as the icon of the dish. When ezMeal displays the menu, dish icons will be shown to the left of the title of the dish. Only logged-in users are able to comment on dishes and upload related pictures, by pressing the corresponding buttons at the bottom of each dish page. This requires users to register on ezMeal, using their ITSC account and creating a password. The followings are some specification.
+
+  * Comments
+    * Both English and Chinese (simplified and/or traditional) comments are supported.
+    * The maximum length of a comment is 140 words if English is used, or 140 characters if Chinese is used.
+  * Picture uploading
+    * Only JPEG format (.jpg or .jpeg) is supported, since most mobile devices produce a JPEG picture after taking a photo by its camera.
+    * The maximum size of a picture is 500KB, in order to optimize the display effects and guarantee a satisfactory uploading speed.
+    * The dimension of a picture is not limited.
+    * If a dish has no uploaded pictures, a default picture (on which it says “Please upload pictures”) will be used in its album.
+    * By default, the server will choose the first uploaded picture of each dish as the icon of it. If the uploaded picture is not square, the server will cut the center of the picture into a square with maximum area. Then the sever will resize the picture to a 48 × 48 icon. (The dimension of icons is subject to change.)
+
+= Rating =
+Users are welcome to rate on dishes. Each dish also provides the users’ latest overall rating on it. Only logged-in customers can rate on dishes. This requires customers to register on ezMeal, using their ITSC account and creating a password. The followings are some specifications.
+
+  * For each user, the unit of rating is star. The maximum is 5 stars (“I couldn’t like it anymore!”), while the minimum is 0 stars (“I really dislike it!”). When a user gives 0 stars to a dish, the dish will be added into the user’s black list. 
+  * For the overall rating score, the unit is 0.1 points. The maximum is 10 points, the minimum is 0 points. 
+  * The overall rating is calculated from users’ rating. The number of users who have commented on a specific dish is _n_; the number of stars given by these users is _m_. Since each star is worth 2 points, the overall rating score should be 2_m_/_n_. And the server will automatically correct the final result to one decimal place. The overall rating will displays in the dish page in both star way and numeral way. The decimal part of the total rating is discarded for the star way and each point is worth half star. 
+  * The overall rating can be updated immediately after a user rates a dish.
+  * A user is able to modify his/her rating at any time. However, the overall rating should not double-count the user’s previous rating and his/her new rating. In other words, only his/her new rating contributes to the overall rating.
+
+=Personal Tasting=
+  Each registered customer has a personal profile to record his/her taste preference. A person’s taste preference should have its own page view that shows favor, histories and black list. The favor should include vegetable dish, meat dish, spicy dish, mild dish and Islamic cuisine. Vegetable dish option and meat dish option should be inside a group of radio buttons, which means that customers can only choose one option between vegetable dish and meat dish. A no preference option should be offered between the vegetable dish and meat dish and it is the default option. The spicy dish and mild dish also follow this rule. In the history list, customers can review what they ate in a week. Basic information of the dishes should be shown in the list along with the time they are eaten. When customers click the dishes in the list, they can browse its details. Customer cannot modify the history list. Different from the history list, customer can modify their black list, which contains the dishes they dislike and would never be chosen. 
+=Shaking=
+  It is a function offered to all the customers including the unregistered one. To use this function, customers should shake their phones three times and an individual page appears. After specifying a canteen, a dish available in current time slot would be chosen randomly from the menu and its name and picture appear in the page. For unregistered customers, the dish would be chosen from the whole menu. For registered customers, the result should be related to their taste preference. 
+  *If customers have vegetable preference, dishes contain meat would not be in the candidates. 
+  *If customers choose meat dishes preference, the dishes with much meat should have more possibility to be chosen. 
+  *If customers prefer a spicy dish, the spicy dishes will have higher possibility. 
+  *If customers choose the mild option, all the spicy dishes will be filtered out. 
+  *If the Islamic cuisine is chosen, the dishes with pork are impossible to be chosen. 
+  *All the dishes in the black list will be filtered. 
+  *The dishes in history list will have less possibility. The possibilities for different dishes in the history list are different as well. For example, dishes eaten today have low possibilities than dishes eaten yesterday. 
+Customers can accept the result, and the result will add to the history list automatically. If customers want another choice, they click the re-pick button to do so. If customers dislike the dishes very much, they can click a button to add the dish to the black list (only for registered customers). 
+
+=System Management=
+	
+It is vital for administrators of ezMeal to maintain the information in the database and to obtain reports generated automatically by the system on a daily basis. Therefore, a website with access only by the administrators should be established so that they can remotely log on to the system, without affecting the service provided to users. 
+The website requires user-id and password to log on. Administrators who log on to the website are subject to:
+  *change password of the administrator account. It is required by the system to enter the correct password before any modifications to it. Besides, the new password has to be repeated twice to prevent any typing errors.
+  *have access to all information inside the database. More specifically, the administrator is allowed to view all the information related to users, dishes, comments and so on through this website. 
+  *add or delete entries of dishes, as well as create or delete an account in the table of ezMeal users.
+
+Beyond that, a simple and straight-forward user-interface, including list of selected outputs, and buttons for editing, adding or deleting entries will be constructed. The list should be capable of producing the following reports:
+  *a list of dish details. It can be identified by the dish id, dish name, or the combinations both. The list should include the dish name, price, canteen and its total rating
+  *a list of user details. Similar to the dish list, we can search for a particular user with its user ITSC or user id, and the report should contain the user name, user password, and user tastes.
