@@ -1,7 +1,7 @@
 #summary Defines the system requirements of our system in detail.
 #labels Featured
 
-= System Requirements Specification =
+= System Requirements =
   * [SystemRequirements#Customer_Registration Customer Registration]
   * [SystemRequirements#Browsing_and_Searching_of_Items Browsing and Searching of Items]
   * [SystemRequirements#Comments_and_Picture_Uploading_System Comments and Picture Uploading System]
