@@ -1,7 +1,7 @@
 #summary Wiki sidebar.
 
   * [ProjectProposal Project Proposal]
-  * [SystemRequirements System Requirements Specification]
+  * [SystemRequirements System Requirements]
   * [ProgressTracking Progress Tracking]
   * Developers' Guide
     * [GettingStarted Getting Started]
