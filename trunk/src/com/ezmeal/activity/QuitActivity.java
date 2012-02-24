@@ -1,13 +1,5 @@
 package com.ezmeal.activity;
 
-/**
- * QuitActivity
- * 
- * This activity leads the program to quit.
- * 
- * Author: ZHENG, Zichen
- */
-
 import com.ezmeal.main.Main;
 import android.app.Activity;
 import android.content.Intent;
