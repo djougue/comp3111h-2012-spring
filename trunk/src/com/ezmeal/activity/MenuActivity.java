@@ -15,8 +15,7 @@ public class MenuActivity extends Activity {
     LazyAdapter adapter;
     
     @Override
-	public void onCreate(Bundle savedInstanceState)
-	{
+	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.ezmeal.main.R.layout.menu);
         
@@ -30,20 +29,19 @@ public class MenuActivity extends Activity {
     }
     
     @Override
-    public void onDestroy()
-    {
+    public void onDestroy() {
         list.setAdapter(null);
         super.onDestroy();
     }
     
-    public OnClickListener listener=new OnClickListener(){
+    public OnClickListener listener=new OnClickListener() {
         public void onClick(View arg0) {
             adapter.imageLoader.clearCache();
             adapter.notifyDataSetChanged();
         }
     };
     
-    private String[] mStrings={
+    private String[] mStrings = {
             "http://a3.twimg.com/profile_images/670625317/aam-logo-v3-twitter.png",
             "http://a3.twimg.com/profile_images/740897825/AndroidCast-350_normal.png",
             "http://a3.twimg.com/profile_images/121630227/Droid_normal.jpg",

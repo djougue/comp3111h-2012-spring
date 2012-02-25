@@ -7,9 +7,9 @@ import android.widget.TextView;
 public class SettingsActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         TextView textview = new TextView(this);
-        textview.setText("Settings button testing...");
+        textview.setText("Ranking tab testing...");
         setContentView(textview);
     }
 }
