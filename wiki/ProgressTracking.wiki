@@ -9,7 +9,7 @@
 || 26 Feb || 5 || Build up the server || <font color="#009900">Completed</font> || 26 Feb ||
 || 26 Feb || 5 || Prepare the database to store canteen and dish information || <font color="#0000FF">_In progress..._</font>  || ||
 || 5 Mar || 6 || *Presentation* || || ||
-|| 5 Mar || 6 || Finish the first version of UI prototype || || ||
+|| 5 Mar || 6 || Finish the first version of UI prototype || <font color="#0000FF">_In progress..._</font> || ||
 || 5 Mar || 6 || Prepare the database to store user information || || ||
 || 12 Mar || 7 || Finish the second version of UI prototype || || ||
 || 12 Mar || 7 || Realize Searching, Classification and SHAKE function || || ||
