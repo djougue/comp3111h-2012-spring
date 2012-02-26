@@ -1,6 +1,4 @@
 /*
- * Copyright 2011 Peter Kuterna
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -35,15 +33,17 @@ import com.ezmeal.activity.MyTasteActivity;
 import com.ezmeal.activity.QuitActivity;
 import com.ezmeal.activity.SettingsActivity;
 import com.ezmeal.activity.ShakeActivity;
+import com.ezmeal.main.R;
+import com.ezmeal.main.R.id;
+import com.ezmeal.main.R.layout;
 
-public class SwipeyTabsSampleActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity {
 
 	private static final String [] TITLES = {
 		"MENU",
 		"SEARCH",
 		"RANK",
 	};
-	
 	
 
 	private ViewPager mViewPager;

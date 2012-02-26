@@ -68,7 +68,7 @@
 		android:id="@+id/swipeytabs"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		Swipeytabs:bottomBarColor="#ff96aa39"
+		Swipeytabs:bottomBarColor="#ffff7c00"
 		Swipeytabs:bottomBarHeight="2dip"
 		Swipeytabs:tabIndicatorHeight="3dip"
  		android:background="#ff3b3b3b" />   

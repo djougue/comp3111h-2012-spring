@@ -1,6 +1,6 @@
 package com.ezmeal.activity;
 
-import com.ezmeal.main.Main;
+import com.ezmeal.main.MainActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +16,7 @@ public class QuitActivity extends Activity {
         startActivity(quit);
         
         //back to the home page
-        Intent homePageIntent = new Intent().setClass(this, Main.class);
+        Intent homePageIntent = new Intent().setClass(this, MainActivity.class);
         startActivityForResult(homePageIntent, 0);
     }
 }

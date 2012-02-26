@@ -1,6 +1,4 @@
 /*
- * Copyright 2011 Peter Kuterna
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -96,7 +94,7 @@ public class SwipeyTabs extends ViewGroup implements OnPageChangeListener {
 		// enable the horizontal fading edges which will be drawn by the parent
 		// View
 		setHorizontalFadingEdgeEnabled(true); //doesn't matter
-		setFadingEdgeLength((int) (getResources().getDisplayMetrics().density * 35.0f + 0.5f));
+		setFadingEdgeLength((int) (getResources().getDisplayMetrics().density * 28.0f + 0.5f));
 		setWillNotDraw(false);
 
 		mCachedTabPaint = new Paint();
@@ -120,7 +118,7 @@ public class SwipeyTabs extends ViewGroup implements OnPageChangeListener {
 		mRightTabPos = null;
 		mCurrentTabPos = null;
 
-		// clean up our childs
+		// clean up our children
 		removeAllViews();
 
 		if (mAdapter != null) {
@@ -188,34 +186,48 @@ public class SwipeyTabs extends ViewGroup implements OnPageChangeListener {
 			final int width = getMeasuredWidth();
 
 			final View centerTab = getChildAt(position);
-			tabPositions[position] = width / 2 - centerTab.getMeasuredWidth()
-					/ 2;
+			tabPositions[position] = width / 2 - centerTab.getMeasuredWidth() / 2;
 			for (int i = position - 1; i >= 0; i--) {
 				final TextView tab = (TextView) getChildAt(i);
 				if (i == position - 1) {
-					tabPositions[i] = 0 - tab.getPaddingLeft();
-				} else {
+					tabPositions[i] = 5 - tab.getPaddingLeft();
+				} else if (i != 0 && i != count - 1) {
 					tabPositions[i] = 0 - tab.getMeasuredWidth() - width;
 				}
 				tabPositions[i] = Math.min(tabPositions[i], tabPositions[i + 1]
 						- tab.getMeasuredWidth());
 			}
+			
 			for (int i = position + 1; i < count; i++) {
 				final TextView tab = (TextView) getChildAt(i);
 				if (i == position + 1) {
 					tabPositions[i] = width - tab.getMeasuredWidth()
-							+ tab.getPaddingRight();
-				} else {
+							+ tab.getPaddingRight() - 5;
+			    } else if (i != 0 && i != count - 1) {
 					tabPositions[i] = width * 2;
 				}
 				final TextView prevTab = (TextView) getChildAt(i - 1);
 				tabPositions[i] = Math.max(tabPositions[i], tabPositions[i - 1]
 						+ prevTab.getMeasuredWidth());
 			}
+			/*
+			// make it a circle!
+			if (position == 0) {
+				final TextView tab = (TextView) getChildAt(count - 1);
+				tabPositions[count - 1] = 5 - tab.getPaddingLeft();
+			}
+			if (position == count - 1) {
+				final TextView tab = (TextView) getChildAt(0);
+				tabPositions[0] = width - tab.getMeasuredWidth()
+						+ tab.getPaddingRight() - 5;
+			}
+			*/
+			
 		} else {
 			for (int i = 0; i < tabPositions.length; i++) {
 				tabPositions[i] = -1;
 			}
+			
 		}
 	}
 
