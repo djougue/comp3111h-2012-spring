@@ -117,6 +117,7 @@ public class SwipeyTabs extends ViewGroup implements OnPageChangeListener {
 		mLeftTabPos = null;
 		mRightTabPos = null;
 		mCurrentTabPos = null;
+		
 
 		// clean up our children
 		removeAllViews();
@@ -210,6 +211,7 @@ public class SwipeyTabs extends ViewGroup implements OnPageChangeListener {
 				tabPositions[i] = Math.max(tabPositions[i], tabPositions[i - 1]
 						+ prevTab.getMeasuredWidth());
 			}
+			
 			/*
 			// make it a circle!
 			if (position == 0) {
@@ -222,6 +224,7 @@ public class SwipeyTabs extends ViewGroup implements OnPageChangeListener {
 						+ tab.getPaddingRight() - 5;
 			}
 			*/
+			
 			
 		} else {
 			for (int i = 0; i < tabPositions.length; i++) {

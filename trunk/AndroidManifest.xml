@@ -4,6 +4,8 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
+    <uses-permission android:name="android.permission.INTERNET"/>    
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="13"/>
 
     <application android:icon="@drawable/icon" android:label="@string/app_name" android:theme="@style/Theme">
@@ -48,21 +50,6 @@
             android:name="com.ezmeal.activity.QuitActivity"
             android:label="@string/app_name" >
         </activity>
-        <activity
-            android:name="com.ezmeal.activity.MenuActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="com.ezmeal.activity.SearchActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="com.ezmeal.activity.RankingActivity"
-            android:label="@string/app_name" >
-        </activity>
     
-
-    <uses-permission android:name="android.permission.INTERNET"/>    
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     </application>
 </manifest>

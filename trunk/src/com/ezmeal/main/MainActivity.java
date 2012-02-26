@@ -34,15 +34,13 @@ import com.ezmeal.activity.QuitActivity;
 import com.ezmeal.activity.SettingsActivity;
 import com.ezmeal.activity.ShakeActivity;
 import com.ezmeal.main.R;
-import com.ezmeal.main.R.id;
-import com.ezmeal.main.R.layout;
 
 public class MainActivity extends FragmentActivity {
 
 	private static final String [] TITLES = {
-		"MENU",
-		"SEARCH",
 		"RANK",
+		"MENU",
+		"SEARCH"
 	};
 	
 
@@ -67,7 +65,7 @@ public class MainActivity extends FragmentActivity {
 		mTabs.setAdapter(adapter);
 		mViewPager.setOnPageChangeListener(mTabs);
 		//set mTabs as the listener
-		mViewPager.setCurrentItem(0);
+		mViewPager.setCurrentItem(mTabs.getChildCount() / 2);  //By default, show the middle one of the tabs
 		
 		/**
 		 * Button activities
@@ -108,7 +106,11 @@ public class MainActivity extends FragmentActivity {
             }
 		});
 	}
-
+	
+	
+	/**
+	 * SwipeyTabsPagerAdapter
+	 */
 	private class SwipeyTabsPagerAdapter extends FragmentPagerAdapter implements
 			SwipeyTabsAdapter {
 		
@@ -122,7 +124,8 @@ public class MainActivity extends FragmentActivity {
 
 		@Override
 		public Fragment getItem(int position) {
-			if(position == 0){
+			switch (position) {
+			case 1:
 				MenuFragment mFragment = new MenuFragment();
 				return mFragment;
 			}

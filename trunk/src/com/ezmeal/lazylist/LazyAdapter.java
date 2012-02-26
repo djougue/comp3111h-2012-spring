@@ -38,7 +38,7 @@ public class LazyAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi=convertView;
         if(convertView==null)
-            vi = inflater.inflate(com.ezmeal.main.R.layout.item, null);
+            vi = inflater.inflate(com.ezmeal.main.R.layout.menu_item, null);
 
         TextView text1=(TextView)vi.findViewById(com.ezmeal.main.R.id.dishnameText);
         TextView text2=(TextView)vi.findViewById(com.ezmeal.main.R.id.priceText);
