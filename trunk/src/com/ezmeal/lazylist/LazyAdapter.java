@@ -43,8 +43,10 @@ public class LazyAdapter extends BaseAdapter {
         TextView text1=(TextView)vi.findViewById(com.ezmeal.main.R.id.dishnameText);
         TextView text2=(TextView)vi.findViewById(com.ezmeal.main.R.id.priceText);
         ImageView image=(ImageView)vi.findViewById(com.ezmeal.main.R.id.image);
+        /** TO BE MODIFIED **/
         text1.setText("dish "+position);
-        text2.setText("27.0");
+        text2.setText("10.0");
+        /** END OF DEMO **/
         imageLoader.DisplayImage(data[position], image);
         return vi;
     }

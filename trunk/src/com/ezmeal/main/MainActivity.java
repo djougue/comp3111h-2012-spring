@@ -89,11 +89,11 @@ public class MainActivity extends FragmentActivity {
 		});
 		
 		/* My Taste button */
-		Button myTasteBt = (Button) findViewById(R.id.buttonMyTaste);
-		myTasteBt.setOnClickListener(new View.OnClickListener() {
+		Button myTasteBtn = (Button) findViewById(R.id.buttonMyTaste);
+		myTasteBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent myTasteBtIntent = new Intent(view.getContext(), MyTasteActivity.class);
-                startActivityForResult(myTasteBtIntent, 0);
+                Intent myTasteBtnIntent = new Intent(view.getContext(), MyTasteActivity.class);
+                startActivityForResult(myTasteBtnIntent, 0);
             }
 		});
 		
