@@ -30,7 +30,7 @@ This task is due on 16th Mar (next Friday).
     * User: userName, password, nickName, history (multi-valued), blacklist (multi-valued)
     * PersonalTaste (composition with User): doesPreferSpicy, doesPreferMeat, isVege
     * Dish: name, photos, overallRating (multi-valued)
-      * Note: The overallRating is a 5-element array. overallRating[0] stores the number of users that rate 1 star for this dish; overallRating[1] stores the number of users that rate 2 stars; so on so forth.
+      * Note: The overallRating is a 5-element array. The first element stores the number of users that rate 1 star for this dish; The second one stores the number of users that rate 2 stars; so on so forth.
     * Canteen: dish (multi-valued)
     * Comment: content 
 
