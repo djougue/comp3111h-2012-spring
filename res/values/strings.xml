@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ezMeal</string>
+    <string name="buttonSettings">Settings</string>
+    <string name="buttonShake">SHAKE</string>
+    <string name="buttonMyTaste">My Taste</string>
+    <string name="buttonQuit">Quit</string>
+    <string name="userNameHint">Your ITSC</string>
+    <string name="buttonLogin">Login</string>
+    <string name="labelUserName">User Name</string>
+    <string name="labelPassword">Password</string>
+    <string name="buttonSignUp">Sign Up</string>
+</resources>
