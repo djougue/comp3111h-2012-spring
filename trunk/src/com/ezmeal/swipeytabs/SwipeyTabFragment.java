@@ -12,7 +12,11 @@
  * limitations under the License.
  */
 
-package com.ezmeal.main;
+package com.ezmeal.swipeytabs;
+
+import com.ezmeal.main.R;
+import com.ezmeal.main.R.id;
+import com.ezmeal.main.R.layout;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
