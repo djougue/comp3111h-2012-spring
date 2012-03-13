@@ -34,6 +34,9 @@ import com.ezmeal.activity.QuitActivity;
 import com.ezmeal.activity.SettingsActivity;
 import com.ezmeal.activity.ShakeActivity;
 import com.ezmeal.main.R;
+import com.ezmeal.swipeytabs.SwipeyTabFragment;
+import com.ezmeal.swipeytabs.SwipeyTabs;
+import com.ezmeal.swipeytabs.SwipeyTabsAdapter;
 
 public class MainActivity extends FragmentActivity {
 
@@ -42,7 +45,6 @@ public class MainActivity extends FragmentActivity {
 		"MENU",
 		"SEARCH"
 	};
-	
 
 	private ViewPager mViewPager;
 	private SwipeyTabs mTabs;
