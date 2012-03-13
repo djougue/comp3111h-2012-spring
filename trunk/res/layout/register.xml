@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingLeft="32dp"
+    android:paddingRight="32dp"
+    android:gravity="center"
+    android:background="@drawable/orange_bg">
+    
+    <!-- User Name (SQmail) -->
+    <TextView
+        android:id="@+id/labelSQmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:text="@string/labelSQMail"/>
+    <EditText
+        android:id="@+id/editTextRegUserName"
+        android:hint="@string/hintUserName"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:background="@android:drawable/editbox_background"
+        android:layout_below="@id/labelSQmail"/>
+    <TextView
+        android:id="@+id/labelMailAddrSuffix"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="3dp"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:layout_toRightOf="@id/editTextRegUserName"
+        android:layout_alignBaseline="@id/editTextRegUserName"
+        android:text="@string/labelMailAddrSuffix"/>
+    <TextView
+        android:id="@+id/labelUserNameRemarks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:textColor="#eee"
+        android:layout_below="@id/editTextRegUserName"
+        android:text="@string/labelUserNameRemarks"/>
+    
+    <!-- Password -->
+    <TextView
+        android:id="@+id/labelRegPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:layout_below="@id/labelUserNameRemarks"
+        android:paddingTop="20dp"
+        android:text="@string/labelPassword"/>
+    <EditText
+        android:id="@+id/editTextRegPassword"
+        android:hint="@string/hintPassword"
+        android:inputType="textPassword"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/editbox_background"
+        android:layout_below="@id/labelRegPassword"/>
+    
+    <!-- Confirm Password -->
+    <TextView
+        android:id="@+id/labelRegConfirmPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:layout_below="@id/editTextRegPassword"
+        android:paddingTop="15dp"
+        android:text="@string/labelRegConfirmPassword"/>
+    <EditText
+        android:id="@+id/editTextRegConfirmPassword"
+        android:inputType="textPassword"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/editbox_background"
+        android:layout_below="@id/labelRegConfirmPassword"/>
+    
+    <!-- Result of Registration -->
+    <TextView
+        android:id="@+id/labelRegResult"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_below="@id/editTextRegConfirmPassword"
+        android:paddingTop="7dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="#f00"/>
+    
+    <!-- Submit / Cancel Buttons -->
+    <Button
+        android:id="@+id/buttonCancelRegForm"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/labelRegResult"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="10dip"
+        android:text="@string/buttonCancel" />
+    <Button
+        android:id="@+id/buttonSubmitRegForm"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/buttonCancelRegForm"
+        android:layout_alignTop="@id/buttonCancelRegForm"
+        android:text="@string/buttonSubmit" />
+</RelativeLayout>
