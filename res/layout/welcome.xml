@@ -5,28 +5,33 @@
     android:background="@drawable/welcome"
     android:orientation="vertical">
     
-    <ImageView android:id="@+id/imageViewLogo"
+    <!-- ezMeal Logo -->
+    <ImageView
+        android:id="@+id/imageLogo"
         android:contentDescription="@string/app_name"
         android:src="@drawable/cake_logo"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
     
-    <TextView android:id="@+id/textViewResult"
+    <!-- Login Result -->
+    <TextView
+        android:id="@+id/labelLoginResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:paddingTop="18dp">
     </TextView>
     
+    <!-- User Name -->
     <LinearLayout
-        android:id="@+id/linearLayoutUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:orientation="horizontal"
         android:paddingTop="12dp">
-        <TextView android:id="@+id/textViewUserName"
+        <TextView
+            android:id="@+id/labelUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/labelUserName"
@@ -35,21 +40,26 @@
             android:textStyle="bold"
             android:textColor="#fff">
         </TextView>
-        <EditText android:id="@+id/editTextUserName"
-            android:hint="@string/userNameHint"
+        <EditText
+            android:id="@+id/editTextUserName"
+            android:hint="@string/hintUserName"
+            android:singleLine="true"
             android:layout_width="150dp"
             android:layout_height="40dp"
+            android:background="@android:drawable/editbox_background"
             android:textSize="15dp">
         </EditText>
     </LinearLayout>
     
-    <LinearLayout android:id="@+id/linearLayoutPassword"
+    <!-- Password -->
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="3dp"
         android:orientation="horizontal" >
-        <TextView android:id="@+id/textViewPassword"
+        <TextView
+            android:id="@+id/labelPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/labelPassword"
@@ -59,33 +69,38 @@
             android:textStyle="bold"
             android:textColor="#fff">
         </TextView>
-        <EditText android:id="@+id/editTextPassword"
+        <EditText
+            android:id="@+id/editTextPassword"
             android:inputType="textPassword"
             android:layout_width="150dp"
             android:layout_height="40dp"
             android:textSize="15dp"
+            android:background="@android:drawable/editbox_background"
             android:password="true">
         </EditText>
     </LinearLayout>
     
-    <LinearLayout android:id="@+id/linearLayoutLoginBtns"
+    <!-- Login / Sign-up Buttons -->
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="15dp"
-        android:orientation="horizontal" >
-        <Button android:id="@+id/buttonLogin"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/buttonLogin"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="@string/buttonLogin">
         </Button>
-        <Button android:id="@+id/buttonSingUp"
+        <Button
+            android:id="@+id/buttonRegister"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="17dp"
-            android:text="@string/buttonSignUp">
+            android:text="@string/buttonRegister">
         </Button>
     </LinearLayout>
     
