@@ -11,12 +11,12 @@
 || 5 Mar || 6 || *Presentation* || <font color="#009900">Completed</font> || 5 Mar ||
 || 5 Mar || 6 || Finish the first version of UI prototype || <font color="#009900">Completed</font> || 4 Mar ||
 || 5 Mar || 6 || Prepare the database to store user information || <font color="#009900">Completed</font> || 4 Mar ||
-|| 12 Mar || 7 || Finish the second version of UI prototype || <font color="#0000FF">_In progress..._</font> || ||
-|| 12 Mar || 7 || Realize Searching, Classification and SHAKE function || <font color="#0000FF">_In progress..._</font> || ||
-|| 12 Mar || 7 || Pass the offline testing || || ||
-|| 19 Mar || 8 || Finish the third version of UI prototype || || ||
-|| 19 Mar || 8 || Realize Login function || || ||
-|| 19 Mar || 8 || Pass the first online testing || || ||
+|| 12 Mar || 7 || Finish the second version of UI prototype || <font color="#009900">Completed</font> || 12 Mar ||
+|| 12 Mar || 7 || Realize Searching, Classification and SHAKE function || <<font color="#009900">Completed</font> || 12 Mar ||
+|| 12 Mar || 7 || Pass the offline testing || <font color="#009900">Completed</font> || 12 Mar ||
+|| 19 Mar || 8 || Finish the third version of UI prototype || <font color="#0000FF">_In progress..._</font> || ||
+|| 19 Mar || 8 || Realize Login function || <font color="#0000FF">_In progress..._</font> || ||
+|| 19 Mar || 8 || Pass the first online testing || <font color="#0000FF">_In progress..._</font> || ||
 || 26 Mar || 9 || *Prototype demonstration* || || ||
 || 2 Apr || 10 || *Inner testing 1*, focusing on Searching, Classification and Login function || || ||
 || 2 Apr || 10 || Realize Rankings and Personal taste function || || ||
