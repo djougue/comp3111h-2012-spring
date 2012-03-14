@@ -3,6 +3,8 @@
 
 = Progress Tracking =
 
+As of 14 Mar, 2012
+
 || *Deadline* || *Week* || *Task* || *Status* || *Date of Completion* ||
 || 19 Feb || 4 || Finish the homepage UI design || <font color="#009900">Completed</font> || 20 Feb ||
 || 26 Feb || 5 || Finish the modification of the homepage UI || <font color="#009900">Completed</font> || 26 Feb  ||
@@ -12,7 +14,7 @@
 || 5 Mar || 6 || Finish the first version of UI prototype || <font color="#009900">Completed</font> || 4 Mar ||
 || 5 Mar || 6 || Prepare the database to store user information || <font color="#009900">Completed</font> || 4 Mar ||
 || 12 Mar || 7 || Finish the second version of UI prototype || <font color="#009900">Completed</font> || 12 Mar ||
-|| 12 Mar || 7 || Realize Searching, Classification and SHAKE function || <<font color="#009900">Completed</font> || 12 Mar ||
+|| 12 Mar || 7 || Realize Searching, Classification and SHAKE function || <font color="#009900">Completed</font> || 12 Mar ||
 || 12 Mar || 7 || Pass the offline testing || <font color="#009900">Completed</font> || 12 Mar ||
 || 19 Mar || 8 || Finish the third version of UI prototype || <font color="#0000FF">_In progress..._</font> || ||
 || 19 Mar || 8 || Realize Login function || <font color="#0000FF">_In progress..._</font> || ||
