@@ -63,7 +63,8 @@ An Administrator is a person who maintains the information of the dishes and use
     # The server send the login status (successful of failed) to the client).
     # Go to the main page if login is successful.
   * Nonfunctional requirements: 
-    # 
+    # The system should check the network availability when the user clicks the _Login_ button.
+    # The system should stop listening to the response from the server and display error message if timeout (30 seconds).
 
 ==== Search ====
   * Participating actors: Initiated by User.
@@ -125,7 +126,7 @@ An Administrator is a person who maintains the information of the dishes and use
     # The photo is submitted to the server system.
     # The User receive acknowledge upon successful upload.
   * Nonfunctional requirements: 
-    # The UploadPhoto button is in the Detailed page.
+    # The _Upload Photo_ button is in the Detailed page.
     # User can upload any numbers of photos of any number of dishes.
     # Uploaded photos should within some certain size.
     # Uploaded photos will appear in Gallery page.
