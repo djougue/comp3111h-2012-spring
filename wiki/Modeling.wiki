@@ -31,16 +31,16 @@ This wiki pages contains a class diagram showing the domain model classes, their
 = Use-Case Model =
 [https://comp3111h-2012-spring.googlecode.com/svn/images/modeling/use-case-model.png]
 
-== Actors ==
+= Actors =
 ezMeal has two actors: User and Administrator. The following briefly describes the main job of these two actors.
 
-=== User ===
+== User ==
 User is a person who 
 
-=== Administrator ===
+== Administrator ==
 Administrator is a person maintains the information of the dishes and users. The administrator uses a admin website to add or delete dishes and export users’ information.
 
-== Use Case ==
+= Use Case =
  
 
 = Download =
