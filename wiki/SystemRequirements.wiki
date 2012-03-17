@@ -1,5 +1,5 @@
 #summary Defines the system requirements of our system in detail.
-#labels Featured
+#labels Featured,Phase-Requirements
 
 = System Requirements =
   * [SystemRequirements#Customer_Registration Customer Registration]
