@@ -1,0 +1,47 @@
+#summary The domain model and the use-case model of ezMeal system.
+#labels Featured,Phase-Design
+
+= Domain Model and Use-Case Model =
+  * [Modeling#Introduction Introduction]
+  * [Modeling#Domain_Model Domain Model]
+  * [Modeling#Use-Case_Model Use-Case Model]
+    * [Modeling#Actors Actors]
+      * [Modeling#User User]
+      * [Modeling#Administrator Administrator]
+    * [Modeling#Use_Case Use Case]
+      * [Modeling#Login Login]
+      * [Modeling#Register Register]
+      * [Modeling#Search Search]
+      * [Modeling#SHAKE SHAKE]
+      * [Modeling#Comment Comment]
+      * [Modeling#Rate Rate]
+      * [Modeling#Upload_Photos Upload Photos]
+      * [Modeling#Modify_Personal_Taste Modify Personal Taste]
+      * [Modeling#Manage_Dish Manage Dish]
+      * [Modeling#Manage_User Manage User]
+  * [Modeling#Download Download]
+----
+
+= Introduction =
+This wiki pages contains a class diagram showing the domain model classes, their attributes and the associations or association classes that relate the classes; and a use-case diagram showing the actors and use cases and how they are related.
+
+= Domain Model =
+[https://comp3111h-2012-spring.googlecode.com/svn/images/modeling/domain-model.png]
+
+= Use-Case Model =
+[https://comp3111h-2012-spring.googlecode.com/svn/images/modeling/use-case-model.png]
+
+== Actors ==
+ezMeal has two actors: User and Administrator. The following briefly describes the main job of these two actors.
+
+=== User ===
+User is a person who 
+
+=== Administrator ===
+Administrator is a person maintains the information of the dishes and users. The administrator uses a admin website to add or delete dishes and export users’ information.
+
+== Use Case ==
+ 
+
+= Download =
+You can also download the original files of the domain model and the use-case model under the "Download" tab of ezMeal's Google Code site.
