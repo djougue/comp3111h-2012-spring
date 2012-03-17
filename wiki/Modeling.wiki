@@ -9,8 +9,8 @@
       * [Modeling#User User]
       * [Modeling#Administrator Administrator]
     * [Modeling#Use_Case Use Case]
-      * [Modeling#Login Login]
       * [Modeling#Register Register]
+      * [Modeling#Login Login]
       * [Modeling#Search Search]
       * [Modeling#SHAKE SHAKE]
       * [Modeling#Comment Comment]
@@ -31,17 +31,73 @@ This wiki pages contains a class diagram showing the domain model classes, their
 = Use-Case Model =
 [https://comp3111h-2012-spring.googlecode.com/svn/images/modeling/use-case-model.png]
 
-= Actors =
-ezMeal has two actors: User and Administrator. The following briefly describes the main job of these two actors.
+== Actors ==
+==== User ====
+A User is a registered person of ezMeal, who can login to ezMeal to browse all dishes in terms of their personal taste and the ranking of dishes, rate dishes, comment on dishes, upload related photos, and modify personal information. A User is able to use ezMeal on a mobile device with Android.
 
-== User ==
-User is a person who 
+==== Administrator ====
+An Administrator is a person who maintains the information of the dishes and users. An Administrator uses a admin website to add or delete dishes and export users’ information.
 
-== Administrator ==
-Administrator is a person maintains the information of the dishes and users. The administrator uses a admin website to add or delete dishes and export users’ information.
+== Use Case ==
+==== Register ====
+  * Participating actors: 
+  * Purpose: 
+  * Flow of events: 
+  * Nonfunctional requirements: 
 
-= Use Case =
- 
+==== Login ====
+  * Participating actors: 
+  * Purpose: 
+  * Flow of events: 
+  * Nonfunctional requirements: 
+
+==== Search ====
+  * Participating actors: 
+  * Purpose: 
+  * Flow of events: 
+  * Nonfunctional requirements: 
+
+==== SHAKE ====
+  * Participating actors: 
+  * Purpose: 
+  * Flow of events: 
+  * Nonfunctional requirements: 
+
+==== Comment ====
+  * Participating actors: 
+  * Purpose: 
+  * Flow of events: 
+  * Nonfunctional requirements: 
+
+==== Rate ====
+  * Participating actors: 
+  * Purpose: 
+  * Flow of events: 
+  * Nonfunctional requirements: 
+
+==== Upload Photos ====
+  * Participating actors: 
+  * Purpose: 
+  * Flow of events: 
+  * Nonfunctional requirements: 
+
+==== Modify Personal Taste ====
+  * Participating actors: 
+  * Purpose: 
+  * Flow of events: 
+  * Nonfunctional requirements: 
+
+==== Manage User ====
+  * Participating actors: 
+  * Purpose: 
+  * Flow of events: 
+  * Nonfunctional requirements: 
+
+==== Manage Dish ====
+  * Participating actors: 
+  * Purpose: 
+  * Flow of events: 
+  * Nonfunctional requirements: 
 
 = Download =
 You can also download the original files of the domain model and the use-case model under the "Download" tab of ezMeal's Google Code site.
