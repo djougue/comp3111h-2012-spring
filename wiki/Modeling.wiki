@@ -1,7 +1,7 @@
 #summary The domain model and the use-case model of ezMeal system.
 #labels Featured,Phase-Design
 
-= Domain Model and Use-Case Model =
+= Domain and Use-Case Model =
   * [Modeling#Introduction Introduction]
   * [Modeling#Domain_Model Domain Model]
   * [Modeling#Use-Case_Model Use-Case Model]
