@@ -131,22 +131,40 @@ An Administrator is a person who maintains the information of the dishes and use
     # Uploaded photos will appear in Gallery page.
 
 ==== Modify Personal Taste ====
-  * Participating actors: 
-  * Purpose: 
+  * Participating actors: Initiated by User.
+  * Purpose: Enable users to edit their personal taste after registering and enable searching by tastes as well as SHAKE function.
   * Flow of events: 
+    # The User modifies their personal taste.
+    #The request is sent to the system and the information is updated.
+    # The User receive acknowledgement of successful modification.
   * Nonfunctional requirements: 
+    # The personal taste setting is shown in _Personal Taste_ Page.
+    # The User should see the same information on different device.
+    # The User can modify their personal tastes infinite number of times.
 
 ==== Manage User ====
-  * Participating actors: 
-  * Purpose: 
+  * Participating actors: Initiated by Administrator.
+  * Purpose: Administrator takes the responsibility to keep the dish database up to date.
   * Flow of events: 
+    # The Administrator send update dishes request.
+    # The request is sent to the system.
+    # The Administrator receive acknowledgement once the system is updated.
   * Nonfunctional requirements: 
+    # The Administrator adds new dishes or deletes canceled dishes from time to time to keep dish information up to date.
+    # The User shall not have the direct access to manage the dish information.
+    # The Administrator can modify the default dish photo from the gallery in this process.
 
 ==== Manage Dish ====
-  * Participating actors: 
-  * Purpose: 
-  * Flow of events: 
+  * Participating actors: Initiated by Administrator.
+  * Purpose: Enable the Administrator to manage the users account.
+  * Flow of events:
+    # The Administrator modify the user account.
+    # The request is sent to the system.
+    # The Administrator receive acknowledgement upon user account update.
   * Nonfunctional requirements: 
+    # The Administrator has access to user’s account information.
+    # The Administrator should delete the “zombie fan” or fake users.
+    # The User shall not have the access to alter other user account.
 
 = Download =
 You can also download the original files of the domain model and the use-case model under the "Download" tab of ezMeal's Google Code site.
