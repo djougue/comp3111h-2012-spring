@@ -40,46 +40,95 @@ An Administrator is a person who maintains the information of the dishes and use
 
 == Use Case ==
 ==== Register ====
-  * Participating actors: 
-  * Purpose: 
+  * Participating actors: Initiated by User.
+  * Purpose: Enable users' information to be recorded in ezMeal's database
   * Flow of events: 
+    # A user submits ITSC account and ezMeal password.
+    # The system checks the correctness of the user information.
+    # The registration information is sent to the server.
+    # An aunthentication/activation email is sent to the user.
+    # The user clicks on the randomly generated link included in the email to activate his/her account.
+    # The use is successfully registered.
   * Nonfunctional requirements: 
+    # No space is allowed in the password.
+    # After the submission of the user's information, the user will be put in to the temporary user table in the database.
 
 ==== Login ====
-  * Participating actors: 
-  * Purpose: 
+  * Participating actors: Initiated by User.
+  * Purpose: Enable the user to comment on dishes, upload photos, and browse dishes according to his/her personal taste.
   * Flow of events: 
+    # A user enters his/her ezMeal user name (ITSC account) and password.
+    # The system checks the correctness of the format of the user's input.
+    # The login information is sent to the server.
+    # The server send the login status (successful of failed) to the client).
+    # Go to the main page if login is successful.
   * Nonfunctional requirements: 
+    # 
 
 ==== Search ====
-  * Participating actors: 
-  * Purpose: 
+  * Participating actors: Initiated by User.
+  * Purpose: The use case enables a user to browse dishes with some customized limitations.
   * Flow of events: 
+    # The User activates the “search” page in his/her terminal.
+    # The User inputs some conditions for the dishes he/she wants.
+    # The User receives the search result.
   * Nonfunctional requirements: 
+    # The allowed filters include dish name, favor, canteen, price, available time and rating.
+    # The results of browsing or filtering should be displayed in a tabular format showing the dish thumbnail, if any, name, price, canteen and available time.
+    # It should be possible to order the dishes by price and group by canteen or available time.
+    # From this display of dishes it should be possible to go directly to a dish’s web page.
 
 ==== SHAKE ====
-  * Participating actors: 
-  * Purpose: 
+  * Participating actors: Initiated by User.
+  * Purpose: When a user want the system to recommend a dish to him/her, SHAKE will choose a dish randomly for the user.
   * Flow of events: 
-  * Nonfunctional requirements: 
+    # The User activates the “SHAKE” page in his/her terminal.
+    # The User specifies the a canteen.
+    # The User receives the random-picked-up dish in the menu of the canteen.
+  * Nonfunctional requirements:
+    # The chosen dish should be available in current time slot.
+    # The name and a picture of the dish should appears in the page.
+    # For registered user, the result should be related to their taste preference.
 
 ==== Comment ====
-  * Participating actors: 
-  * Purpose: 
+  * Participating actors: Initiated by User.
+  * Purpose: User can write comments on the dishes.
   * Flow of events: 
+    # The User writes comments in the dialog.
+    # The User submits comments.
+    # The User receives acknowledge upon successful commenting.
   * Nonfunctional requirements: 
+    # The comment dialog shall appear at the bottom of the detailed page
+    # User can comments on the same dish for several times
+    # One user can comment on several different dishes.
 
 ==== Rate ====
-  * Participating actors: 
-  * Purpose: 
+  * Participating actors: Initiated by User.
+  * Purpose: This use case allow users to rate a dish and enable searching by rating.
   * Flow of events: 
+    # The User rates the dish.
+    # The rate is sent to the system.
+    # The User is acknowledged once rated.
   * Nonfunctional requirements: 
+    # Rating is in the form of stars.
+    # User give 1-5 stars for a dish and the system calculates the total average rating
+    # The rating stars should appear above the comments dialog in the detailed page.
+    # The default stars before use rating shall be the average rating.
+    # After rating there shall be a small word indicating that the user has already rated the dish.
+    # User can only rate a dish once but could modify their rating.
 
 ==== Upload Photos ====
-  * Participating actors: 
-  * Purpose: 
+  * Participating actors: Initiated by User.
+  * Purpose: User can upload their photos of dishes.
   * Flow of events: 
+    # The User upload the desired photo.
+    # The photo is submitted to the server system.
+    # The User receive acknowledge upon successful upload.
   * Nonfunctional requirements: 
+    # The UploadPhoto button is in the Detailed page.
+    # User can upload any numbers of photos of any number of dishes.
+    # Uploaded photos should within some certain size.
+    # Uploaded photos will appear in Gallery page.
 
 ==== Modify Personal Taste ====
   * Participating actors: 
