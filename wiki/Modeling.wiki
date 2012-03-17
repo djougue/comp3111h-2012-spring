@@ -143,7 +143,7 @@ An Administrator is a person who maintains the information of the dishes and use
     # The User should see the same information on different device.
     # The User can modify their personal tastes infinite number of times.
 
-==== Manage User ====
+==== Manage Dish ====
   * Participating actors: Initiated by Administrator.
   * Purpose: Administrator takes the responsibility to keep the dish database up to date.
   * Flow of events: 
@@ -155,7 +155,7 @@ An Administrator is a person who maintains the information of the dishes and use
     # The User shall not have the direct access to manage the dish information.
     # The Administrator can modify the default dish photo from the gallery in this process.
 
-==== Manage Dish ====
+==== Manage User ====
   * Participating actors: Initiated by Administrator.
   * Purpose: Enable the Administrator to manage the users account.
   * Flow of events:
