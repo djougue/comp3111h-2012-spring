@@ -169,3 +169,7 @@ An Administrator is a person who maintains the information of the dishes and use
 
 = Download =
 You can also download the original files of the domain model and the use-case model under the "Download" tab of ezMeal's Google Code site.
+
+Quick links to the download page:
+  * [http://code.google.com/p/comp3111h-2012-spring/downloads/detail?name=domain-model.emx&can=2&q= Domain model]
+  * [http://code.google.com/p/comp3111h-2012-spring/downloads/detail?name=use-case-model.emx&can=2&q= Use-case model]
