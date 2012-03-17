@@ -17,8 +17,8 @@
       * [Modeling#Rate Rate]
       * [Modeling#Upload_Photos Upload Photos]
       * [Modeling#Modify_Personal_Taste Modify Personal Taste]
-      * [Modeling#Manage_Dish Manage Dish]
       * [Modeling#Manage_User Manage User]
+      * [Modeling#Manage_Dish Manage Dish]
   * [Modeling#Download Download]
 ----
 
@@ -143,18 +143,6 @@ An Administrator is a person who maintains the information of the dishes and use
     # The User should see the same information on different device.
     # The User can modify their personal tastes infinite number of times.
 
-==== Manage Dish ====
-  * Participating actors: Initiated by Administrator.
-  * Purpose: Administrator takes the responsibility to keep the dish database up to date.
-  * Flow of events: 
-    # The Administrator send update dishes request.
-    # The request is sent to the system.
-    # The Administrator receive acknowledgement once the system is updated.
-  * Nonfunctional requirements: 
-    # The Administrator adds new dishes or deletes canceled dishes from time to time to keep dish information up to date.
-    # The User shall not have the direct access to manage the dish information.
-    # The Administrator can modify the default dish photo from the gallery in this process.
-
 ==== Manage User ====
   * Participating actors: Initiated by Administrator.
   * Purpose: Enable the Administrator to manage the users account.
@@ -166,6 +154,18 @@ An Administrator is a person who maintains the information of the dishes and use
     # The Administrator has access to user’s account information.
     # The Administrator should delete the “zombie fan” or fake users.
     # The User shall not have the access to alter other user account.
+
+==== Manage Dish ====
+  * Participating actors: Initiated by Administrator.
+  * Purpose: Administrator takes the responsibility to keep the dish database up to date.
+  * Flow of events: 
+    # The Administrator send update dishes request.
+    # The request is sent to the system.
+    # The Administrator receive acknowledgement once the system is updated.
+  * Nonfunctional requirements: 
+    # The Administrator adds new dishes or deletes canceled dishes from time to time to keep dish information up to date.
+    # The User shall not have the direct access to manage the dish information.
+    # The Administrator can modify the default dish photo from the gallery in this process.
 
 = Download =
 You can also download the original files of the domain model and the use-case model under the "Download" tab of ezMeal's Google Code site.
