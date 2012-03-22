@@ -1,14 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/white_bg"
+    android:orientation="vertical" >
+    
+    <!-- Page Title -->
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp">
+        
+        <!-- Back Button -->
+        <Button
+            android:id="@+id/buttonSettingsBack"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="@string/buttonBack" />
+        
+        <!-- Settings Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/buttonSettingsBack"
+            android:layout_centerHorizontal="true"
+            android:text="@string/labelSettings"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+        
+    </RelativeLayout>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:paddingLeft="32dp"
-    android:paddingRight="32dp"
-    android:gravity="center"
-    android:background="@drawable/white_bg">
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp">
+
+        <!-- User Name -->
+        <TextView
+            android:id="@+id/labelSettingsUserName"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/labelUserName"
+            android:textColor="#000"
+            android:textStyle="bold" />
+        <EditText
+            android:id="@+id/editTextSettingsUserName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/labelSettingsUserName"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/labelSettingsUserName"
+            android:background="@android:drawable/editbox_background"
+            android:editable="false"
+            android:inputType="none"
+            android:singleLine="true"
+            android:textColor="#aaa" >
+        </EditText>
+
+        <!-- Nickname -->
+        <TextView
+            android:id="@+id/labelSettingsNickName"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editTextSettingsUserName"
+            android:layout_marginTop="30dp"
+            android:text="@string/labelNickName"
+            android:textColor="#000"
+            android:textStyle="bold" />
+        <EditText
+            android:id="@+id/editTextSettingsNickName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/labelSettingsNickName"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/labelSettingsNickName"
+            android:background="@android:drawable/editbox_background"
+            android:inputType="text"
+            android:singleLine="true" />
+
+        <!-- Personal Taste -->
+        <TextView
+            android:id="@+id/labelSettingsPersonalTaste"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editTextSettingsNickName"
+            android:layout_marginTop="80dp"
+            android:text="@string/labelPersonalTaste"
+            android:textColor="#000"
+            android:textStyle="bold" />
+        <CheckBox
+            android:id="@+id/checkBoxSettingsSpicy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/labelSettingsPersonalTaste"
+            android:layout_below="@+id/labelSettingsPersonalTaste"
+            android:layout_marginTop="3dp"
+            android:text="@string/labelPreferSpicy" />
+        <CheckBox
+            android:id="@+id/checkBoxSettingsMeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/checkBoxSettingsSpicy"
+            android:layout_below="@+id/checkBoxSettingsSpicy"
+            android:text="@string/labelPreferMeat" />
+        <CheckBox
+            android:id="@+id/checkBoxSettingsVege"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/checkBoxSettingsMeat"
+            android:layout_below="@+id/checkBoxSettingsMeat"
+            android:text="@string/labelPreferVege" />
+
+        <!-- Buttons -->
+        <Button
+            android:id="@+id/buttonSettingsOk"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/checkBoxSettingsVege"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/buttonOk" />
+        <Button
+            android:id="@+id/buttonSettingsModifyPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/buttonSettingsOk"
+            android:layout_toLeftOf="@id/buttonSettingsOk"
+            android:text="@string/buttonModifyPassword" />
+    </RelativeLayout>
     
-    <!-- User Name -->
-    
-    
-</RelativeLayout>
+</LinearLayout>

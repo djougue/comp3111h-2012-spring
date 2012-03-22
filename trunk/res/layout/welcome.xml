@@ -15,12 +15,20 @@
         android:layout_height="wrap_content"/>
     
     <!-- Login Result -->
+    <ProgressBar
+        android:id="@+id/progressBarLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@android:style/Widget.ProgressBar.Small"
+        android:visibility="invisible"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="5dp" />
     <TextView
         android:id="@+id/labelLoginResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:paddingTop="18dp">
+        android:layout_gravity="center_horizontal">
     </TextView>
     
     <!-- User Name -->
@@ -42,6 +50,7 @@
         </TextView>
         <EditText
             android:id="@+id/editTextUserName"
+            android:inputType="text"
             android:hint="@string/hintUserName"
             android:singleLine="true"
             android:layout_width="150dp"
