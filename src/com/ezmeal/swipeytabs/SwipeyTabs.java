@@ -15,7 +15,6 @@
 package com.ezmeal.swipeytabs;
 
 import com.ezmeal.main.R;
-import com.ezmeal.main.R.styleable;
 
 import android.content.Context;
 import android.content.res.TypedArray;

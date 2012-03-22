@@ -32,6 +32,8 @@ public class RegisterActivity extends Activity implements OnClickListener {
 	
 	//messages for result
 	private String EMPTY_USERNAME      = "Your ITSC account is required.";
+	private String EMPTY_PASSWD        = "Password is required.";
+	private String EMPTY_NICKNAME      = "Nick name is required.";
 	private String INVALID_ITSC        = "The ITSC is invalid.";
 	private String SHORT_PASSWD        = "The length of password should be no less than 6 characters.";
 	private String LONG_PASSWD         = "The length of password should be no more than 20 characters.";
@@ -54,10 +56,21 @@ public class RegisterActivity extends Activity implements OnClickListener {
     /**
      * Check if the user input is valid.
      */
-    private boolean checkInput(String uname, String passwd, String confPasswd) {
-    	//check if the username is empty
+    private boolean checkInput(String uname, String passwd,String confPasswd,
+    		String nname) {
+    	//check if the username field is empty
     	if (uname.length() == 0) {
     		resultText.setText(EMPTY_USERNAME);
+    		return false;
+    	}
+    	//check if the password field is empty
+    	else if (passwd.length() == 0) {
+    		resultText.setText(EMPTY_PASSWD);
+    		return false;
+    	}
+    	//check if the nick name field is empty
+    	else if (nname.length() == 0) {
+    		resultText.setText(EMPTY_NICKNAME);
     		return false;
     	}
     	//check if the username contains any space(s)
@@ -102,7 +115,10 @@ public class RegisterActivity extends Activity implements OnClickListener {
     	EditText cPwd = (EditText) findViewById(R.id.editTextRegConfirmPassword);
     	String confirmedPassword = cPwd.getText().toString();
     	
-    	if (checkInput(username, password, confirmedPassword)) {
+    	EditText nname = (EditText) findViewById(R.id.editTextRegNickName);
+    	String nickname = nname.getText().toString();
+    	
+    	if (checkInput(username, password, confirmedPassword, nickname)) {
     		//TODO: Post data to the server
     		//Finish the activity, and go back to the welcome page.
     		finish();
