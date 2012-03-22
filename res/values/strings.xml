@@ -5,9 +5,25 @@
     <string name="buttonShake">SHAKE</string>
     <string name="buttonMyTaste">My Taste</string>
     <string name="buttonQuit">Quit</string>
-    <string name="userNameHint">Your ITSC</string>
+    <string name="hintUserName">Your ITSC</string>
     <string name="buttonLogin">Login</string>
     <string name="labelUserName">User Name</string>
     <string name="labelPassword">Password</string>
-    <string name="buttonSignUp">Sign Up</string>
+    <string name="buttonRegister">Sign Up</string>
+    <string name="labelSQMail">Your HKUST Email (SQmail) Account</string>
+    <string name="labelMailAddrSuffix"> \@ ust.hk</string>
+    <string name="labelUserNameRemarks">An authentication email will be sent to your SQmail inbox. You need to finish the activation process. After a successful registration, you are able to login to ezMeal using your ITSC account.</string>
+    <string name="labelConfirmPassword">Confirm Password</string>
+    <string name="buttonSubmit">Submit</string>
+    <string name="hintPassword">6&#8211;20 chars, no space</string>
+    <string name="buttonCancel">Cancel</string>
+    <string name="labelNickName">Nickname</string>
+    <string name="labelPersonalTaste">Personal Taste</string>
+    <string name="labelPreferSpicy">I prefer spicy food.</string>
+    <string name="labelPreferMeat">I prefer meat.</string>
+    <string name="labelPreferVege">I prefer vegetables.</string>
+    <string name="buttonOk">OK</string>
+    <string name="buttonModifyPassword">Modify Password</string>
+    <string name="buttonBack">Back</string>
+    <string name="labelSettings">Settings</string>
 </resources>

@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     android:paddingLeft="32dp"
     android:paddingRight="32dp"
-    android:gravity="center"
+    android:gravity="center_vertical"
     android:background="@drawable/orange_bg">
     
     <!-- User Name (SQmail) -->
@@ -18,6 +18,7 @@
         android:text="@string/labelSQMail"/>
     <EditText
         android:id="@+id/editTextRegUserName"
+        android:inputType="text"
         android:hint="@string/hintUserName"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
@@ -51,7 +52,7 @@
         android:textColor="#fff"
         android:textStyle="bold"
         android:layout_below="@id/labelUserNameRemarks"
-        android:paddingTop="20dp"
+        android:paddingTop="15dp"
         android:text="@string/labelPassword"/>
     <EditText
         android:id="@+id/editTextRegPassword"
@@ -70,8 +71,8 @@
         android:textColor="#fff"
         android:textStyle="bold"
         android:layout_below="@id/editTextRegPassword"
-        android:paddingTop="15dp"
-        android:text="@string/labelRegConfirmPassword"/>
+        android:paddingTop="10dp"
+        android:text="@string/labelConfirmPassword"/>
     <EditText
         android:id="@+id/editTextRegConfirmPassword"
         android:inputType="textPassword"
@@ -80,12 +81,31 @@
         android:background="@android:drawable/editbox_background"
         android:layout_below="@id/labelRegConfirmPassword"/>
     
+    <!-- Nick Name -->
+    <TextView
+        android:id="@+id/labelRegNickName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:layout_below="@id/editTextRegConfirmPassword"
+        android:paddingTop="10dp"
+        android:text="@string/labelNickName"/>
+    <EditText
+        android:id="@+id/editTextRegNickName"
+        android:inputType="text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:background="@android:drawable/editbox_background"
+        android:layout_below="@id/labelRegNickName"/>
+    
     <!-- Result of Registration -->
     <TextView
         android:id="@+id/labelRegResult"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
-        android:layout_below="@id/editTextRegConfirmPassword"
+        android:layout_below="@id/editTextRegNickName"
         android:paddingTop="7dp"
         android:layout_centerHorizontal="true"
         android:textColor="#f00"/>
