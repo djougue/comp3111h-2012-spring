@@ -33,7 +33,6 @@ import com.ezmeal.activity.MyTasteActivity;
 import com.ezmeal.activity.QuitActivity;
 import com.ezmeal.activity.SettingsActivity;
 import com.ezmeal.activity.ShakeActivity;
-import com.ezmeal.main.R;
 import com.ezmeal.swipeytabs.SwipeyTabFragment;
 import com.ezmeal.swipeytabs.SwipeyTabs;
 import com.ezmeal.swipeytabs.SwipeyTabsAdapter;
@@ -53,11 +52,11 @@ public class MainActivity extends FragmentActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_swipeytab);
+		setContentView(com.ezmeal.main.R.layout.activity_swipeytab);
 
-		mTabs = (SwipeyTabs) findViewById(R.id.swipeytabs);
+		mTabs = (SwipeyTabs) findViewById(com.ezmeal.main.R.id.swipeytabs);
 
-		mViewPager = (ViewPager) findViewById(R.id.viewpager);
+		mViewPager = (ViewPager) findViewById(com.ezmeal.main.R.id.viewpager);
 
 		SwipeyTabsPagerAdapter adapter = new SwipeyTabsPagerAdapter(this,
 				getSupportFragmentManager());
@@ -73,7 +72,7 @@ public class MainActivity extends FragmentActivity {
 		 * Button activities
 		 */
 		/* Settings button */
-		Button settingsBt = (Button) findViewById(R.id.buttonSettings);
+		Button settingsBt = (Button) findViewById(com.ezmeal.main.R.id.buttonSettings);
 		settingsBt.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent settingsBtIntent = new Intent(view.getContext(), SettingsActivity.class);
@@ -82,7 +81,7 @@ public class MainActivity extends FragmentActivity {
 		});
 		
 		/* SHAKE button */
-		Button shakeBt = (Button) findViewById(R.id.buttonShake);
+		Button shakeBt = (Button) findViewById(com.ezmeal.main.R.id.buttonShake);
 		shakeBt.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent shakeBtIntent = new Intent(view.getContext(), ShakeActivity.class);
@@ -91,7 +90,7 @@ public class MainActivity extends FragmentActivity {
 		});
 		
 		/* My Taste button */
-		Button myTasteBtn = (Button) findViewById(R.id.buttonMyTaste);
+		Button myTasteBtn = (Button) findViewById(com.ezmeal.main.R.id.buttonMyTaste);
 		myTasteBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent myTasteBtnIntent = new Intent(view.getContext(), MyTasteActivity.class);
@@ -100,7 +99,7 @@ public class MainActivity extends FragmentActivity {
 		});
 		
 		/* Quit button */
-		Button quitBt = (Button) findViewById(R.id.buttonQuit);
+		Button quitBt = (Button) findViewById(com.ezmeal.main.R.id.buttonQuit);
 		quitBt.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent quitBtIntent = new Intent(view.getContext(), QuitActivity.class);
@@ -141,7 +140,7 @@ public class MainActivity extends FragmentActivity {
 
 		public TextView getTab(final int position, SwipeyTabs root) {
 			TextView view = (TextView) LayoutInflater.from(mContext).inflate(
-					R.layout.swipey_tab_indicator, root, false);
+					com.ezmeal.main.R.layout.swipey_tab_indicator, root, false);
 			view.setText(TITLES[position]);
 			view.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
