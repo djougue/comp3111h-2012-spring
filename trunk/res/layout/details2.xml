@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content">
+	    <FrameLayout 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        >
+	        <ImageView 
+	            android:layout_width="100dip"
+		        android:layout_height="100dip"	            
+	            android:clickable="true"
+	            android:contentDescription="pic"
+	            android:src="@drawable/fm_png2"/>
+	        <ImageView 
+	            android:layout_width="30dip"
+		        android:layout_height="30dip"
+	            android:clickable="true"
+	            android:contentDescription="cancel"
+	            android:src="@drawable/cancel"/>
+	   	</FrameLayout>
+	    <LinearLayout 
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        >
+	        <TextView 
+	            android:id="@+id/textDishNameInDetail"
+			  	android:layout_width="fill_parent"
+				android:layout_height="wrap_content"	            
+	            android:layout_gravity="top"
+	            android:textSize="30dip"
+	            android:layout_marginLeft="10dip"
+	            android:layout_marginTop="10dip"
+	            android:text="叉烧饭"/>
+	            "
+	    </LinearLayout>
+	</LinearLayout>
+	<RatingBar
+	    android:id="@+id/ratingBar1"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" 
+	    style="?android:attr/ratingBarStyleIndicator"/>
+
+</LinearLayout>
