@@ -12,19 +12,23 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.net.ParseException;
 import android.util.Log;
-import android.widget.Toast;
 
 public class Communication_API {
 	static JSONArray jArray;
 	static String result = null;
 	static InputStream is = null;
 	static StringBuilder sb=null;
+	static int timeoutConnection = 3000;
+	static int timeoutSocket = 5000;
+	
 	
 	public void fetch_all_user_information()
 	{
@@ -35,7 +39,10 @@ public class Communication_API {
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		//http post
 		try{
-		     HttpClient httpclient = new DefaultHttpClient();
+		     HttpParams httpParameters = new BasicHttpParams();
+			 HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+			 HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+			 HttpClient httpclient = new DefaultHttpClient(httpParameters);
 		     HttpPost httppost = new HttpPost("http://143.89.220.19/COMP3111H/"+cmd);
 		     httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 		     HttpResponse response = httpclient.execute(httppost);
@@ -99,14 +106,21 @@ public class Communication_API {
 		*/	
 	}
 	
-	public static boolean check_password(String name, String password)
+	public static int check_password(String name, String password)
 	{
-		send_cmd("check_password.php?name="+name+"&password="+password);
+		//add by Tong
+		result = null;
+		
+		send_cmd("check_password.php?name="+name.trim()+"%26password="+password.trim());
 		try
-		{			  
-			  jArray = new JSONArray(result);
-			  if (jArray.length()>0)
-				 return true;	      
+		{
+			  if(result != null){
+				  jArray = new JSONArray(result);
+				  if (jArray.length()>0)
+				 return 1;	      
+			  }
+			  else
+				  return -1;
 		}
 		catch(JSONException e1)
 		{
@@ -117,6 +131,6 @@ public class Communication_API {
 			e1.printStackTrace();
 		}
 			
-		return false;
+		return 0;
 	}
 }
