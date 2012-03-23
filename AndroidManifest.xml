@@ -47,6 +47,11 @@
             android:name="com.ezmeal.activity.RegisterActivity"
             android:label="@string/app_name" >
         </activity>
+        
+        <activity
+            android:name="com.ezmeal.activity.DetailActivity"
+            android:label="@string/app_name" >
+        </activity>   
     
     </application>
 </manifest>
