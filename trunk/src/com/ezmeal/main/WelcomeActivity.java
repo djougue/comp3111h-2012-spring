@@ -39,13 +39,15 @@ public class WelcomeActivity extends Activity implements OnClickListener {
 	private ProgressBar progressBar;
 	private Handler refreshHandler = new Handler();
 	Thread postDataThread;
-	public static boolean isLoginSucc;
+	Thread splashThread;
+	public static int isLoginSucc;
 	
 	//constant strings
 	private String INVALID_INPUT = "Invalid user name or password!";
 	private String LOADING       = "Loading...";
 	private String BLANK_ERROR   = "Both user name and password are required.";
 	private String NETWORK_ERROR = "No network connection.";
+	private String TIME_OUT = "The server is not available now, please try later. ";
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,7 +70,7 @@ public class WelcomeActivity extends Activity implements OnClickListener {
       
         /*
         //Stay on the welcome page for 5 seconds
-        Thread splashThread = new Thread() {
+        splashThread = new Thread() {
         	@Override
         	public void run() {
         		//display the welcome image for seconds
@@ -92,7 +94,7 @@ public class WelcomeActivity extends Activity implements OnClickListener {
         		}
         	}
         };
-        splashThread.start();
+//        splashThread.start();
         */
     }
 
@@ -167,8 +169,9 @@ public class WelcomeActivity extends Activity implements OnClickListener {
     	    			//Refresh the data of this app
     	    			refreshHandler.post(new Runnable() {
     	    				public void run() {
-    	    		    		if (isLoginSucc) {
-    	    		    			((UserApp) thisActivity.getApplication()).setUserName(username);
+    	    		    		if (isLoginSucc == 1) {
+//    	    		    		if (true) {	  
+    	    					((UserApp) thisActivity.getApplication()).setUserName(username);
     	    		    			((UserApp) thisActivity.getApplication()).setPassword(password);
     	    		    			
     	    		    			//start the main activity
@@ -179,9 +182,26 @@ public class WelcomeActivity extends Activity implements OnClickListener {
     	    		    			
     	    		    			//finish the welcome activity
     	    		    			finish();
-    	    		    		} else {
+    	    		    		} 
+    	    		    		//return is 0 means wrong password
+    	    		    		else if(isLoginSucc == 0) {
     	    		    			resultText.setTextColor(0xffff0000);
     	    		    			resultText.setText(INVALID_INPUT);
+    	    		    		}
+    	    		    		//return is -1, means timeout
+    	    		    		else{
+    	    		    			resultText.setTextColor(0xffff0000);
+    	    		    			resultText.setText(TIME_OUT);	
+    	    		    			//*******this part only for debug*****************
+    	    		    			//start the main activity
+    	    		    			Intent intent = new Intent();
+    	    		    			intent.setClassName("com.ezmeal.main",
+    	    		    					"com.ezmeal.main.MainActivity");
+    	    		    			startActivity(intent);
+    	    		    			
+    	    		    			//finish the welcome activity
+    	    		    			finish();
+    	    		    			//******************************************
     	    		    		}
     	    		    		progressBar.setVisibility(View.INVISIBLE);
     	    				}
