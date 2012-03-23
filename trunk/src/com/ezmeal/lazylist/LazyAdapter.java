@@ -3,17 +3,17 @@ package com.ezmeal.lazylist;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class LazyAdapter extends BaseAdapter {
-    
-    private Activity activity;
+public class LazyAdapter extends BaseAdapter{    
+	private Activity activity;
     private String[] data;
     private static LayoutInflater inflater=null;
     public ImageLoader imageLoader; 
@@ -54,7 +54,10 @@ public class LazyAdapter extends BaseAdapter {
             public void onClick(View arg0) {
     			Intent intent = new Intent(activity.getApplicationContext(),
     					com.ezmeal.activity.DetailActivity.class);
-    			intent.putExtra("value", position);
+    			Bundle dishInfo = new Bundle();
+    			dishInfo.putInt("name", position);
+    			dishInfo.putString("pic", data[position]);
+    			intent.putExtras(dishInfo);
     			activity.startActivity(intent);
             }        	
         };

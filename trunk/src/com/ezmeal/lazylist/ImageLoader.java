@@ -20,9 +20,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 
-public class ImageLoader {
-    
-    MemoryCache memoryCache=new MemoryCache();
+public class ImageLoader{
+	MemoryCache memoryCache=new MemoryCache();
     FileCache fileCache;
     private Map<ImageView, String> imageViews=Collections.synchronizedMap(new WeakHashMap<ImageView, String>());
     ExecutorService executorService; 
@@ -42,6 +41,17 @@ public class ImageLoader {
         else
         {
             queuePhoto(url, imageView);
+            imageView.setImageResource(stub_id);
+        }
+    }
+    
+    public void setImage(String url, ImageView imageView)
+    {
+        Bitmap bitmap=memoryCache.get(url);
+        if(bitmap!=null)
+            imageView.setImageBitmap(bitmap);
+        else
+        {
             imageView.setImageResource(stub_id);
         }
     }
