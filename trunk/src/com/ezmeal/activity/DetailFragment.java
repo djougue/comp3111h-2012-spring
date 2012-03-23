@@ -26,12 +26,13 @@ public class DetailFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.details, container, false);
+		View view = inflater.inflate(R.layout.details2, container, false);
 		return view;
 	}
-
+/*
 	public void setText(String item) {
-		TextView view = (TextView) getView().findViewById(R.id.detailsText);
+		TextView view = (TextView) getView().findViewById(R.id.textDishNameInDetail);
 		view.setText(item);
 	}
+	*/
 }
