@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:background="@drawable/orange_bg"
+    android:orientation="vertical" >
+    
+    <!-- Page Header -->
+
+    <include
+        android:id="@+id/include1"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        layout="@layout/header" />
+
+    <!-- Main Content -->
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center" >
+
+        <!-- Personal Taste -->
+        <TextView
+            android:id="@+id/labelMyTastePersonalTaste"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/labelPersonalTaste"
+            android:textColor="#000"
+            android:textStyle="bold" />
+
+        <CheckBox
+            android:id="@+id/checkBoxMyTasteSpicy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/labelMyTastePersonalTaste"
+            android:layout_below="@+id/labelMyTastePersonalTaste"
+            android:layout_marginTop="3dp"
+            android:text="@string/labelPreferSpicy" />
+
+        <CheckBox
+            android:id="@+id/checkBoxMyTasteMeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/checkBoxMyTasteSpicy"
+            android:layout_below="@+id/checkBoxMyTasteSpicy"
+            android:text="@string/labelPreferMeat" />
+
+        <CheckBox
+            android:id="@+id/checkBoxMyTasteVege"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/checkBoxMyTasteMeat"
+            android:layout_below="@+id/checkBoxMyTasteMeat"
+            android:text="@string/labelPreferVege" />
+
+        <Button
+            android:id="@+id/buttonMyTasteSubmit"
+            android:layout_width="110dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/checkBoxMyTasteVege"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/button_submit" />
+        
+        <!-- Blacklist -->
+        <!-- TODO -->
+    </RelativeLayout>
+    
+</LinearLayout>

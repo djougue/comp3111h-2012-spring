@@ -98,18 +98,18 @@
         android:orientation="horizontal">
         <Button
             android:id="@+id/buttonLogin"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_width="110dp"
+            android:layout_height="32dp"
             android:layout_gravity="center_horizontal"
-            android:text="@string/buttonLogin">
+            android:background="@drawable/button_login">
         </Button>
         <Button
             android:id="@+id/buttonRegister"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_width="110dp"
+            android:layout_height="32dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="17dp"
-            android:text="@string/buttonRegister">
+            android:background="@drawable/button_signup">
         </Button>
     </LinearLayout>
     

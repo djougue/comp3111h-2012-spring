@@ -42,7 +42,7 @@
         android:paddingTop="5dp"
         android:textColor="#eee"
         android:layout_below="@id/editTextRegUserName"
-        android:text="@string/labelUserNameRemarks"/>
+        android:text="@string/labelUserNameRemarksTemp"/>
     
     <!-- Password -->
     <TextView
@@ -113,18 +113,18 @@
     <!-- Submit / Cancel Buttons -->
     <Button
         android:id="@+id/buttonCancelRegForm"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
+        android:layout_width="110dp"
+        android:layout_height="32dp"
         android:layout_below="@id/labelRegResult"
         android:layout_marginTop="10dp"
         android:layout_alignParentRight="true"
         android:layout_marginLeft="10dip"
-        android:text="@string/buttonCancel" />
+        android:background="@drawable/button_cancel" />
     <Button
         android:id="@+id/buttonSubmitRegForm"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
+        android:layout_width="110dp"
+        android:layout_height="32dp"
         android:layout_toLeftOf="@id/buttonCancelRegForm"
         android:layout_alignTop="@id/buttonCancelRegForm"
-        android:text="@string/buttonSubmit" />
+        android:background="@drawable/button_submit" />
 </RelativeLayout>

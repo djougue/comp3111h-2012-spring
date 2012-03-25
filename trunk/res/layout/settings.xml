@@ -1,53 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@drawable/white_bg"
+    android:layout_height="fill_parent"
+    android:background="@drawable/orange_bg"
     android:orientation="vertical" >
     
-    <!-- Page Title -->
+    <!-- Page Header -->
+    <include
+        android:id="@+id/include1"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        layout="@layout/header" />
+
+    <!-- Main Content -->
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="15dp">
-        
-        <!-- Back Button -->
-        <Button
-            android:id="@+id/buttonSettingsBack"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:text="@string/buttonBack" />
-        
-        <!-- Settings Label -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/buttonSettingsBack"
-            android:layout_centerHorizontal="true"
-            android:text="@string/labelSettings"
-            android:textColor="#000"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-        
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp">
+        android:gravity="center">
 
         <!-- User Name -->
         <TextView
             android:id="@+id/labelSettingsUserName"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:text="@string/labelUserName"
             android:textColor="#000"
             android:textStyle="bold" />
@@ -70,7 +48,7 @@
             android:id="@+id/labelSettingsNickName"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/editTextSettingsUserName"
+            android:layout_below="@id/labelSettingsUserName"
             android:layout_marginTop="30dp"
             android:text="@string/labelNickName"
             android:textColor="#000"
@@ -85,57 +63,43 @@
             android:background="@android:drawable/editbox_background"
             android:inputType="text"
             android:singleLine="true" />
-
-        <!-- Personal Taste -->
+        
+        <!-- SHAKE Settings -->
         <TextView
-            android:id="@+id/labelSettingsPersonalTaste"
+            android:id="@+id/labelSettingsShake"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/editTextSettingsNickName"
-            android:layout_marginTop="80dp"
-            android:text="@string/labelPersonalTaste"
+            android:layout_below="@id/labelSettingsNickName"
+            android:layout_marginTop="30dp"
+            android:text="@string/labelShakeSettings"
             android:textColor="#000"
             android:textStyle="bold" />
-        <CheckBox
-            android:id="@+id/checkBoxSettingsSpicy"
+        <ToggleButton
+            android:id="@+id/toggleButtonSettingsShake"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/labelSettingsPersonalTaste"
-            android:layout_below="@+id/labelSettingsPersonalTaste"
-            android:layout_marginTop="3dp"
-            android:text="@string/labelPreferSpicy" />
-        <CheckBox
-            android:id="@+id/checkBoxSettingsMeat"
+            android:layout_alignBaseline="@id/labelSettingsShake"
+            android:layout_alignParentRight="true"/>
+        <TextView
+            android:id="@+id/labelSettingsShakeRemarks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/checkBoxSettingsSpicy"
-            android:layout_below="@+id/checkBoxSettingsSpicy"
-            android:text="@string/labelPreferMeat" />
-        <CheckBox
-            android:id="@+id/checkBoxSettingsVege"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/checkBoxSettingsMeat"
-            android:layout_below="@+id/checkBoxSettingsMeat"
-            android:text="@string/labelPreferVege" />
+            android:layout_marginTop="22dp"
+            android:textColor="#eee"
+            android:layout_below="@id/labelSettingsShake"
+            android:text="@string/labelShakeRemarks"/>
 
         <!-- Buttons -->
         <Button
-            android:id="@+id/buttonSettingsOk"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/buttonSettingsSubmit"
+            android:layout_width="110dp"
+            android:layout_height="32dp"
             android:layout_alignParentRight="true"
-            android:layout_below="@id/checkBoxSettingsVege"
+            android:layout_below="@id/labelSettingsShakeRemarks"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="30dp"
-            android:text="@string/buttonOk" />
-        <Button
-            android:id="@+id/buttonSettingsModifyPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/buttonSettingsOk"
-            android:layout_toLeftOf="@id/buttonSettingsOk"
-            android:text="@string/buttonModifyPassword" />
+            android:layout_marginTop="50dp"
+            android:background="@drawable/button_submit" />
+
     </RelativeLayout>
     
 </LinearLayout>
