@@ -1,5 +1,6 @@
 package com.ezmeal.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.widget.ImageView;
@@ -13,32 +14,46 @@ public class DetailActivity extends FragmentActivity {
 
 	ShakeListener mShaker;
     public ImageLoader imageLoader; 
-
+    private Bundle the_dish;
 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.details_activity_layout);
-		Bundle extras = getIntent().getExtras();
-		if (extras != null) {
-			int integer = extras.getInt("name");
-			TextView view = (TextView) findViewById(R.id.textDishNameInDetail);
-			view.setText("This is dish "+ integer);	
-			ImageView image = (ImageView) findViewById(R.id.dishImage);
-			String pic = extras.getString("pic");
-	        imageLoader=new ImageLoader(this.getApplicationContext());
-	        imageLoader.DisplayImage(pic, image);
-		}
+		the_dish = getIntent().getExtras();
 		
 		mShaker = new ShakeListener(this);
 		
 		mShaker.setOnShakeListener(new ShakeListener.OnShakeListener() {  
 		    public void onShake() {  
-				TextView view = (TextView) findViewById(R.id.textDishNameInDetail);
-				view.setText("Shaking");
-		    }  
+	   			Intent intent = new Intent(getApplicationContext(),
+    					com.ezmeal.activity.ShakeActivity.class);
+	   			startActivity(intent);
+ 		    }  
 		});
+	}
+	
+	void setView(){
+		if (the_dish != null) {
+			String dish_name = the_dish.getString("name");
+			String dish_canteen = the_dish.getString("canteen");
+			String dish_price = the_dish.getString("price");
+			TextView name = (TextView) findViewById(R.id.textDishNameInDetail);
+			name.setText(dish_name);	
+			TextView canteen = (TextView) findViewById(R.id.textDishCanteenInDetail);
+			canteen.setText(dish_canteen);
+			TextView price = (TextView) findViewById(R.id.textDishPriceInDetail);
+			price.setText(dish_price);
+			ImageView image = (ImageView) findViewById(R.id.dishImage);
+			String pic = the_dish.getString("pic");
+	        imageLoader=new ImageLoader(this.getApplicationContext());
+	        imageLoader.DisplayImage(pic, image);
+		}
+		else{
+			TextView view = (TextView) findViewById(R.id.textDishNameInDetail);
+			view.setText("Fail");				
+		}
 	}
 
 	@Override
