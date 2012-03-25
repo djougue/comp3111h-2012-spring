@@ -133,6 +133,67 @@ public class Communication_API {
 		return 0;
 	}
 	
+	//if change setting successfully, return 1
+	//if the user_name does not exist inside the database, return -2
+	//if unknown error occurs, return -1
+	public static int change_user_setting(String name, String password, String nickname, int spicy, int vege, int meat)
+	{
+		result = null;
+		send_cmd("fetch_user_info.php?name="+name);
+		try
+		{
+			  //Check whether there exists users with such user_name
+			  if(result != null){
+				  jArray = new JSONArray(result);
+				  if (jArray.length()>0)
+					  return -2;//User with the same user_name already exists	      
+			  }
+
+		}
+		catch(JSONException e1)
+		{
+			e1.printStackTrace();
+		} 
+		catch (ParseException e1) 
+		{
+			e1.printStackTrace();
+		}
+		
+		send_cmd("change_user_setting.php?name="+name+"&password="+password+"&nickname="
+				+nickname+"&spicy="+spicy+"&vege="+vege+"&meat="+meat);
+			
+		return check_password(name, password);
+	}
+	
+	public static User get_user_info(String name, String password)
+	{
+		User user=new User();
+		send_cmd("fetch_user_info.php?name="+name);
+		try
+		{
+			jArray = new JSONArray(result);
+		    JSONObject json_data=null;
+
+            json_data = jArray.getJSONObject(0);
+            user.setUser_id(json_data.getInt("user_id"));
+            user.setUser_name(json_data.getString("user_name"));
+            user.setUser_nickname(json_data.getString("user_nickname"));
+            user.setUser_spicy((json_data.getInt("user_spicy")==1)?true:false);
+            user.setUser_vege((json_data.getInt("user_vege")==1)?true:false);
+            user.setUser_meat((json_data.getInt("user_meat")==1)?true:false);
+
+		}
+		catch(JSONException e1)
+		{
+			e1.printStackTrace();
+		} 
+		catch (ParseException e1) 
+		{
+			e1.printStackTrace();
+		}
+		      
+        return user;
+	}
 	
 	/*******************************************************************************************
 	 * 									Methods Related to Dishes
@@ -147,6 +208,33 @@ public class Communication_API {
 		     JSONObject json_data=null;
 
              json_data = jArray.getJSONObject(index);
+             dish.setDish_id(json_data.getInt("dish_id"));
+             dish.setDish_name(json_data.getString("dish_name"));
+             dish.setDish_canteen(json_data.getString("dish_canteen"));
+             dish.setDish_price(Float.valueOf(json_data.getString("dish_price")).floatValue());
+		}
+		catch(JSONException e1)
+		{
+			e1.printStackTrace();
+		} 
+		catch (ParseException e1) 
+		{
+			e1.printStackTrace();
+		}
+		return dish;
+	}
+	
+	public static Dish random_dish()
+	{
+		
+		Dish dish=new Dish();
+		send_cmd("random_dish.php");
+		try
+		{
+		     jArray = new JSONArray(result);
+		     JSONObject json_data=null;
+
+             json_data = jArray.getJSONObject(0);
              dish.setDish_id(json_data.getInt("dish_id"));
              dish.setDish_name(json_data.getString("dish_name"));
              dish.setDish_canteen(json_data.getString("dish_canteen"));
