@@ -15,23 +15,28 @@
 package com.ezmeal.activity;
 
 import com.ezmeal.main.R;
+import com.ezmeal.main.UserApp;
 import com.ezmeal.main.WelcomeActivity;
 import com.ezmeal.server.Communication_API;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.ezmeal.main.R;
-import com.ezmeal.server.Communication_API;
-
 public class RegisterActivity extends Activity implements OnClickListener {
-	private Button submitBtn, cancelBtn;
-	private TextView resultText;
+	private Button submitBtn, backBtn;
+	private TextView resultText, headerTitle;
+	private ProgressBar progressBar;
+	private Handler refreshHandler;
+	private Thread postDataThread;
+	private static int serverResp;
 	
 	//messages for result
 	private String EMPTY_USERNAME      = "Your ITSC account is required.";
@@ -42,18 +47,24 @@ public class RegisterActivity extends Activity implements OnClickListener {
 	private String LONG_PASSWD         = "The length of password should be no more than 20 characters.";
 	private String SPACE_IN_PASSWD     = "No space is allowed in password.";
 	private String INCONSISTENT_PASSWD = "The confirmed password is inconsistent.";
+	private String SPACE_IN_NICKNAME   = "No space is allowed in nickname";
 	private String EXISTED_ITSC        = "You have already signed up.";
-	private String REG_ERROR           = "Oops! Error occured to registration.";
+	private String TIMEOUT             = "Connection error. Please try again later.";
+	private String LOADING             = "Loading...";
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
+        progressBar = (ProgressBar) findViewById(R.id.progressBarRegister);
+        refreshHandler = new Handler();
         
+        headerTitle = (TextView) findViewById(R.id.labelHeader);
+        headerTitle.setText("Sign Up");
         submitBtn = (Button) findViewById(R.id.buttonSubmitRegForm);
         submitBtn.setOnClickListener(this);
-        cancelBtn = (Button) findViewById(R.id.buttonCancelRegForm);
-        cancelBtn.setOnClickListener(this);
+        backBtn = (Button) findViewById(R.id.buttonBack);
+        backBtn.setOnClickListener(this);
         resultText = (TextView) findViewById(R.id.labelRegResult);
     }
     
@@ -63,6 +74,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
     private boolean checkInput(String uname, String passwd,String confPasswd,
     		String nname) {
     	//check if the username field is empty
+    	resultText.setTextColor(0xffff0000);  //red color
     	if (uname.length() == 0) {
     		resultText.setText(EMPTY_USERNAME);
     		return false;
@@ -102,6 +114,11 @@ public class RegisterActivity extends Activity implements OnClickListener {
     		resultText.setText(INCONSISTENT_PASSWD);
     		return false;
     	}
+    	//check if the nickname contains any space(s)
+    	else if (nname.indexOf(" ") >= 0) {
+    		resultText.setText(SPACE_IN_NICKNAME);
+    		return false;
+    	}
     	return true;
     }
     
@@ -111,32 +128,57 @@ public class RegisterActivity extends Activity implements OnClickListener {
     private void postRegData() {
     	//get input
     	EditText uname = (EditText) findViewById(R.id.editTextRegUserName);
-    	String username = uname.getText().toString();
+    	final String username = uname.getText().toString();
     	
     	EditText pwd = (EditText) findViewById(R.id.editTextRegPassword);
-    	String password = pwd.getText().toString();
+    	final String password = pwd.getText().toString();
     	
     	EditText cPwd = (EditText) findViewById(R.id.editTextRegConfirmPassword);
-    	String confirmedPassword = cPwd.getText().toString();
+    	final String confirmedPassword = cPwd.getText().toString();
     	
     	EditText nname = (EditText) findViewById(R.id.editTextRegNickName);
-    	String nickname = nname.getText().toString();
+    	final String nickname = nname.getText().toString();
     	
     	if (checkInput(username, password, confirmedPassword, nickname)) {
-    		//TODO check timeout
-    		if (Communication_API.register(username, password, nickname) == 0) {
-    			resultText.setText(REG_ERROR);
-    		}
-    		finish();
+    		postDataThread = new Thread(new Runnable() {
+	    		public void run() {
+	    			RegisterActivity.serverResp =
+	    					Communication_API.register(username, password, nickname);
+	    			
+	    			//Refresh the data of this app
+	    			refreshHandler.post(new Runnable() {
+	    				public void run() {
+	    		    		if (serverResp == -1) {
+	    		    			resultText.setTextColor(0xffff0000); //red
+	    		    			resultText.setText(TIMEOUT);
+	    		    		}
+	    		    		else if (serverResp == 1) {
+	    		    			//finish the welcome activity (this)
+	    		    			finish();
+	    		    		} else {
+	    		    			resultText.setTextColor(0xffff0000); //red
+	    		    			resultText.setText(EXISTED_ITSC);
+	    		    		}
+	    		    		progressBar.setVisibility(View.GONE);
+	    				}
+	    			});
+	    		}
+	    	});
+	    	postDataThread.start();
     	}
-    	
+    	else {
+    		progressBar.setVisibility(View.GONE);
+    	}
     }
     
     public void onClick(View view) {
     	if (view == submitBtn) {
+    		resultText.setTextColor(0xffffffff); //white
+    		resultText.setText(LOADING);
+    		progressBar.setVisibility(View.VISIBLE);
     		postRegData();
     	}
-    	else if (view == cancelBtn) {
+    	else if (view == backBtn) {
     		//Finish the activity, and go back to the welcome page.
     		finish();
     	}
