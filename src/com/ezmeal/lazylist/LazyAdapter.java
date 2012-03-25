@@ -22,14 +22,14 @@ public class LazyAdapter extends BaseAdapter{
     private Float[] dishes_price;
     private static LayoutInflater inflater=null;
     public ImageLoader imageLoader; 
-    
+    /*
     public LazyAdapter(Activity a, String[] d) {
         activity = a;
         data=d;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageLoader=new ImageLoader(activity.getApplicationContext());
     }
-
+	*/
     public LazyAdapter(Activity a, Vector<Bundle>dishes) {
         activity = a;
         data = new String[dishes.size()];
@@ -68,20 +68,24 @@ public class LazyAdapter extends BaseAdapter{
         TextView text2=(TextView)vi.findViewById(com.ezmeal.main.R.id.text2);
         TextView text3=(TextView)vi.findViewById(com.ezmeal.main.R.id.text3);
         ImageView image=(ImageView)vi.findViewById(com.ezmeal.main.R.id.image);
-        /** TO BE MODIFIED **/
+        
         text1.setText("$"+Float.toString(dishes_price[position]));
         text2.setText(dishes_name[position]);
         //text2.setText(Float.toString(dishes_price[position]));
         text3.setText(dishes_canteen[position]);
-        /** END OF DEMO **/
+        
+        
         imageLoader.DisplayImage(data[position], image);
+
         OnClickListener itemListener=new OnClickListener(){
             public void onClick(View arg0) {
     			Intent intent = new Intent(activity.getApplicationContext(),
     					com.ezmeal.activity.DetailActivity.class);
     			Bundle dishInfo = new Bundle();
-    			dishInfo.putInt("name", position);
+    			dishInfo.putString("name", dishes_name[position]);
     			dishInfo.putString("pic", data[position]);
+    			dishInfo.putString("price", Float.toString(dishes_price[position]));
+    			dishInfo.putString("canteen", dishes_canteen[position]);    			
     			intent.putExtras(dishInfo);
     			activity.startActivity(intent);
             }        	
