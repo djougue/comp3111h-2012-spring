@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -15,7 +17,10 @@ import com.ezmeal.server.Communication_API;
 import com.ezmeal.server.Dish;
 import com.ezmeal.shake.ShakeListener;
 
-public class ShakeActivity extends Activity {
+public class ShakeActivity extends Activity implements OnClickListener{
+	private TextView headerTitle;
+	private Button backBtn;
+
 	private String dish_name="fail";
 	private String dish_canteen="fail";
 	private String dish_price="fail";
@@ -32,6 +37,11 @@ public class ShakeActivity extends Activity {
 		setContentView(R.layout.shake_activity_layout);
 
 		progressBar = (ProgressBar) findViewById(R.id.progressBarMenu);
+
+        headerTitle = (TextView) findViewById(R.id.labelHeader);
+        headerTitle.setText("Shake");
+        backBtn = (Button) findViewById(R.id.buttonBack);
+        backBtn.setOnClickListener(this);
 
 		
 		Button reshakeBt = (Button) findViewById(com.ezmeal.main.R.id.reshake);
@@ -107,7 +117,13 @@ public class ShakeActivity extends Activity {
     		return;
     }
 
-    
-    
-    
+    /**
+     * Click Listener
+     */
+    public void onClick(View view) {
+    	if (view == backBtn) {
+    		finish();
+    	}
+    }
+        
 }
