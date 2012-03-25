@@ -44,7 +44,7 @@ public class MenuFragment extends Fragment {
 			Bundle bundle = new Bundle();
 			bundle.putString("name", cur_dish.getDish_name());
 			bundle.putString("canteen", cur_dish.getDish_canteen());
-			//bundle.putFloat("price", cur_dish.getDish_price());
+			bundle.putFloat("price", cur_dish.getDish_price());
 			dishes.add(bundle);
 		}
 		
