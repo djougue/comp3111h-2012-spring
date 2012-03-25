@@ -16,7 +16,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:Swipeytabs="http://schemas.android.com/apk/res/com.ezmeal.main"
     android:orientation="vertical"
-    android:layout_width="fill_parent"
+    android:layout_width="wrap_content"
     android:layout_height="fill_parent"
     android:background="@drawable/orange_bg">
 
