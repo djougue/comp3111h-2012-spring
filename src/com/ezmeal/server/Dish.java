@@ -4,9 +4,18 @@ public class Dish {
 	private int dish_id;
 	private String dish_name;
 	private String dish_canteen;
+	private float dish_price;
 	
 	Dish(){
 		dish_id=0;
+	}
+	
+	public float getDish_price() {
+		return dish_price;
+	}
+
+	public void setDish_price(float dish_price) {
+		this.dish_price = dish_price;
 	}
 	
 	public int getDish_id() {

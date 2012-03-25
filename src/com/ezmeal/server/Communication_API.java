@@ -156,7 +156,7 @@ public class Communication_API {
              dish.setDish_id(json_data.getInt("dish_id"));
              dish.setDish_name(json_data.getString("dish_name"));
              dish.setDish_canteen(json_data.getString("dish_canteen"));
-
+             dish.setDish_price(Float.valueOf(json_data.getString("dish_price")).floatValue());
 		}
 		catch(JSONException e1)
 		{
