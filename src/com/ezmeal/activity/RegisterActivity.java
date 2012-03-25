@@ -16,6 +16,7 @@ package com.ezmeal.activity;
 
 import com.ezmeal.main.R;
 import com.ezmeal.main.WelcomeActivity;
+import com.ezmeal.server.Communication_API;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -121,6 +122,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
     	if (checkInput(username, password, confirmedPassword, nickname)) {
     		//TODO: Post data to the server
     		//Finish the activity, and go back to the welcome page.
+    		Communication_API.register(username, password);
     		finish();
     	}
     	
