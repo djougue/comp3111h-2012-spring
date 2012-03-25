@@ -20,5 +20,7 @@
         <attr name="bottomBarHeight" format="dimension" />
         <attr name="tabIndicatorHeight" format="dimension" />
     </declare-styleable>
-
+	<dimen name="framesize">10dip</dimen>
+	<dimen name="menusize">54dip</dimen>
+	
 </resources>
