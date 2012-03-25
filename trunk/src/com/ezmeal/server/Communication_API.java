@@ -135,7 +135,7 @@ public class Communication_API {
 		return 0;
 	}
 	
-	public int register(String name, String password)
+	public static int register(String name, String password)
 	{
 		
 		send_cmd("send_and_fetch_user.php?name="+name+"&password="+password);
@@ -143,7 +143,7 @@ public class Communication_API {
 		return check_password(name, password);
 	}
 	
-	public Dish fetch_dish(int index)
+	public static Dish fetch_dish(int index)
 	{
 		Dish dish=new Dish();
 		send_cmd("fetch_dish.php");
