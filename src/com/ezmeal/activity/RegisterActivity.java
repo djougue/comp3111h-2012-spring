@@ -14,18 +14,16 @@
 
 package com.ezmeal.activity;
 
-import com.ezmeal.main.R;
-import com.ezmeal.main.WelcomeActivity;
-import com.ezmeal.server.Communication_API;
-
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.ezmeal.main.R;
+import com.ezmeal.server.Communication_API;
 
 public class RegisterActivity extends Activity implements OnClickListener {
 	private Button submitBtn, cancelBtn;
