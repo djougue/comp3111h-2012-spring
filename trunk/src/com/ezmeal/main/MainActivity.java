@@ -102,8 +102,9 @@ public class MainActivity extends FragmentActivity {
 		Button quitBt = (Button) findViewById(com.ezmeal.main.R.id.buttonQuit);
 		quitBt.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent quitBtIntent = new Intent(view.getContext(), QuitActivity.class);
-                startActivityForResult(quitBtIntent, 0);
+            	Intent quit = new Intent(view.getContext(), QuitActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            	startActivity(quit);
+            	finish();
             }
 		});
 	}
