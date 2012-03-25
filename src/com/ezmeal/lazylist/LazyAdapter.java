@@ -69,7 +69,7 @@ public class LazyAdapter extends BaseAdapter{
         TextView text3=(TextView)vi.findViewById(com.ezmeal.main.R.id.text3);
         ImageView image=(ImageView)vi.findViewById(com.ezmeal.main.R.id.image);
         /** TO BE MODIFIED **/
-        text1.setText(Float.toString(dishes_price[position]));
+        text1.setText("$"+Float.toString(dishes_price[position]));
         text2.setText(dishes_name[position]);
         //text2.setText(Float.toString(dishes_price[position]));
         text3.setText(dishes_canteen[position]);
