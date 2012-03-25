@@ -17,6 +17,7 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.net.ParseException;
 import android.util.Log;
@@ -111,7 +112,7 @@ public class Communication_API {
 		//add by Tong
 		result = null;
 		
-		send_cmd("check_password.php?name="+name.trim()+"%26password="+password.trim());
+		send_cmd("check_password.php?name="+name.trim()+"&password="+password.trim());
 		try
 		{
 			  if(result != null){
@@ -132,5 +133,39 @@ public class Communication_API {
 		}
 			
 		return 0;
+	}
+	
+	public int register(String name, String password)
+	{
+		
+		send_cmd("send_and_fetch_user.php?name="+name+"&password="+password);
+			
+		return check_password(name, password);
+	}
+	
+	public Dish fetch_dish(int index)
+	{
+		Dish dish=new Dish();
+		send_cmd("fetch_dish.php");
+		try
+		{
+		     jArray = new JSONArray(result);
+		     JSONObject json_data=null;
+
+             json_data = jArray.getJSONObject(index);
+             dish.setDish_id(json_data.getInt("dish_id"));
+             dish.setDish_name(json_data.getString("dish_name"));
+             dish.setDish_canteen(json_data.getString("dish_canteen"));
+
+		}
+		catch(JSONException e1)
+		{
+			e1.printStackTrace();
+		} 
+		catch (ParseException e1) 
+		{
+			e1.printStackTrace();
+		}
+		return dish;
 	}
 }
