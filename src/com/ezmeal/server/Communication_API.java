@@ -121,7 +121,7 @@ public class Communication_API {
 				 return 1;	      
 			  }
 			  else
-				  return -1;
+				 return -1;
 		}
 		catch(JSONException e1)
 		{
@@ -139,7 +139,6 @@ public class Communication_API {
 	{
 		
 		send_cmd("register.php?name="+name+"&password="+password+"&nickname="+nickname);
-			
 		return check_password(name, password);
 	}
 	
