@@ -120,7 +120,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
     	if (checkInput(username, password, confirmedPassword, nickname)) {
     		//TODO: Post data to the server
     		//Finish the activity, and go back to the welcome page.
-    		Communication_API.register(username, password);
+    		Communication_API.register(username, password, nickname);
     		finish();
     	}
     	
