@@ -39,15 +39,16 @@ public class WelcomeActivity extends Activity implements OnClickListener {
 	private ProgressBar progressBar;
 	private Handler refreshHandler = new Handler();
 	Thread postDataThread;
-	Thread splashThread;
-	public static int isLoginSucc;
+	public static int serverResp;
 	
 	//constant strings
 	private String INVALID_INPUT = "Invalid user name or password!";
 	private String LOADING       = "Loading...";
 	private String BLANK_ERROR   = "Both user name and password are required.";
 	private String NETWORK_ERROR = "No network connection.";
-	private String TIME_OUT = "The server is not available now, please try later. ";
+	private String TIMEOUT       = "Connection timeout. Please try again later.";
+	private String NONE          = "";
+
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -142,6 +143,9 @@ public class WelcomeActivity extends Activity implements OnClickListener {
 	    return true;
     }
 
+    /**
+     * Click Listener
+     */
     public void onClick(View view) {
     	if (!isNetworkAvailable())
     		return;
@@ -160,18 +164,23 @@ public class WelcomeActivity extends Activity implements OnClickListener {
     	    
     	    final Activity thisActivity = this;
     	    
+    	    //Post the login info to the server. Wait for the response from the server.
+    	    //This procedure will be executed in the background.
     	    if (checkInput(username, password)) {
     	    	postDataThread = new Thread(new Runnable() {
     	    		public void run() {
-    	    			WelcomeActivity.isLoginSucc =
+    	    			WelcomeActivity.serverResp =
     	    					Communication_API.check_password(username, password);
     	    			
     	    			//Refresh the data of this app
     	    			refreshHandler.post(new Runnable() {
     	    				public void run() {
-    	    		    		if (isLoginSucc == 1) {
-//    	    		    		if (true) {	  
-    	    					((UserApp) thisActivity.getApplication()).setUserName(username);
+    	    		    		if (serverResp == -1) {
+    	    		    			resultText.setTextColor(0xffff0000); //red
+    	    		    			resultText.setText(TIMEOUT);
+    	    		    		}
+    	    		    		else if (serverResp == 1) {
+    	    		    			((UserApp) thisActivity.getApplication()).setUserName(username);
     	    		    			((UserApp) thisActivity.getApplication()).setPassword(password);
     	    		    			
     	    		    			//start the main activity
@@ -180,28 +189,11 @@ public class WelcomeActivity extends Activity implements OnClickListener {
     	    		    					"com.ezmeal.main.MainActivity");
     	    		    			startActivity(intent);
     	    		    			
-    	    		    			//finish the welcome activity
+    	    		    			//finish the welcome activity (this)
     	    		    			finish();
-    	    		    		} 
-    	    		    		//return is 0 means wrong password
-    	    		    		else if(isLoginSucc == 0) {
-    	    		    			resultText.setTextColor(0xffff0000);
+    	    		    		} else {
+    	    		    			resultText.setTextColor(0xffff0000); //red
     	    		    			resultText.setText(INVALID_INPUT);
-    	    		    		}
-    	    		    		//return is -1, means timeout
-    	    		    		else{
-    	    		    			resultText.setTextColor(0xffff0000);
-    	    		    			resultText.setText(TIME_OUT);	
-    	    		    			//*******this part only for debug*****************
-    	    		    			//start the main activity
-    	    		    			Intent intent = new Intent();
-    	    		    			intent.setClassName("com.ezmeal.main",
-    	    		    					"com.ezmeal.main.MainActivity");
-    	    		    			startActivity(intent);
-    	    		    			
-    	    		    			//finish the welcome activity
-    	    		    			finish();
-    	    		    			//******************************************
     	    		    		}
     	    		    		progressBar.setVisibility(View.INVISIBLE);
     	    				}
@@ -213,6 +205,7 @@ public class WelcomeActivity extends Activity implements OnClickListener {
     	} else if (view == regBtn) {
     		Intent intent = new Intent(view.getContext(), RegisterActivity.class);
     		startActivityForResult(intent, 0);
+    		resultText.setText(NONE);   //Clear the result text
     	}
     }
 }
