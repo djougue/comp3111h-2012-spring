@@ -41,7 +41,7 @@ public class LazyAdapter extends BaseAdapter{
         	data[i]=mStrings[i];
         	dishes_name[i]=one_dish.getString("name");
         	dishes_canteen[i]=one_dish.getString("canteen");
-        	//dishes_price[i]=one_dish.getFloat("price");
+        	dishes_price[i]=one_dish.getFloat("price");
         }
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageLoader=new ImageLoader(activity.getApplicationContext());
@@ -69,7 +69,7 @@ public class LazyAdapter extends BaseAdapter{
         TextView text3=(TextView)vi.findViewById(com.ezmeal.main.R.id.text3);
         ImageView image=(ImageView)vi.findViewById(com.ezmeal.main.R.id.image);
         /** TO BE MODIFIED **/
-        text1.setText("10.0");
+        text1.setText(Float.toString(dishes_price[position]));
         text2.setText(dishes_name[position]);
         //text2.setText(Float.toString(dishes_price[position]));
         text3.setText(dishes_canteen[position]);
