@@ -1,14 +1,17 @@
 package com.ezmeal.activity;
 
+import java.util.Vector;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.ezmeal.lazylist.LazyAdapter;
+import com.ezmeal.server.Communication_API;
+import com.ezmeal.server.Dish;
 
 public class MenuFragment extends Fragment {
 	LayoutInflater Inflater;
@@ -31,17 +34,31 @@ public class MenuFragment extends Fragment {
 		View view = inflater.inflate(com.ezmeal.main.R.layout.menu, container, false);
 		list=(ListView)view.findViewById(com.ezmeal.main.R.id.list);
 		Inflater = inflater;
-        adapter=new LazyAdapter(this.getActivity(), mStrings);
+		Vector<Bundle> dishes =new Vector<Bundle>();
+		Dish cur_dish;
+		int _index = 0;
+		while(true){
+			cur_dish = Communication_API.fetch_dish(_index);
+			if(cur_dish.getDish_id()==0) break;
+			_index++;
+			Bundle bundle = new Bundle();
+			bundle.putString("name", cur_dish.getDish_name());
+			bundle.putString("canteen", cur_dish.getDish_canteen());
+			//bundle.putFloat("price", cur_dish.getDish_price());
+			dishes.add(bundle);
+		}
+		
+        adapter=new LazyAdapter(this.getActivity(), dishes);
         list.setAdapter(adapter);
 		return view;
 	}
-	
+	/*
     public OnClickListener listener=new OnClickListener(){
         public void onClick(View arg0) {
             adapter.imageLoader.clearCache();
             adapter.notifyDataSetChanged();
         }
-    };
+    };*/
     
     private String[] mStrings={
             "http://www.ezmealsonline.com/wp-content/uploads/2010/02/pork_milanese_dinner-150x150.jpg",
