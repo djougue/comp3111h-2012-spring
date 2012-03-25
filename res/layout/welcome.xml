@@ -89,6 +89,17 @@
         </EditText>
     </LinearLayout>
     
+    <!-- Forgot Password -->
+    <TextView 
+        android:id="@+id/labelForgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/labelForgotPassword"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#fff"
+        android:layout_marginTop="5dp"
+        android:linksClickable="true"/>
+            
     <!-- Login / Sign-up Buttons -->
     <LinearLayout
         android:layout_width="wrap_content"
