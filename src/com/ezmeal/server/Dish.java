@@ -8,6 +8,8 @@ public class Dish {
 	
 	Dish(){
 		dish_id=0;
+		dish_name=null;
+		dish_canteen=null;
 	}
 	
 	public float getDish_price() {
