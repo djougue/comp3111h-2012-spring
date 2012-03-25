@@ -26,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ezmeal.activity.MenuFragment;
@@ -33,6 +34,7 @@ import com.ezmeal.activity.MyTasteActivity;
 import com.ezmeal.activity.QuitActivity;
 import com.ezmeal.activity.SettingsActivity;
 import com.ezmeal.activity.ShakeActivity;
+import com.ezmeal.shake.ShakeListener;
 import com.ezmeal.swipeytabs.SwipeyTabFragment;
 import com.ezmeal.swipeytabs.SwipeyTabs;
 import com.ezmeal.swipeytabs.SwipeyTabsAdapter;
@@ -47,6 +49,7 @@ public class MainActivity extends FragmentActivity {
 
 	private ViewPager mViewPager;
 	private SwipeyTabs mTabs;
+	ShakeListener mShaker;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -67,11 +70,55 @@ public class MainActivity extends FragmentActivity {
 		mViewPager.setOnPageChangeListener(mTabs);
 		//set mTabs as the listener
 		mViewPager.setCurrentItem(mTabs.getChildCount() / 2);  //By default, show the middle one of the tabs
-		
+
+		mShaker = new ShakeListener(this);		
+		mShaker.setOnShakeListener(new ShakeListener.OnShakeListener() {  
+		    public void onShake() {  
+	   			Intent intent = new Intent(getApplicationContext(),
+    					com.ezmeal.activity.ShakeActivity.class);
+	   			startActivity(intent);
+		    }  
+		});
 		/**
 		 * Button activities
 		 */
-		/* Settings button */
+		ImageView settingsBt = (ImageView) findViewById(com.ezmeal.main.R.id.buttonSettings);
+		settingsBt.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent settingsBtIntent = new Intent(view.getContext(), SettingsActivity.class);
+                startActivityForResult(settingsBtIntent, 0);
+            }
+		});
+		
+		
+		ImageView shakeBt = (ImageView) findViewById(com.ezmeal.main.R.id.buttonShake);
+		shakeBt.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent shakeBtIntent = new Intent(view.getContext(), ShakeActivity.class);
+                startActivityForResult(shakeBtIntent, 0);
+            }
+		});
+		
+		
+		ImageView myTasteBtn = (ImageView) findViewById(com.ezmeal.main.R.id.buttonMyTaste);
+		myTasteBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent myTasteBtnIntent = new Intent(view.getContext(), MyTasteActivity.class);
+                startActivityForResult(myTasteBtnIntent, 0);
+            }
+		});
+		
+		
+		ImageView quitBt = (ImageView) findViewById(com.ezmeal.main.R.id.buttonQuit);
+		quitBt.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+            	Intent quit = new Intent(view.getContext(), QuitActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            	startActivity(quit);
+            	finish();
+            }
+		});
+
+		/*		
 		Button settingsBt = (Button) findViewById(com.ezmeal.main.R.id.buttonSettings);
 		settingsBt.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -80,7 +127,7 @@ public class MainActivity extends FragmentActivity {
             }
 		});
 		
-		/* SHAKE button */
+		
 		Button shakeBt = (Button) findViewById(com.ezmeal.main.R.id.buttonShake);
 		shakeBt.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -89,7 +136,7 @@ public class MainActivity extends FragmentActivity {
             }
 		});
 		
-		/* My Taste button */
+		
 		Button myTasteBtn = (Button) findViewById(com.ezmeal.main.R.id.buttonMyTaste);
 		myTasteBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -98,7 +145,7 @@ public class MainActivity extends FragmentActivity {
             }
 		});
 		
-		/* Quit button */
+		
 		Button quitBt = (Button) findViewById(com.ezmeal.main.R.id.buttonQuit);
 		quitBt.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -107,6 +154,7 @@ public class MainActivity extends FragmentActivity {
             	finish();
             }
 		});
+*/
 	}
 	
 	
@@ -153,5 +201,18 @@ public class MainActivity extends FragmentActivity {
 		}
 
 	}
+	
+	@Override
+	protected void onPause(){
+		mShaker.pause();
+		super.onPause();
+	}
+	
+	@Override
+	protected void onResume(){
+		mShaker.resume();
+		super.onResume();
+	}
 
+	
 }
