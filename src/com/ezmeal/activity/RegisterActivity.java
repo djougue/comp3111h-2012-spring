@@ -14,6 +14,10 @@
 
 package com.ezmeal.activity;
 
+import com.ezmeal.main.R;
+import com.ezmeal.main.WelcomeActivity;
+import com.ezmeal.server.Communication_API;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -33,12 +37,13 @@ public class RegisterActivity extends Activity implements OnClickListener {
 	private String EMPTY_USERNAME      = "Your ITSC account is required.";
 	private String EMPTY_PASSWD        = "Password is required.";
 	private String EMPTY_NICKNAME      = "Nick name is required.";
-	private String INVALID_ITSC        = "The ITSC is invalid.";
+	private String INVALID_ITSC        = "The ITSC is invalid. Have you entered Space?";
 	private String SHORT_PASSWD        = "The length of password should be no less than 6 characters.";
 	private String LONG_PASSWD         = "The length of password should be no more than 20 characters.";
 	private String SPACE_IN_PASSWD     = "No space is allowed in password.";
 	private String INCONSISTENT_PASSWD = "The confirmed password is inconsistent.";
 	private String EXISTED_ITSC        = "You have already signed up.";
+	private String REG_ERROR           = "Oops! Error occured to registration.";
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -118,9 +123,10 @@ public class RegisterActivity extends Activity implements OnClickListener {
     	String nickname = nname.getText().toString();
     	
     	if (checkInput(username, password, confirmedPassword, nickname)) {
-    		//TODO: Post data to the server
-    		//Finish the activity, and go back to the welcome page.
-    		Communication_API.register(username, password, nickname);
+    		//TODO check timeout
+    		if (Communication_API.register(username, password, nickname) == 0) {
+    			resultText.setText(REG_ERROR);
+    		}
     		finish();
     	}
     	
