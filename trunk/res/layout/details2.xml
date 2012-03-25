@@ -2,21 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:background="@drawable/orange_bg">
 	<LinearLayout 
 	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content">
+	    android:layout_height="wrap_content"
+	    android:paddingTop="10dip">
 	    <FrameLayout 
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        >
 		    <ImageView
 		  	    android:id="@+id/dishImage"
-		  	    android:layout_marginLeft = "10dip"
-		  	    android:layout_marginTop = "10dip"
-			    android:layout_width="80dip"
-			    android:layout_height="80dip" 
+			    android:layout_width="95dip"
+			    android:layout_height="95dip" 
 			    android:src="@drawable/stub" 
+			    android:layout_gravity="center_vertical|center_horizontal"
 			    android:scaleType="centerCrop"/>
  	        <ImageView 
 	            android:layout_width="100dip"
@@ -24,26 +27,92 @@
 	            android:clickable="true"
 	            android:contentDescription="pic"
 	            android:src="@drawable/fm_png2"/>
-  	        <ImageView 
+<!--    	        <ImageView 
 	            android:layout_width="30dip"
 		        android:layout_height="30dip"
 	            android:clickable="true"
 	            android:contentDescription="cancel"
-	            android:src="@drawable/cancel"/>
+	            android:src="@drawable/cancel"/>-->
 	   	</FrameLayout>
 	    <LinearLayout 
 	        android:layout_width="fill_parent"
 	        android:layout_height="fill_parent"
+	        android:orientation="vertical"
 	        >
 	        <TextView 
 	            android:id="@+id/textDishNameInDetail"
 			  	android:layout_width="fill_parent"
-				android:layout_height="wrap_content"	            
+				android:layout_height="50dip"	            
 	            android:layout_gravity="top"
-	            android:textSize="30dip"
-	            android:layout_marginLeft="10dip"
-	            android:layout_marginTop="10dip"
-	            android:text="叉烧饭"/>	            
+	            android:textSize="20dip"
+	            android:layout_marginLeft="5dip"
+	            android:layout_marginTop="2dip"
+	            android:textStyle="bold"
+	            android:textColor="#000000"
+	            android:shadowColor="#000000"
+	            android:shadowDx="1"
+	            android:shadowDy="1"
+	            android:shadowRadius="1"
+	            android:text="Fried Rice, Yeung Chow Style"/>
+	        <TextView 
+			  	android:layout_width="fill_parent"
+				android:layout_height="20dip"	            
+	            android:textSize="15dip"
+	            android:textStyle="italic"
+	            android:text="Food style:"/>
+	        <TextView 
+			  	android:layout_width="fill_parent"
+				android:layout_height="20dip"	            
+	            android:textSize="15dip"
+	            android:textStyle="italic"
+	            android:text="   coming soon"/>	               	            
 	    </LinearLayout>
 	</LinearLayout>
+
+	<LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" 
+	    android:layout_marginLeft="10dip"
+	    android:layout_marginRight="10dip"
+	    android:layout_marginBottom="5dip">
+        <TextView 
+		  	android:layout_width="wrap_content"
+			android:layout_height="wrap_content"	            
+            android:textSize="15dip"
+	        android:textColor="#000000"
+	        android:textStyle="bold"
+            android:text="Canteen: "/>
+        <TextView 
+			android:id="@+id/textDishCanteenInDetail"
+		  	android:layout_width="fill_parent"
+			android:layout_height="wrap_content"	            
+            android:textSize="15dip"
+            android:gravity="right"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:text="failed"/>	        	    
+	</LinearLayout>
+	<LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginLeft="10dip"
+	    android:layout_marginRight="10dip">
+        <TextView 
+		  	android:layout_width="wrap_content"
+			android:layout_height="wrap_content"	            
+            android:textSize="17dip"
+	        android:textColor="#000000"
+	        android:textStyle="bold"
+            android:text="Price: "/>
+        <TextView 
+			android:id="@+id/textDishPriceInDetail"
+		  	android:layout_width="fill_parent"
+			android:layout_height="wrap_content"	            
+            android:textSize="20dip"
+            android:gravity="right"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:text="failed"/>	        	    
+	</LinearLayout>
+	
 </LinearLayout>

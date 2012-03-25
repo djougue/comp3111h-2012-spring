@@ -17,9 +17,54 @@
     xmlns:Swipeytabs="http://schemas.android.com/apk/res/com.ezmeal.main"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-    
+    android:layout_height="fill_parent"
+    android:background="@drawable/orange_bg">
+
     <!-- Button Group -->
+    <LinearLayout
+        android:id="@+id/linearLayoutHomePageButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/buttonSettings"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/menusize"
+            android:layout_weight="1"
+            android:src="@drawable/menu1"
+            android:scaleType="fitXY"
+            />
+        <ImageView
+            android:id="@+id/buttonShake"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/menusize"
+            android:layout_weight="1"
+            android:src="@drawable/menu2"
+            android:scaleType="fitXY"
+             />
+
+        <ImageView
+            android:id="@+id/buttonMyTaste"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/menusize"
+            android:layout_weight="1"
+            android:src="@drawable/menu3"
+            android:scaleType="fitXY"
+            />
+
+        <ImageView
+            android:id="@+id/buttonQuit"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/menusize"
+            android:layout_weight="1"
+            android:src="@drawable/menu4"
+            android:scaleType="fitXY"
+            />
+    </LinearLayout>
+        
+    <!-- Button Group -->
+<!--  
     <LinearLayout
         android:id="@+id/linearLayoutHomePageButtons"
         android:layout_width="match_parent"
@@ -54,6 +99,7 @@
             android:layout_weight="1"
             android:text="@string/buttonQuit" />
     </LinearLayout>
+-->
 
     <!-- Tabs -->
     <android.support.v4.view.ViewPager
