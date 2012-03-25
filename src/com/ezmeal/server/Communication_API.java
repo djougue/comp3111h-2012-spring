@@ -29,12 +29,7 @@ public class Communication_API {
 	static StringBuilder sb=null;
 	static int timeoutConnection = 3000;
 	static int timeoutSocket = 5000;
-	
-	
-	public void fetch_all_user_information()
-	{
-	}
-	
+		
 	private static void send_cmd(String cmd)
 	{
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
@@ -74,42 +69,45 @@ public class Communication_API {
 		}
 	}
 	
-	private void receive_data()
+	/*******************************************************************************************
+	 * 									Methods Related to Users
+	 ******************************************************************************************/
+
+	//if register successfully, return 1
+	//if the user_name is already inside the database, return -2
+	//if unknown error occurs, return -1
+	public static int register(String name, String password, String nickname)
 	{
-		/*
-		//paring data
-		int user_id;
-		String user_name;
-		String user_password;
+		result = null;
+		send_cmd("fetch_user_info.php?name="+name);
 		try
 		{
-		      jArray = new JSONArray(result);
-		      JSONObject json_data=null;
-		      for(int i=0;i<jArray.length();i++)
-		      {
-		             json_data = jArray.getJSONObject(i);
-		             user_id=json_data.getInt("id");
-		             user_name=json_data.getString("name");
-		             user_password=json_data.getString("password");
-		      }
+			  //Check whether there exists users with such user_name
+			  if(result != null){
+				  jArray = new JSONArray(result);
+				  if (jArray.length()>0)
+					  return -2;//User with the same user_name already exists	      
+			  }
+
 		}
 		catch(JSONException e1)
 		{
-			Log.e("log_tag", "Error converting result "+e1.toString());
 			e1.printStackTrace();
-			//Toast.makeText(getBaseContext(), "No User Found" ,Toast.LENGTH_LONG).show();
 		} 
 		catch (ParseException e1) 
 		{
-			Log.e("log_tag", "Error parsing result "+e1.toString());
 			e1.printStackTrace();
 		}
-		*/	
+		
+		send_cmd("register.php?name="+name+"&password="+password+"&nickname="+nickname);
+			
+		return check_password(name, password);
 	}
 	
+	//if the password is correct, return 1
+	//else return -1
 	public static int check_password(String name, String password)
 	{
-		//add by Tong
 		result = null;
 		
 		send_cmd("check_password.php?name="+name.trim()+"&password="+password.trim());
@@ -121,7 +119,7 @@ public class Communication_API {
 				 return 1;	      
 			  }
 			  else
-				 return -1;
+				  return -1;
 		}
 		catch(JSONException e1)
 		{
@@ -135,13 +133,10 @@ public class Communication_API {
 		return 0;
 	}
 	
-	public static int register(String name, String password, String nickname)
-	{
-		
-		send_cmd("register.php?name="+name+"&password="+password+"&nickname="+nickname);
-		return check_password(name, password);
-	}
 	
+	/*******************************************************************************************
+	 * 									Methods Related to Dishes
+	 ******************************************************************************************/
 	public static Dish fetch_dish(int index)
 	{
 		Dish dish=new Dish();
