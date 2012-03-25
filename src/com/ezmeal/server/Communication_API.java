@@ -35,9 +35,11 @@ public class Communication_API {
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		//http post
 		try{
+			//set time out
 		     HttpParams httpParameters = new BasicHttpParams();
 			 HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
 			 HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+			 
 			 HttpClient httpclient = new DefaultHttpClient(httpParameters);
 		     HttpPost httppost = new HttpPost("http://143.89.220.19/COMP3111H/"+cmd);
 		     httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -61,6 +63,7 @@ public class Communication_API {
 		       	sb.append(line + "\n");
 		       }
 		       is.close();
+		       result = new String();
 		       result=sb.toString();
 		}
 		catch(Exception e)
@@ -204,6 +207,7 @@ public class Communication_API {
 		send_cmd("fetch_dish.php");
 		try
 		{
+			if(result==null) return dish;
 		     jArray = new JSONArray(result);
 		     JSONObject json_data=null;
 
