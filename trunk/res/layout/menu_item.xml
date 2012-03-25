@@ -2,25 +2,49 @@
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="fill_parent"
-  android:layout_height="wrap_content">
+  android:layout_height="wrap_content"
+  android:padding="5dip">
   <ImageView
   	  android:id="@+id/image"
-	  android:layout_width="80dip"
-	  android:layout_height="80dip" android:src="@drawable/stub" android:scaleType="centerCrop"/>
-  <LinearLayout
-      xmlns:android="http://schemas.android.com/apk/res/android"
+	  android:layout_width="50dip"
+	  android:layout_height="50dip" android:src="@drawable/stub" android:scaleType="centerCrop"/>
+  <FrameLayout 
       android:layout_width="fill_parent"
-      android:layout_height="fill_parent"
-      android:layout_weight="2">
-
-	  <TextView
-	  	  android:id="@+id/dishnameText"
-	  	  android:layout_width="fill_parent"
-		  android:layout_height="wrap_content"
-		  android:layout_weight="1" android:layout_gravity="top" android:textSize="30dip" android:layout_marginLeft="10dip"/>
-	  
-  </LinearLayout>
-  <LinearLayout 
+      android:layout_height="fill_parent">
+   	  <TextView
+	  	  android:id="@+id/text1"
+	  	  android:layout_width="70dip"
+		  android:layout_height="34dip"
+		  android:layout_gravity="bottom|right"
+		  android:textSize="30dip" 
+		  android:textStyle="bold|italic"
+		  android:text = "HelloWorld"
+	  />"
+	  <LinearLayout
+	      xmlns:android="http://schemas.android.com/apk/res/android"
+	      android:layout_width="fill_parent"
+	      android:layout_height="fill_parent"
+	      android:layout_gravity="top|left"
+	      android:padding="2dip"
+	      android:orientation="vertical">	
+	
+		  <TextView
+		  	  android:id="@+id/text2"
+		  	  android:layout_width="fill_parent"
+			  android:layout_height="16dip"
+			  android:layout_gravity="top" android:textSize="12dip" android:layout_marginLeft="10dip"
+			  android:textStyle="bold"
+			  android:text="for_debug_purpose"/>
+		  <TextView
+		  	  android:id="@+id/text3"
+		  	  android:layout_width="fill_parent"
+			  android:layout_height="15dip"
+			  android:layout_gravity="top" android:textSize="12dip" android:layout_marginLeft="10dip"
+			  android:text="for_debug_purpose"/>
+		  	  
+	  </LinearLayout>  
+</FrameLayout>
+<!--    <LinearLayout 
       xmlns:android="http://schemas.android.com/apk/res/android"
       android:layout_width="fill_parent"
       android:layout_height="fill_parent"
@@ -35,6 +59,6 @@
 		  android:textStyle="bold|italic"
 		  />
       
-  </LinearLayout>
+  </LinearLayout>-->
 	
 </LinearLayout>
