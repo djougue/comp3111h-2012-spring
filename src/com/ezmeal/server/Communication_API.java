@@ -135,10 +135,10 @@ public class Communication_API {
 		return 0;
 	}
 	
-	public static int register(String name, String password)
+	public static int register(String name, String password, String nickname)
 	{
 		
-		send_cmd("send_and_fetch_user.php?name="+name+"&password="+password);
+		send_cmd("register.php?name="+name+"&password="+password+"&nickname="+nickname);
 			
 		return check_password(name, password);
 	}
