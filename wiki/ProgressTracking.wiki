@@ -3,7 +3,7 @@
 
 = Progress Tracking =
 
-As of 14 Mar, 2012
+As of 25 Mar, 2012
 
 || *Deadline* || *Week* || *Task* || *Status* || *Date of Completion* ||
 || 19 Feb || 4 || Finish the homepage UI design || <font color="#009900">Completed</font> || 20 Feb ||
@@ -16,15 +16,15 @@ As of 14 Mar, 2012
 || 12 Mar || 7 || Finish the second version of UI prototype || <font color="#009900">Completed</font> || 12 Mar ||
 || 12 Mar || 7 || Realize Searching, Classification and SHAKE function || <font color="#009900">Completed</font> || 12 Mar ||
 || 12 Mar || 7 || Pass the offline testing || <font color="#009900">Completed</font> || 12 Mar ||
-|| 19 Mar || 8 || Finish the third version of UI prototype || <font color="#0000FF">_In progress..._</font> || ||
-|| 19 Mar || 8 || Realize Login function || <font color="#0000FF">_In progress..._</font> || ||
-|| 19 Mar || 8 || Pass the first online testing || <font color="#0000FF">_In progress..._</font> || ||
+|| 19 Mar || 8 || Finish the third version of UI prototype || <font color="#009900">Completed</font> || 19 Mar ||
+|| 19 Mar || 8 || Realize Login function || <font color="#009900">Completed</font> || 19 Mar ||
+|| 19 Mar || 8 || Pass the first online testing || <font color="#009900">Completed</font> || 19 Mar ||
 || 26 Mar || 9 || *Prototype demonstration* || || ||
 || 2 Apr || 10 || *Inner testing 1*, focusing on Searching, Classification and Login function || || ||
-|| 2 Apr || 10 || Realize Rankings and Personal taste function || || ||
+|| 2 Apr || 10 || Realize Rankings and Personal taste function || <font color="#0000FF">_In progress..._</font> || ||
 || 9 Apr || Break || Release of the first alpha version (1.0a1) || || ||
 || 16 Apr || 11 || *Inner testing 2*, on all functions || || ||
-|| 16 Apr || 11 || Realize optional functions (news and Rice Friend) || || ||
+|| 16 Apr || 11 || Realize optional functions (news and Rice Friend) || Omitted || ||
 || 16 Apr || 11 || Release of the second alpha version (1.0a2) || || ||
 || 22 Apr || 12 || Release of the first beta version (1.0b1) || || ||
 || 23 Apr || 12 || *Peer acceptance testing 1* || || ||
