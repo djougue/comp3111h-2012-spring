@@ -17,6 +17,7 @@ package com.ezmeal.main;
 import com.ezmeal.activity.ForgotPasswdActivity;
 import com.ezmeal.activity.RegisterActivity;
 import com.ezmeal.server.Communication_API;
+import com.ezmeal.server.User;
 
 import android.app.Activity;
 import android.content.Context;
@@ -186,6 +187,13 @@ public class WelcomeActivity extends Activity implements OnClickListener {
     	    		    		else if (serverResp == 1) {
     	    		    			((UserApp) thisActivity.getApplication()).setUserName(username);
     	    		    			((UserApp) thisActivity.getApplication()).setPassword(password);
+    	    		    			
+    	    		    			//get and set user info
+    	    		    			User user = Communication_API.get_user_info(username, password);
+    	    		    			((UserApp) thisActivity.getApplication()).setNickName(user.getUser_nickname());
+    	    		    			boolean[] taste = {user.isUser_spicy(), user.isUser_meat(), user.isUser_vege()};
+    	    		    			((UserApp) thisActivity.getApplication()).setTaste(taste);
+    	    		    			((UserApp) thisActivity.getApplication()).setShake(true);
     	    		    			
     	    		    			//start the main activity
     	    		    			Intent intent = new Intent();

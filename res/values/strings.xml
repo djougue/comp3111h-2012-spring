@@ -21,10 +21,12 @@
     <string name="hintPassword">6&#8211;20 chars, no space</string>
     
     <!-- Labels -->
+    <string name="labelBlacklist">Blacklist</string>
     <string name="labelChangePassword">Change Password</string>
     <string name="labelConfirm">Confirm</string>
     <string name="labelConfirmPassword">Confirm Password</string>
     <string name="labelForgotPassword"><u>Forgot your password?</u></string>
+    <string name="labelHistory">History</string>
     <string name="labelMailAddrSuffix"> \@ ust.hk</string>
     <string name="labelNew">New</string>
     <string name="labelNickName">Nickname</string>
