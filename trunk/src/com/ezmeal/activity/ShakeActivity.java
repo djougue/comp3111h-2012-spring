@@ -39,7 +39,7 @@ public class ShakeActivity extends Activity implements OnClickListener{
 		progressBar = (ProgressBar) findViewById(R.id.progressBarMenu);
 
         headerTitle = (TextView) findViewById(R.id.labelHeader);
-        headerTitle.setText("Shake");
+        headerTitle.setText("SHAKE");
         backBtn = (Button) findViewById(R.id.buttonBack);
         backBtn.setOnClickListener(this);
 

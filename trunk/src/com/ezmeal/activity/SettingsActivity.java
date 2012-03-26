@@ -185,7 +185,7 @@ public class SettingsActivity extends Activity implements OnClickListener, OnChe
 	    			refreshHandler.post(new Runnable() {
 	    				public void run() {
 	    				    if(serverResp == 0) {
-	    				    	resultText.setTextColor(0xffffffff); //white
+	    				    	resultText.setTextColor(0xffff0000); //red
 	    		    			resultText.setText(TIMEOUT);
 	    				    }
 	    					else if (serverResp == 1) {
