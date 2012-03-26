@@ -163,6 +163,25 @@
             android:textColor="#eee"
             android:layout_below="@id/labelSettingsShake"
             android:text="@string/labelShakeRemarks"/>
+        
+        <!-- Result of Settings -->
+        <TextView
+            android:id="@+id/labelSettingsResult"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:paddingLeft="10dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="#fff"
+            android:layout_below="@id/labelSettingsShakeRemarks"
+            android:layout_marginTop="15dp"/>
+        <ProgressBar
+            android:id="@+id/progressBarSettings"
+            style="@android:style/Widget.ProgressBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/labelSettingsResult"
+            android:layout_toLeftOf="@+id/labelSettingsResult"
+            android:visibility="gone" />
 
         <!-- Buttons -->
         <Button
@@ -172,7 +191,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@id/labelSettingsShakeRemarks"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="55dp"
             android:background="@drawable/button_submit" />
 
     </RelativeLayout>

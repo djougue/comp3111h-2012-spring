@@ -19,7 +19,7 @@
         android:layout_height="fill_parent"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:gravity="center" >
 
         <!-- Personal Taste -->
@@ -55,18 +55,75 @@
             android:layout_alignLeft="@+id/checkBoxMyTasteMeat"
             android:layout_below="@+id/checkBoxMyTasteMeat"
             android:text="@string/labelPreferVege" />
+        
+        <!-- Blacklist -->
+        <TextView
+            android:id="@+id/labelMyTasteBlacklist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/labelBlacklist"
+            android:layout_below="@id/checkBoxMyTasteVege"
+            android:layout_marginTop="30dp"
+            android:textColor="#000"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/labelMyTasteComingSoon1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Coming soon..."
+            android:layout_below="@id/labelMyTasteBlacklist"
+            android:textColor="#eee"
+            android:textStyle="bold" />
 
+         <!-- History -->
+         <TextView
+            android:id="@+id/labelMyTasteHistory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/labelHistory"
+            android:layout_below="@id/labelMyTasteComingSoon1"
+            android:layout_marginTop="30dp"
+            android:textColor="#000"
+            android:textStyle="bold" />
+         <TextView
+            android:id="@+id/labelMyTasteComingSoon2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Coming soon..."
+            android:layout_below="@id/labelMyTasteHistory"
+            android:textColor="#eee"
+            android:textStyle="bold" />
+        
+        <!-- Result of My Taste-->
+        <TextView
+            android:id="@+id/labelMyTasteResult"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:paddingLeft="10dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="#fff"
+            android:layout_below="@id/labelMyTasteComingSoon2"
+            android:layout_marginTop="15dp"/>
+        <ProgressBar
+            android:id="@+id/progressBarMyTaste"
+            style="@android:style/Widget.ProgressBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/labelMyTasteResult"
+            android:layout_toLeftOf="@+id/labelMyTasteResult"
+            android:visibility="gone" />
+        
+        <!-- Submit Button -->
         <Button
             android:id="@+id/buttonMyTasteSubmit"
             android:layout_width="110dp"
             android:layout_height="32dp"
             android:layout_alignParentRight="true"
-            android:layout_below="@id/checkBoxMyTasteVege"
+            android:layout_below="@id/labelMyTasteComingSoon2"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="55dp"
             android:background="@drawable/button_submit" />
         
-        <!-- Blacklist -->
         <!-- TODO -->
     </RelativeLayout>
     

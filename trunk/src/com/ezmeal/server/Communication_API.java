@@ -27,8 +27,8 @@ public class Communication_API {
 	static String result = null;
 	static InputStream is = null;
 	static StringBuilder sb=null;
-	static int timeoutConnection = 3000;
-	static int timeoutSocket = 5000;
+	static int timeoutConnection = 12000;
+	static int timeoutSocket = 12000;
 		
 	private static void send_cmd(String cmd)
 	{
@@ -148,8 +148,8 @@ public class Communication_API {
 			  //Check whether there exists users with such user_name
 			  if(result != null){
 				  jArray = new JSONArray(result);
-				  if (jArray.length()>0)
-					  return -2;//User with the same user_name already exists	      
+				  if (jArray.length()<=0)
+					  return -2;//User with the same user_name does not exist    
 			  }
 
 		}
@@ -164,7 +164,6 @@ public class Communication_API {
 		
 		send_cmd("change_user_setting.php?name="+name+"&password="+password+"&nickname="
 				+nickname+"&spicy="+spicy+"&vege="+vege+"&meat="+meat);
-			
 		return check_password(name, password);
 	}
 	

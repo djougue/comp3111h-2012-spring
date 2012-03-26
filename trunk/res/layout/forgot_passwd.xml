@@ -27,7 +27,7 @@
         android:textColor="#fff"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:text="&quot;Forgot Password&quot; feature is not supported in this version of ezMeal."/>/>
+        android:text="Coming soon..."/>/>
 
     </RelativeLayout>
     
