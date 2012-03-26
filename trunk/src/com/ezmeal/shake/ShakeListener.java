@@ -23,7 +23,7 @@ public class ShakeListener implements SensorEventListener {
     private long mLastShake;  
     private long mLastForce;  
   
-    public interface OnShakeListener {  
+    public interface OnShakeListener {
         public void onShake();  
 //      public void onShakeHorizontal();  
 //      public void onShakeVertical();  
