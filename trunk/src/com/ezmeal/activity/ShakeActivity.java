@@ -1,11 +1,13 @@
 package com.ezmeal.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -29,6 +31,8 @@ public class ShakeActivity extends Activity implements OnClickListener{
 	private ProgressBar progressBar;
 	private LinearLayout view;
 	ShakeListener mShaker;
+	ImageView dishImage;
+	
 	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +59,24 @@ public class ShakeActivity extends Activity implements OnClickListener{
 		    	reshake();
 		    }  
 		});
+		dishImage = (ImageView) findViewById(com.ezmeal.main.R.id.dishImageButton);
 
+		dishImage.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+    			Intent intent = new Intent(getApplicationContext(),
+    					com.ezmeal.activity.DetailActivity.class);
+    			
+    			Bundle dishInfo = new Bundle();
+    			dishInfo.putString("name", dish_name);
+    			dishInfo.putString("pic", " ");
+    			dishInfo.putString("price", dish_price);
+    			dishInfo.putString("canteen", dish_canteen);
+    			dishInfo.putInt("ActivityFlag", 1);
+    			intent.putExtras(dishInfo);
+    			startActivity(intent);
+    		}
+		});
+        
 		shakeThread = new Thread(new Runnable() {
 			public void run() {
 				while(true){
@@ -66,28 +87,32 @@ public class ShakeActivity extends Activity implements OnClickListener{
 							dish_name = the_dish.getDish_name();
 							dish_canteen = the_dish.getDish_canteen();
 							dish_price = "$"+Float.toString(the_dish.getDish_price());
+							shake_state = 2;
 						}
 						
 						shakeHandler.post(new Runnable() {
-							public void run() {						
-								TextView name=(TextView)findViewById(com.ezmeal.main.R.id.textDishNameInShake);	
-								TextView canteen=(TextView)findViewById(com.ezmeal.main.R.id.textDishCanteenInShake);
-								TextView price=(TextView)findViewById(com.ezmeal.main.R.id.textDishPriceInShake);
-								name.setText(dish_name);
-								canteen.setText(dish_canteen);
-								price.setText(dish_price);
-								
-								
-								view=(LinearLayout)findViewById(com.ezmeal.main.R.id.information);	
-								progressBar.setVisibility(View.INVISIBLE);
-								view.setVisibility(View.VISIBLE);
-								shake_state = 1;
+							public void run() {
+								if(shake_state == 2){
+									TextView name=(TextView)findViewById(com.ezmeal.main.R.id.textDishNameInShake);	
+									TextView canteen=(TextView)findViewById(com.ezmeal.main.R.id.textDishCanteenInShake);
+									TextView price=(TextView)findViewById(com.ezmeal.main.R.id.textDishPriceInShake);
+									name.setText(dish_name);
+									canteen.setText(dish_canteen);
+									price.setText(dish_price);
+									
+									
+									view=(LinearLayout)findViewById(com.ezmeal.main.R.id.information);	
+									progressBar.setVisibility(View.INVISIBLE);
+									view.setVisibility(View.VISIBLE);
+									shake_state = 1;
+								}
 							}
 						});
 					}
 				}
 	  		}});
 		shakeThread.start();
+		
     }
 
     protected void onPause() {
