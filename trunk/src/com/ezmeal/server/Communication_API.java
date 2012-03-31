@@ -203,10 +203,11 @@ public class Communication_API {
 	public static Dish fetch_dish(int index)
 	{
 		Dish dish=new Dish();
+		result = null;
 		send_cmd("fetch_dish.php");
 		try
 		{
-			if(result==null) return dish;
+			if(result==null) return null;
 		     jArray = new JSONArray(result);
 		     JSONObject json_data=null;
 
@@ -231,9 +232,11 @@ public class Communication_API {
 	{
 		
 		Dish dish=new Dish();
+		result = null;
 		send_cmd("random_dish.php");
 		try
 		{
+			if(result==null) return null;
 		     jArray = new JSONArray(result);
 		     JSONObject json_data=null;
 
