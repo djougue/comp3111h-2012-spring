@@ -38,19 +38,33 @@
 			    android:src="@drawable/stub" 
 			    android:layout_gravity="center_vertical|center_horizontal"
 			    android:scaleType="centerCrop"/>
- 	        <ImageView 
+ 	        <ImageView
+ 	            android:id="@+id/dishImageButton" 
 	            android:layout_width="100dip"
 		        android:layout_height="100dip"	            
 	            android:clickable="true"
 	            android:contentDescription="pic"
 	            android:src="@drawable/fm_png2"/>
 	   	</FrameLayout>
-        <TextView 
+	   	<!--   	        android:ellipsize="marquee"
+   	        android:marqueeRepeatLimit="marquee_forever"
+   	        android:scrollHorizontally="true"
+   	        android:singleLine="true"
+			android:focusable="true" 
+			android:focusableInTouchMode="true"
+	   	  -->
+        <TextView
+               	        android:ellipsize="marquee"
+   	        android:marqueeRepeatLimit="marquee_forever"
+   	        android:scrollHorizontally="true"
+   	        android:singleLine="true"
+			android:focusable="true" 
+			android:focusableInTouchMode="true" 
             android:gravity="center_horizontal"
             android:id="@+id/textDishNameInShake"
-		  	android:layout_width="fill_parent"
+		  	android:layout_width="200dip"
 			android:layout_height="wrap_content"	            
-            android:textSize="20dip"
+            android:textSize="20sp"
             android:layout_marginLeft="5dip"
             android:layout_marginTop="2dip"
             android:textStyle="bold"
@@ -59,7 +73,7 @@
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="1"
-            android:text="Fried Rice, Yeung Chow Style"/>
+        />
         <TextView
             android:layout_gravity="center_horizontal"
 			android:id="@+id/textDishCanteenInShake"
