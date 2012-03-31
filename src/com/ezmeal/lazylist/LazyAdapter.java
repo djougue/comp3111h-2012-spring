@@ -85,7 +85,8 @@ public class LazyAdapter extends BaseAdapter{
     			dishInfo.putString("name", dishes_name[position]);
     			dishInfo.putString("pic", data[position]);
     			dishInfo.putString("price", Float.toString(dishes_price[position]));
-    			dishInfo.putString("canteen", dishes_canteen[position]);    			
+    			dishInfo.putString("canteen", dishes_canteen[position]);   
+    			dishInfo.putInt("ActivityFlag", 0);
     			intent.putExtras(dishInfo);
     			activity.startActivity(intent);
             }        	
