@@ -55,7 +55,7 @@ public class MenuFragment extends Fragment {
     			while(true){
     				cur_dish = Communication_API.fetch_dish(_index);
     				
-    				if(cur_dish==null){ //time out. Then delete all loaded dishes
+    				if(cur_dish==null){ //time out. Then delete all loaded dishes    					
     					dishes.clear();
     					break;
     				}
