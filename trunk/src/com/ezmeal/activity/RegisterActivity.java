@@ -15,14 +15,15 @@
 package com.ezmeal.activity;
 
 import com.ezmeal.main.R;
-import com.ezmeal.main.UserApp;
-import com.ezmeal.main.WelcomeActivity;
 import com.ezmeal.server.Communication_API;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -30,13 +31,15 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class RegisterActivity extends Activity implements OnClickListener {
+public class RegisterActivity extends Activity implements OnClickListener, TextWatcher {
 	private Button submitBtn, backBtn;
 	private TextView resultText, headerTitle;
+	private EditText uname, pwd, conPwd, nname;
 	private ProgressBar progressBar;
 	private Handler refreshHandler;
 	private Thread postDataThread;
 	private static int serverResp;
+	private boolean isChanged = false;
 	
 	//messages for result
 	private String EMPTY_USERNAME      = "Your ITSC account is required.";
@@ -51,6 +54,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
 	private String EXISTED_ITSC        = "You have already signed up.";
 	private String TIMEOUT             = "Connection error. Please try again later.";
 	private String LOADING             = "Loading...";
+	private String SUCCESSFUL          = "You registration is successful.";
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,16 @@ public class RegisterActivity extends Activity implements OnClickListener {
         setContentView(R.layout.register);
         progressBar = (ProgressBar) findViewById(R.id.progressBarRegister);
         refreshHandler = new Handler();
+        
+        //edit text
+        uname = (EditText) findViewById(R.id.editTextRegUserName);
+        uname.addTextChangedListener(this);
+        pwd = (EditText) findViewById(R.id.editTextRegPassword);
+        pwd.addTextChangedListener(this);
+        conPwd = (EditText) findViewById(R.id.editTextRegConfirmPassword);
+        conPwd.addTextChangedListener(this);
+        nname = (EditText) findViewById(R.id.editTextRegNickName);
+        nname.addTextChangedListener(this);
         
         headerTitle = (TextView) findViewById(R.id.labelHeader);
         headerTitle.setText("Sign Up");
@@ -74,7 +88,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
     private boolean checkInput(String uname, String passwd,String confPasswd,
     		String nname) {
     	//check if the username field is empty
-    	resultText.setTextColor(0xffff0000);  //red color
+    	resultText.setTextColor(0xffff0000);  //red
     	if (uname.length() == 0) {
     		resultText.setText(EMPTY_USERNAME);
     		return false;
@@ -119,6 +133,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
     		resultText.setText(SPACE_IN_NICKNAME);
     		return false;
     	}
+    	resultText.setTextColor(0xffffffff);  //white
     	return true;
     }
     
@@ -127,16 +142,9 @@ public class RegisterActivity extends Activity implements OnClickListener {
      */
     private void postRegData() {
     	//get input
-    	EditText uname = (EditText) findViewById(R.id.editTextRegUserName);
     	final String username = uname.getText().toString();
-    	
-    	EditText pwd = (EditText) findViewById(R.id.editTextRegPassword);
     	final String password = pwd.getText().toString();
-    	
-    	EditText cPwd = (EditText) findViewById(R.id.editTextRegConfirmPassword);
-    	final String confirmedPassword = cPwd.getText().toString();
-    	
-    	EditText nname = (EditText) findViewById(R.id.editTextRegNickName);
+    	final String confirmedPassword = conPwd.getText().toString();
     	final String nickname = nname.getText().toString();
     	
     	if (checkInput(username, password, confirmedPassword, nickname)) {
@@ -153,8 +161,32 @@ public class RegisterActivity extends Activity implements OnClickListener {
 	    		    			resultText.setText(TIMEOUT);
 	    		    		}
 	    		    		else if (serverResp == 1) {
-	    		    			//finish the welcome activity (this)
-	    		    			finish();
+	    		    			//finish the register activity (this)
+	    		    			resultText.setTextColor(0xffffffff); //white
+	    		    			resultText.setText(SUCCESSFUL);
+	    		    			submitBtn.setEnabled(false);  //cannot re-submit
+	    		    			
+	    		    			//stay on the register page for 1 seconds
+	    		    			new Thread() {
+	    		    	        	@Override
+	    		    	        	public void run() {
+	    		    	        		try {
+	    		    	        			int waited = 0;
+	    		    	        			while (waited < 1000) {
+	    		    	        				sleep(100);
+	    		    	        				waited += 100;
+	    		    	        			}
+	    		    	        		} catch (InterruptedException e) {
+	    		    	               //do nothing
+	    		    	        		}
+	    		    	        		
+	    		    	        		//finish the register activity
+	    		    	        		finally {
+	    		    	        			finish();
+	    		    	        		}
+	    		    	        	}
+	    		    	        }.start();
+	    		    	        
 	    		    		} else {
 	    		    			resultText.setTextColor(0xffff0000); //red
 	    		    			resultText.setText(EXISTED_ITSC);
@@ -179,8 +211,38 @@ public class RegisterActivity extends Activity implements OnClickListener {
     		postRegData();
     	}
     	else if (view == backBtn) {
-    		//Finish the activity, and go back to the welcome page.
-    		finish();
+    		//Pop up an alert dialog if something has been modified
+    		if (isChanged) {
+    			final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+    			alertDialog.setTitle("Alert!");
+    			alertDialog.setMessage("Are you sure to exit this page?");
+    			alertDialog.setButton("Yes, please.", new DialogInterface.OnClickListener() {
+    			      public void onClick(DialogInterface dialog, int which) {
+    			    	  finish();
+    			    } });
+    			alertDialog.setButton2("Oops, NO!", new DialogInterface.OnClickListener() {
+  			      public void onClick(DialogInterface dialog, int which) {
+  			    	  alertDialog.dismiss();
+  			        } });
+    			alertDialog.show();
+    		}
+    		
+    		//Else, directly finish the activity, and go back to the welcome page.
+    		else {
+    		    finish();
+    		}
     	}
     }
+
+	public void afterTextChanged(Editable ed) {
+		isChanged = true;
+	}
+
+	public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+		// Nothing	
+	}
+
+	public void onTextChanged(CharSequence s, int start, int before, int count) {
+		// Nothing
+	}
 }

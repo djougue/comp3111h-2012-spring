@@ -27,38 +27,38 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
-        <ImageView
+        <Button
             android:id="@+id/buttonSettings"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/menusize"
             android:layout_weight="1"
-            android:src="@drawable/menu1"
+            android:background="@drawable/tab_settings"
             android:scaleType="fitXY"
             />
-        <ImageView
+        <Button
             android:id="@+id/buttonShake"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/menusize"
             android:layout_weight="1"
-            android:src="@drawable/menu2"
+            android:background="@drawable/tab_shake"
             android:scaleType="fitXY"
              />
 
-        <ImageView
+        <Button
             android:id="@+id/buttonMyTaste"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/menusize"
             android:layout_weight="1"
-            android:src="@drawable/menu3"
+            android:background="@drawable/tab_mytaste"
             android:scaleType="fitXY"
             />
 
-        <ImageView
+        <Button
             android:id="@+id/buttonQuit"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/menusize"
             android:layout_weight="1"
-            android:src="@drawable/menu4"
+            android:background="@drawable/tab_quit"
             android:scaleType="fitXY"
             />
     </LinearLayout>
