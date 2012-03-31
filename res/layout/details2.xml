@@ -42,6 +42,10 @@
 	        <TextView 
 	            android:id="@+id/textDishNameInDetail"
 			  	android:layout_width="fill_parent"
+			  	
+			  	android:ellipsize="marquee"
+   	        	android:marqueeRepeatLimit="marquee_forever"
+			  	
 				android:layout_height="50dip"	            
 	            android:layout_gravity="top"
 	            android:textSize="20dip"
