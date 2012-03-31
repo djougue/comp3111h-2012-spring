@@ -15,6 +15,8 @@ public class DetailActivity extends FragmentActivity {
 	ShakeListener mShaker;
     public ImageLoader imageLoader; 
     private Bundle the_dish;
+    private int fatherActivity;
+    
 
 
 	@Override
@@ -26,16 +28,26 @@ public class DetailActivity extends FragmentActivity {
 		mShaker = new ShakeListener(this);
 		
 		mShaker.setOnShakeListener(new ShakeListener.OnShakeListener() {  
-		    public void onShake() {  
-	   			Intent intent = new Intent(getApplicationContext(),
-    					com.ezmeal.activity.ShakeActivity.class);
-	   			startActivity(intent);
+		    public void onShake() {
+		    	if(fatherActivity==0)
+		    	{
+		   			Intent intent = new Intent(getApplicationContext(),
+	    					com.ezmeal.activity.ShakeActivity.class);
+		   			startActivity(intent);
+		    	}
+		    	else if(fatherActivity==1){
+		   			Intent intent = new Intent(getApplicationContext(),
+	    					com.ezmeal.activity.ShakeActivity.class);
+		   			startActivity(intent);
+		    		finish();
+		    	}
  		    }  
 		});
 	}
 	
 	void setView(){
 		if (the_dish != null) {
+	        fatherActivity = the_dish.getInt("ActivityFlag");
 			String dish_name = the_dish.getString("name");
 			String dish_canteen = the_dish.getString("canteen");
 			String dish_price = the_dish.getString("price");
@@ -49,6 +61,7 @@ public class DetailActivity extends FragmentActivity {
 			String pic = the_dish.getString("pic");
 	        imageLoader=new ImageLoader(this.getApplicationContext());
 	        imageLoader.DisplayImage(pic, image);
+
 		}
 		else{
 			TextView view = (TextView) findViewById(R.id.textDishNameInDetail);
@@ -67,6 +80,23 @@ public class DetailActivity extends FragmentActivity {
 		mShaker.resume();
 		super.onResume();
 	}
+	
+	@Override
+	public void onBackPressed() {
+    	if(fatherActivity==0)
+    	{
+   			Intent intent = new Intent(getApplicationContext(),
+					com.ezmeal.activity.ShakeActivity.class);
+   			startActivity(intent);
+    	}
+    	else if(fatherActivity==1){
+   			Intent intent = new Intent(getApplicationContext(),
+					com.ezmeal.activity.ShakeActivity.class);
+   			startActivity(intent);
+    		finish();
+    	}		
+		return;
+		}
 
 	
 	
