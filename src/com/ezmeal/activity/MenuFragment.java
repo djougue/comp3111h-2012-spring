@@ -54,6 +54,11 @@ public class MenuFragment extends Fragment {
     			int _index = 0;
     			while(true){
     				cur_dish = Communication_API.fetch_dish(_index);
+    				
+    				if(cur_dish==null){ //time out. Then delete all loaded dishes
+    					dishes.clear();
+    					break;
+    				}
     				if(cur_dish.getDish_id()==0) break;
     				_index++;
     				Bundle bundle = new Bundle();
