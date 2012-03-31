@@ -2,14 +2,15 @@ package com.ezmeal.activity;
 
 import com.ezmeal.main.R;
 import com.ezmeal.main.UserApp;
-import com.ezmeal.main.WelcomeActivity;
 import com.ezmeal.server.Communication_API;
-import com.ezmeal.server.User;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -21,7 +22,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-public class SettingsActivity extends Activity implements OnClickListener, OnCheckedChangeListener {
+public class SettingsActivity extends Activity implements OnClickListener,
+OnCheckedChangeListener, TextWatcher {
 	private TextView headerTitle, oldpasswdLabel, newpasswdLabel, confirmpasswdLabel, resultText;
 	private Button backBtn, submitBtn;
 	private EditText username, nickname, oldpasswd, newpasswd, confirmpasswd;
@@ -31,6 +33,7 @@ public class SettingsActivity extends Activity implements OnClickListener, OnChe
 	private Handler refreshHandler;
 	private Thread postDataThread;
 	private static int serverResp;
+	private boolean isChanged = false;
 	
 	//messages for result
 	private String EMPTY_PASSWD        = "Password is required.";
@@ -71,6 +74,7 @@ public class SettingsActivity extends Activity implements OnClickListener, OnChe
         shakeBtn = (ToggleButton) findViewById(R.id.toggleButtonSettingsShake);
         boolean isShake = ((UserApp) this.getApplication()).isShake();
         shakeBtn.setChecked(isShake);
+        shakeBtn.setOnCheckedChangeListener(this);
         
         refreshHandler = new Handler();
         progressBar = (ProgressBar) findViewById(R.id.progressBarSettings);
@@ -83,6 +87,7 @@ public class SettingsActivity extends Activity implements OnClickListener, OnChe
         nickname = (EditText) findViewById(R.id.editTextSettingsNickName);
         String nname = ((UserApp) this.getApplication()).getNickName();
         nickname.setText(nname);
+        nickname.addTextChangedListener(this);
     }
     
     private void EnablePasswd() {
@@ -159,19 +164,17 @@ public class SettingsActivity extends Activity implements OnClickListener, OnChe
     	//get input
     	final String uname = username.getText().toString();
     	final String nname = nickname.getText().toString();
-    	final String oldpwd, newpwd, cpwd;
+    	final String newpwd, cpwd;
     	final boolean[] taste = ((UserApp) this.getApplication()).getTaste();
     	final Activity thisActivity = this;
     	final boolean isShake = shakeBtn.isChecked();
     	
     	if (changePasswd.isChecked()) {
-    		oldpwd = oldpasswd.getText().toString();
-        	newpwd = newpasswd.getText().toString();
+    		newpwd = newpasswd.getText().toString();
         	cpwd = confirmpasswd.getText().toString();
     	}
     	else {
-    		oldpwd = ((UserApp) this.getApplication()).getPassword();
-        	newpwd = ((UserApp) this.getApplication()).getPassword();
+    		newpwd = ((UserApp) this.getApplication()).getPassword();
         	cpwd = ((UserApp) this.getApplication()).getPassword();
     	}
     	
@@ -256,7 +259,26 @@ public class SettingsActivity extends Activity implements OnClickListener, OnChe
         	}
         }
     	else if (view == backBtn) {
-    		finish();
+    		//Pop up an alert dialog if something has been modified
+    		if (isChanged) {
+    			final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+    			alertDialog.setTitle("Alert!");
+    			alertDialog.setMessage("Are you sure to exit this page?");
+    			alertDialog.setButton("Yes, please.", new DialogInterface.OnClickListener() {
+    			      public void onClick(DialogInterface dialog, int which) {
+    			    	  finish();
+    			    } });
+    			alertDialog.setButton2("Oops, NO!", new DialogInterface.OnClickListener() {
+  			      public void onClick(DialogInterface dialog, int which) {
+  			    	  alertDialog.dismiss();
+  			        } });
+    			alertDialog.show();
+    		}
+    		
+    		//Else, directly finish the activity, and go back to the welcome page.
+    		else {
+    		    finish();
+    		}
     	}
     }
 
@@ -264,6 +286,7 @@ public class SettingsActivity extends Activity implements OnClickListener, OnChe
      * Checked Changed Listener
      */
 	public void onCheckedChanged(CompoundButton btn, boolean isChecked) {
+		isChanged = true;
 		if (btn == changePasswd) {
 			if (isChecked) {
 				EnablePasswd();
@@ -272,5 +295,23 @@ public class SettingsActivity extends Activity implements OnClickListener, OnChe
 				DisablePasswd();
 			}
 		}
+		else if (btn == shakeBtn) {
+			//TODO
+		}
+	}
+	
+	/**
+	 * TextWatcher Listener
+	 */
+	public void afterTextChanged(Editable ed) {
+		isChanged = true;
+	}
+
+	public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+		// Nothing
+	}
+
+	public void onTextChanged(CharSequence s, int start, int before, int count) {
+		// Nothing
 	}
 }

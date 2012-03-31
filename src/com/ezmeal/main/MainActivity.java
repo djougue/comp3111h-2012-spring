@@ -26,7 +26,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ezmeal.activity.MenuFragment;
@@ -82,7 +81,7 @@ public class MainActivity extends FragmentActivity {
 		/**
 		 * Button activities
 		 */
-		ImageView settingsBt = (ImageView) findViewById(com.ezmeal.main.R.id.buttonSettings);
+		Button settingsBt = (Button) findViewById(com.ezmeal.main.R.id.buttonSettings);
 		settingsBt.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent settingsBtIntent = new Intent(view.getContext(), SettingsActivity.class);
@@ -91,7 +90,7 @@ public class MainActivity extends FragmentActivity {
 		});
 		
 		
-		ImageView shakeBt = (ImageView) findViewById(com.ezmeal.main.R.id.buttonShake);
+		Button shakeBt = (Button) findViewById(com.ezmeal.main.R.id.buttonShake);
 		shakeBt.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent shakeBtIntent = new Intent(view.getContext(), ShakeActivity.class);
@@ -100,7 +99,7 @@ public class MainActivity extends FragmentActivity {
 		});
 		
 		
-		ImageView myTasteBtn = (ImageView) findViewById(com.ezmeal.main.R.id.buttonMyTaste);
+		Button myTasteBtn = (Button) findViewById(com.ezmeal.main.R.id.buttonMyTaste);
 		myTasteBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent myTasteBtnIntent = new Intent(view.getContext(), MyTasteActivity.class);
@@ -109,7 +108,7 @@ public class MainActivity extends FragmentActivity {
 		});
 		
 		
-		ImageView quitBt = (ImageView) findViewById(com.ezmeal.main.R.id.buttonQuit);
+		Button quitBt = (Button) findViewById(com.ezmeal.main.R.id.buttonQuit);
 		quitBt.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
             	Intent quit = new Intent(view.getContext(), QuitActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
