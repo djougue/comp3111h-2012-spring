@@ -4,7 +4,7 @@
   * [SystemRequirements System Requirements]
   * [Modeling Domain and Use-Case Model]
   * [ProgressTracking Progress Tracking]
-  * [FirstTestCase First Test Case]
+  * [FirstTestCase First Test Cases]
   * Developers' Guide
     * [GettingStarted Getting Started]
     * [UsefulLinks Useful Links]
