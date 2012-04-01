@@ -38,6 +38,7 @@
   # In the Settings page, a user has submitted some change. Then the user makes another change and leaves without submitting. Will the notification show up?(Yes/No)
     Yes. 
     The test cases for My Taste page and Registration page are similar with the one of the Settings page.
+  # The test cases for My Taste page and Registration page are similar with the one of the Settings page.
   # A user goes into SHAKE page (called page A) from page B. When the user presses the back button, will the application go back to page B? (Yes/No)
     Yes. Actually, the OnClickListener calls finish() if the back button is pressed.
   # A user goes into SHAKE page(called page A) from a detail page, page B. The user can press the image shown in page A to enter the detail page(page C) for the result. If the user shakes its device, a SHAKE page(page D) will show up. If the user press the result, another detail page, page E, will show up. Can user go back to page C with the back button? (Yes/No) 
