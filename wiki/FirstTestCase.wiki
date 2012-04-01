@@ -13,31 +13,40 @@ Add your content here.  Format your content with:
   * Headings, paragraphs, and lists
   * Automatic links to other wiki pages
 
- In welcome page, can user just leave without entering username or password? (Yes/No)
+  * In welcome page, can user just leave without entering username or password? (Yes/No)
 Yes. Just press back button on the device. Then the application will exit. 
 (Is there a back button on welcome page? Or do we need to add one?)
 (No, back button is on the device. )
 In Sign up page, a user wanting to register needs to provide his/her ITSC. After registration, an email will be sent out for confirmation purpose. The user need to click the link in the email to activate its account. 
-If an ITSC has been used for registration and the account has been activated, can the ITSC be used again for registration? (Yes/No)
+
+  * If an ITSC has been used for registration and the account has been activated, can the ITSC be used again for registration? (Yes/No)
 No. “You have already signed up” will be displayed.
-If an ITSC has been used for registration without activated, can the ITSC be used again for registration? (Yes/No)
+
+  * If an ITSC has been used for registration without activated, can the ITSC be used again for registration? (Yes/No)
 	Yes. The information of previous registration will be deleted. 
 (Good question. Need to figure it out.)
-If an ITSC has been used for registration without activation and the ITSC is used again for registration with another confirmation email sending out, is the previous confirmation email still effective? (Yes/No)
+
+  * If an ITSC has been used for registration without activation and the ITSC is used again for registration with another confirmation email sending out, is the previous confirmation email still effective? (Yes/No)
 	No. 
 (What does it mean by “the ITSC is used again”?)
 (used for registration)
-Can a registered but not activated account log in? (Yes/No)
+
+  * Can a registered but not activated account log in? (Yes/No)
 No. The information of this kind of users’ will be put in a “Temporary Users” list in the database.
-Will the application keep logging in, if the connection failed? (Yes/No)
+
+  * Will the application keep logging in, if the connection failed? (Yes/No)
 No. Error message will be displayed, and users should to try to log in again manually.
-After logging in successfully, is the application functional if connection failed?
+
+  * After logging in successfully, is the application functional if connection failed?
 No. Whenever there is an interaction between the device and the server, a connection timeout and a socket timeout will be set on the device (client) side. Error message will be displayed when timeout occurs.
-In the main page, what if the user press the back button on the device? 
+
+  * In the main page, what if the user press the back button on the device? 
 It will log out the system and go back to the welcome page. 
 (This has not been implemented yet.)
 (Yes...)
-Pressing a dish on the list, a detailed page will be shown. If a user presses the back button, is the view the same as the original view before detail page shows up? (Yes/No)
+Pressing a dish on the list, a detailed page will be shown. 
+
+  * If a user presses the back button, is the view the same as the original view before detail page shows up? (Yes/No)
 	Yes. 
 (Neal: I do not quite understand this question.)
 (就是在detail page里面按Back的话，一定会返回到前一个页面）
