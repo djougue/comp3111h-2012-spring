@@ -6,8 +6,8 @@
 
   * In welcome page, can user just leave without entering username or password? (Yes/No)
     Yes. Just press back button on the device. Then the application will exit. 
-(Is there a back button on welcome page? Or do we need to add one?)
-(No, back button is on the device. )
+    (Is there a back button on welcome page? Or do we need to add one?)
+    (No, back button is on the device. )
     In Sign up page, a user wanting to register needs to provide his/her ITSC. After registration, an email will be sent out for confirmation purpose. The user need to click the link in the email to activate its account. 
 
   * If an ITSC has been used for registration and the account has been activated, can the ITSC be used again for registration? (Yes/No)
@@ -15,7 +15,7 @@
 
   * If an ITSC has been used for registration without activated, can the ITSC be used again for registration? (Yes/No)
     Yes. The information of previous registration will be deleted. 
-(Good question. Need to figure it out.)
+    (Good question. Need to figure it out.)
 
   * If an ITSC has been used for registration without activation and the ITSC is used again for registration with another confirmation email sending out, is the previous confirmation email still effective? (Yes/No)
     No. 
@@ -32,7 +32,7 @@
     No. Whenever there is an interaction between the device and the server, a connection timeout and a socket timeout will be set on the device (client) side. Error message will be displayed when timeout occurs.
 
   * In the main page, what if the user press the back button on the device? 
-It will log out the system and go back to the welcome page. (This has not been implemented yet.)
+    It will log out the system and go back to the welcome page. (This has not been implemented yet.)
     (Yes...) Pressing a dish on the list, a detailed page will be shown. 
 
   * If a user presses the back button, is the view the same as the original view before detail page shows up? (Yes/No)   
@@ -55,7 +55,7 @@ It will log out the system and go back to the welcome page. (This has not been i
     (I think so)
 
   * In the Settings page, is there any notification if a user leaves the page without saving the changes? (Yes/No)
-Yes.
+    Yes.
 
   * In the Settings page, will the notification show up if a user leaves the page with neither making change and submitting the change? (Yes/No)
     No. An alert dialog will pop up ONLY if the user has modified something.
