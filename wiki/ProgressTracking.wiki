@@ -3,7 +3,7 @@
 
 = Progress Tracking =
 
-As of 28 Mar, 2012
+As of 2 Apr, 2012
 
 || *Deadline* || *Week* || *Task* || *Status* || *Date of Completion* ||
 || 19 Feb || 4 || Finish the homepage UI design || <font color="#009900">Completed</font> || 20 Feb ||
@@ -20,7 +20,7 @@ As of 28 Mar, 2012
 || 19 Mar || 8 || Realize Login function || <font color="#009900">Completed</font> || 19 Mar ||
 || 19 Mar || 8 || Pass the first online testing || <font color="#009900">Completed</font> || 19 Mar ||
 || 26 Mar || 9 || *Prototype demonstration* || <font color="#009900">Completed</font> || 26 Mar ||
-|| 2 Apr || 10 || *Inner testing 1*, focusing on Searching, Classification and Login function || || ||
+|| 2 Apr || 10 || *Inner testing 1*, focusing on Searching, Classification and Login function || <font color="#009900">Completed</font> || 2 Apr ||
 || 2 Apr || 10 || Realize Rankings and Personal taste function || <font color="#0000FF">_In progress..._</font> || ||
 || 9 Apr || Break || Release of the first alpha version (1.0a1) || || ||
 || 16 Apr || 11 || *Inner testing 2*, on all functions || || ||
