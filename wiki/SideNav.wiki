@@ -7,7 +7,7 @@
   * Developers' Guide
     * [GettingStarted Getting Started]
     * [UsefulLinks Useful Links]
-  * Test Cases
+  * Testing
     * [FirstTestCase First Test Cases]
   * Minutes
     * [Minutes0311 11, Mar]
