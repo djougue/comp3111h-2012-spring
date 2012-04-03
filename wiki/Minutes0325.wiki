@@ -42,13 +42,18 @@
 
 = Summary of Tasks To Do =
 Ordered by priority
-1. Email authentication
-1. Forget password
-2. Search page
-2. Detailed page: Rating: rating and browsing
-2. Menu page: food type
-3. SHAKE: random generate referring to personal taste
-3. Personal taste: blacklist and history
-3. Ranking
-4. Detailed Page: Comment: comment and browsing
-5. Detailed Page: Gallery: upload and browsing pictures
+  # Firstly 
+    * Email authentication
+    * Forget password
+  # Secondly
+    * Search page
+    * Detailed page: Rating: rating and browsing
+    * Menu page: food type
+  # Thirdly
+    * SHAKE: random generate referring to personal taste
+    * Personal taste: blacklist and history
+    * Ranking
+  # Fourthly
+    * Detailed Page: Comment: comment and browsing
+  # Fifthly
+    * Detailed Page: Gallery: upload and browsing pictures
