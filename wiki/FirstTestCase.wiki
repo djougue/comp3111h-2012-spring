@@ -48,3 +48,7 @@
     No. In page C, the effect for shaking the device is the same as pressing the back button and then pressing the reshake button, which means page D is the same as page A but with a new result. And page E will take place with the page C. 
   # In the SHAKE page, if a user reshake when a result is loading, will the new shake start intermediately? (Yes/No) 
     No. 
+
+== Results ==
+Bugs found:
+  * On the Welcome page, Registration page and Settings page, if a user enters single quotation marks in his/her user name, password and/or nickname, errors may occur. For example, if a new user set "aaa'aaa" as his/her password when registering, the app will display error message "You have already signed up", even if the user name has never been used.
