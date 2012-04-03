@@ -2,8 +2,8 @@
 #labels Featured
 
 = First Test Cases =
-  * [FirstTestCases#Test_Cases Test Cases]
-  * [FirstTestCases#Results Results]
+  * [FirstTestCase#Test_Cases Test Cases]
+  * [FirstTestCase#Results Results]
 ----
 
 == Test Cases ==
