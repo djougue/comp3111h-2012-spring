@@ -2,8 +2,11 @@
 #labels Featured
 
 = First Test Cases =
+  * [FirstTestCases#Test_Cases Test Cases]
+  * [FirstTestCases#Results Results]
+----
 
-
+== Test Cases ==
   # In welcome page, can user just leave without entering username or password? (Yes/No)
     Yes. Just press back button on the device. Then the application will exit. 
     In Sign up page, a user wanting to register needs to provide his/her ITSC. After registration, an email will be sent out for confirmation purpose. The user need to click the link in the email to activate its account. 
