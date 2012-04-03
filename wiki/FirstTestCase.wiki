@@ -51,4 +51,7 @@
 
 == Results ==
 Bugs found:
-  * On the Welcome page, Registration page and Settings page, if a user enters single quotation marks in his/her user name, password and/or nickname, errors may occur. For example, if a new user set "aaa'aaa" as his/her password when registering, the app will display error message "You have already signed up", even if the user name has never been used.
+  * On the Welcome page, Registration page and Settings page, if a user enters single quotation marks (') in his/her user name, password and/or nickname, errors may occur. For example, if a new user set "aaa'aaa" as his/her password when registering, the app will display error message "You have already signed up", even if the user name has never been used.
+  * <b><u>Reasons</u></b>: A single quotation mark is a special character for PHP. The server will return error messages if the received contents contain special characters.
+  * <b><u>Solutions</u></b>: Forbid users to use any single quotation marks in his/her user name, password and/or nickname.
+  * <b><u>Potential Problems</u></b>: In the comment function, we cannot forbid users to use single quotation marks. Therefore, we need to come up with a better idea to cope with this problems. The provisional solution is to add a reverse slash mark (\) in front of each single quotation mark (actually, each special character).
