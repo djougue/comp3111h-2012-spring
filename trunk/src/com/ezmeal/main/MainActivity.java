@@ -213,5 +213,12 @@ public class MainActivity extends FragmentActivity {
 		super.onResume();
 	}
 
-	
+	@Override
+	public void onBackPressed() {
+		Intent intent = new Intent(getApplicationContext(),
+				com.ezmeal.main.WelcomeActivity.class);
+		startActivity(intent);
+		finish();
+		return;
+	}	
 }

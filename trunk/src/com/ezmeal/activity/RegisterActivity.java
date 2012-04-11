@@ -45,7 +45,7 @@ public class RegisterActivity extends Activity implements OnClickListener, TextW
 	private String EMPTY_USERNAME      = "Your ITSC account is required.";
 	private String EMPTY_PASSWD        = "Password is required.";
 	private String EMPTY_NICKNAME      = "Nick name is required.";
-	private String INVALID_ITSC        = "The ITSC is invalid. Have you entered Space?";
+	private String INVALID_ITSC        = "The ITSC is invalid. Have you entered Space,' or \"?";
 	private String SHORT_PASSWD        = "The length of password should be no less than 6 characters.";
 	private String LONG_PASSWD         = "The length of password should be no more than 20 characters.";
 	private String SPACE_IN_PASSWD     = "No space is allowed in password.";
@@ -54,6 +54,8 @@ public class RegisterActivity extends Activity implements OnClickListener, TextW
 	private String EXISTED_ITSC        = "You have already signed up.";
 	private String TIMEOUT             = "Connection error. Please try again later.";
 	private String LOADING             = "Loading...";
+	private String INVALID_PASSWD	   = "You can't use \' or \" in your password. "; 
+	private String INVALID_NICKNAME	   = "You can't use \' or \" in your nickname. "; 
 	private String SUCCESSFUL          = "You registration is successful.";
 	
 	@Override
@@ -108,6 +110,14 @@ public class RegisterActivity extends Activity implements OnClickListener, TextW
     		resultText.setText(INVALID_ITSC);
     		return false;
     	}
+    	else if (uname.indexOf("'") >= 0) {
+    		resultText.setText(INVALID_ITSC);
+    		return false;
+    	}
+    	else if (uname.indexOf("\"") >= 0) {
+    		resultText.setText(INVALID_ITSC);
+    		return false;
+    	}
     	//check if the password is too short
     	else if (passwd.length() < 6) {
     		resultText.setText(SHORT_PASSWD);
@@ -123,6 +133,16 @@ public class RegisterActivity extends Activity implements OnClickListener, TextW
     		resultText.setText(SPACE_IN_PASSWD);
     		return false;
     	}
+    	//check if the password contains any space(s)
+    	else if (passwd.indexOf("'") >= 0) {
+    		resultText.setText(INVALID_PASSWD);
+    		return false;
+    	}
+    	//check if the password contains any space(s)
+    	else if (passwd.indexOf("\"") >= 0) {
+    		resultText.setText(INVALID_PASSWD);
+    		return false;
+    	}
     	//check if confirmed password is consistent
     	else if (!passwd.equals(confPasswd)) {
     		resultText.setText(INCONSISTENT_PASSWD);
@@ -131,6 +151,16 @@ public class RegisterActivity extends Activity implements OnClickListener, TextW
     	//check if the nickname contains any space(s)
     	else if (nname.indexOf(" ") >= 0) {
     		resultText.setText(SPACE_IN_NICKNAME);
+    		return false;
+    	}
+    	//check if the nickname contains any space(s)
+    	else if (nname.indexOf("'") >= 0) {
+    		resultText.setText(INVALID_NICKNAME);
+    		return false;
+    	}
+    	//check if the nickname contains any space(s)
+    	else if (nname.indexOf("\"") >= 0) {
+    		resultText.setText(INVALID_NICKNAME);
     		return false;
     	}
     	resultText.setTextColor(0xffffffff);  //white

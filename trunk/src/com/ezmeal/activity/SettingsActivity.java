@@ -256,6 +256,7 @@ OnCheckedChangeListener, TextWatcher {
         	}
         	else {
         		postSettingsData();
+        		isChanged = false;
         	}
         }
     	else if (view == backBtn) {
