@@ -71,7 +71,48 @@ public class Communication_API {
 			Log.e("log_tag", "Error converting result "+e.toString());
 		}
 	}
-	
+
+	private static void send_cmd_ihome(String cmd)
+	{
+		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		//http post
+		try{
+			//set time out
+		     HttpParams httpParameters = new BasicHttpParams();
+			 HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+			 HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+			 
+			 HttpClient httpclient = new DefaultHttpClient(httpParameters);
+		     HttpPost httppost = new HttpPost("http://ihome.ust.hk/~xlu/cgi-bin/"+cmd);
+		     httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+		     HttpResponse response = httpclient.execute(httppost);
+		     HttpEntity entity = response.getEntity();
+		     is = entity.getContent();
+		}
+		catch(Exception e)
+		{
+		     Log.e("log_tag", "Error in http connection"+e.toString());
+		}
+		//convert response to string
+		try{
+		      BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
+		       sb = new StringBuilder();
+		       sb.append(reader.readLine() + "\n");
+		
+		       String line="0";
+		       while ((line = reader.readLine()) != null) 
+		       {
+		       	sb.append(line + "\n");
+		       }
+		       is.close();
+		       result = new String();
+		       result=sb.toString();
+		}
+		catch(Exception e)
+		{
+			Log.e("log_tag", "Error converting result "+e.toString());
+		}
+	}
 	/*******************************************************************************************
 	 * 									Methods Related to Users
 	 ******************************************************************************************/
@@ -102,9 +143,9 @@ public class Communication_API {
 			e1.printStackTrace();
 		}
 		
-		send_cmd("register.php?name="+name+"&password="+password+"&nickname="+nickname);
+		send_cmd_ihome("register.php?name="+name+"&password="+password+"&nickname="+nickname);
 			
-		return check_password(name, password);
+		return 1;
 	}
 	
 	//if the password is correct, return 1

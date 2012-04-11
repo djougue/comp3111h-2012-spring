@@ -123,6 +123,7 @@ public class MyTasteActivity extends Activity implements OnClickListener, OnChec
     		resultText.setText(LOADING);
     		progressBar.setVisibility(View.VISIBLE);
     		postMyTasteData();
+    		isChanged = false;
     	}
         else if (view == backBtn) {
     		//Pop up an alert dialog if something has been modified

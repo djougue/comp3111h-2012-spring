@@ -21,9 +21,9 @@ public class ShakeActivity extends Activity implements OnClickListener{
 	private TextView headerTitle;
 	private Button backBtn;
 
-	private String dish_name="fail";
-	private String dish_canteen="fail";
-	private String dish_price="fail";
+	private String dish_name="Connection failed";
+	private String dish_canteen=" ";
+	private String dish_price=" ";
 	private int shake_state = 0;
 	Dish the_dish;
     private Thread shakeThread;
@@ -63,17 +63,19 @@ public class ShakeActivity extends Activity implements OnClickListener{
 
 		dishImage.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-    			Intent intent = new Intent(getApplicationContext(),
-    					com.ezmeal.activity.DetailActivity.class);
-    			
-    			Bundle dishInfo = new Bundle();
-    			dishInfo.putString("name", dish_name);
-    			dishInfo.putString("pic", " ");
-    			dishInfo.putString("price", dish_price);
-    			dishInfo.putString("canteen", dish_canteen);
-    			dishInfo.putInt("ActivityFlag", 1);
-    			intent.putExtras(dishInfo);
-    			startActivity(intent);
+            	if(the_dish != null){
+	    			Intent intent = new Intent(getApplicationContext(),
+	    					com.ezmeal.activity.DetailActivity.class);
+	    			
+	    			Bundle dishInfo = new Bundle();
+	    			dishInfo.putString("name", dish_name);
+	    			dishInfo.putString("pic", " ");
+	    			dishInfo.putString("price", dish_price);
+	    			dishInfo.putString("canteen", dish_canteen);
+	    			dishInfo.putInt("ActivityFlag", 1);
+	    			intent.putExtras(dishInfo);
+	    			startActivity(intent);
+            	}
     		}
 		});
         
@@ -87,6 +89,12 @@ public class ShakeActivity extends Activity implements OnClickListener{
 							dish_name = the_dish.getDish_name();
 							dish_canteen = the_dish.getDish_canteen();
 							dish_price = "$"+Float.toString(the_dish.getDish_price());
+							shake_state = 2;
+						}
+						else{
+							dish_name="Connection failed";
+							dish_canteen=" ";
+							dish_price=" ";
 							shake_state = 2;
 						}
 						

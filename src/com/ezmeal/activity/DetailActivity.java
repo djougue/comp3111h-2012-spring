@@ -85,9 +85,7 @@ public class DetailActivity extends FragmentActivity {
 	public void onBackPressed() {
     	if(fatherActivity==0)
     	{
-   			Intent intent = new Intent(getApplicationContext(),
-					com.ezmeal.activity.ShakeActivity.class);
-   			startActivity(intent);
+    		finish();
     	}
     	else if(fatherActivity==1){
    			Intent intent = new Intent(getApplicationContext(),
@@ -96,7 +94,7 @@ public class DetailActivity extends FragmentActivity {
     		finish();
     	}		
 		return;
-		}
+	}
 
 	
 	
