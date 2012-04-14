@@ -3,6 +3,23 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
+	<LinearLayout 
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+	    >
+	    <Spinner
+	        android:id="@+id/timeSpinner"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" 
+	        android:layout_weight="1"/>
+	
+	    <Spinner
+	        android:id="@+id/canteenSpinner"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" 
+	        android:layout_weight="1"/>
+	</LinearLayout>
     <ProgressBar
         android:id="@+id/progressBarMenu"
         android:layout_width="wrap_content"
@@ -16,7 +33,7 @@
         android:id="@+id/list"
         android:visibility="invisible"
         android:layout_width="fill_parent"
-        android:layout_height="0dip" 
+        android:layout_height="0dip"
         android:layout_weight="1"
     />
     <Button
@@ -26,8 +43,8 @@
         android:layout_gravity="center_horizontal"
         android:text="reconnect"
         android:visibility="invisible"
-    />
-    
+    />	    
+	
 <!--    <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
