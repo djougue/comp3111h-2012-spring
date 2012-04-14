@@ -1,6 +1,8 @@
 package com.ezmeal.server;
 
 import java.io.BufferedReader;
+import java.net.URLEncoder;
+
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -244,6 +246,7 @@ public class Communication_API {
 		      
         return user;
 	}
+	 
 	
 	/*******************************************************************************************
 	 * 									Methods Related to Dishes
@@ -293,6 +296,132 @@ public class Communication_API {
 		     JSONObject json_data=null;
 
              json_data = jArray.getJSONObject(0);
+             dish.setDish_id(json_data.getInt("dish_id"));
+             dish.setDish_name(json_data.getString("dish_name"));
+             dish.setDish_canteen(json_data.getString("dish_canteen"));
+             dish.setDish_price(Float.valueOf(json_data.getString("dish_price")).floatValue());
+             dish.setDish_spicy(json_data.getInt("dish_spicy"));
+             dish.setDish_vege(json_data.getInt("dish_vege"));
+             dish.setDish_meat(json_data.getInt("dish_meat"));
+             dish.setDish_available_time(json_data.getString("dish_available_time"));
+		}
+		catch(JSONException e1)
+		{
+			e1.printStackTrace();
+		} 
+		catch (ParseException e1) 
+		{
+			e1.printStackTrace();
+		}
+		return dish;
+	}
+	
+	//put dish_name="any" if do not want to search by name
+	//put dish_canteen="any" if do not want to search by canteen
+	//put dish_spicy=2 if do not want to search by dish_spicy
+	//put dish_vege=2 if do not want to search by dish_vege
+	//put dish_meat=2 if do not want to search by dish_meat
+	public Dish search_dish(int index, String dish_name, String dish_canteen, int dish_spicy, int dish_vege, int dish_meat)
+	{
+		Dish dish=new Dish();
+		result = null;
+		String cmd="search_dish.php?";
+		boolean first=true; //indicate whether this is the first parameter to be passed
+		
+		//search by name
+		if (dish_name!="any")
+		{
+			//do nothing
+		}
+		else
+		{
+			try{
+				String name=URLEncoder.encode(dish_name,"utf-8"); 
+				cmd+="name="+name;
+				first=false;			
+			}
+			catch(Exception e){
+			}
+		}
+		
+		//search by canteen
+		if (dish_canteen!="any")
+		{
+			//do nothing
+		}
+		else
+		{
+			try{
+				String canteen=URLEncoder.encode(dish_canteen,"utf-8"); 
+				
+				if (first)
+				{
+					cmd+="canteen="+canteen;
+					first=false;
+				}
+				else
+					cmd+="&canteen="+canteen;
+			}
+			catch(Exception e){
+			}			
+		}
+		
+		//search by spicy
+		if (dish_spicy<2)
+		{
+			if (first)
+			{
+				cmd+="spicy="+dish_spicy;
+				first=false;
+			}
+			else
+				cmd+="&spicy="+dish_spicy;
+		}
+		else
+		{
+			//do nothing
+		}
+		
+		//search by vege
+		if (dish_vege<2)
+		{
+			if (first)
+			{
+				cmd+="vege="+dish_vege;
+				first=false;
+			}
+			else
+				cmd+="&vege="+dish_vege;
+		}
+		else
+		{
+			//do nothing
+		}
+		
+		//search by meat
+		if (dish_meat<2)
+		{
+			if (first)
+			{
+				cmd+="meat="+dish_meat;
+				first=false;
+			}
+			else
+				cmd+="&meat="+dish_meat;
+		}
+		else
+		{
+			//do nothing
+		}
+		
+		send_cmd(cmd);
+		try
+		{
+			if(result==null) return null;
+		     jArray = new JSONArray(result);
+		     JSONObject json_data=null;
+
+             json_data = jArray.getJSONObject(index);
              dish.setDish_id(json_data.getInt("dish_id"));
              dish.setDish_name(json_data.getString("dish_name"));
              dish.setDish_canteen(json_data.getString("dish_canteen"));
