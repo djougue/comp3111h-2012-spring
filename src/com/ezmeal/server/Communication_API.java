@@ -23,14 +23,14 @@ import android.net.ParseException;
 import android.util.Log;
 
 public class Communication_API {
-	static JSONArray jArray;
-	static String result = null;
-	static InputStream is = null;
-	static StringBuilder sb=null;
-	static int timeoutConnection = 12000;
-	static int timeoutSocket = 12000;
+	JSONArray jArray;
+	String result = null;
+	InputStream is = null;
+	StringBuilder sb=null;
+	int timeoutConnection = 12000;
+	int timeoutSocket = 12000;
 		
-	private static void send_cmd(String cmd)
+	private void send_cmd(String cmd)
 	{
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		//http post
@@ -72,7 +72,7 @@ public class Communication_API {
 		}
 	}
 
-	private static void send_cmd_ihome(String cmd)
+	private void send_cmd_ihome(String destination, String cmd)
 	{
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		//http post
@@ -83,7 +83,14 @@ public class Communication_API {
 			 HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
 			 
 			 HttpClient httpclient = new DefaultHttpClient(httpParameters);
-		     HttpPost httppost = new HttpPost("http://ihome.ust.hk/~xlu/cgi-bin/"+cmd);
+			 HttpPost httppost;
+			 
+			 //Choose to send to Lu's or Tu's ihome
+			 if (destination=="xlu")
+				 httppost = new HttpPost("http://ihome.ust.hk/~xlu/cgi-bin/"+cmd);
+			 else
+				 httppost = new HttpPost("http://ihome.ust.hk/~jtu/cgi-bin/"+cmd);
+			 
 		     httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 		     HttpResponse response = httpclient.execute(httppost);
 		     HttpEntity entity = response.getEntity();
@@ -120,7 +127,7 @@ public class Communication_API {
 	//if register successfully, return 1
 	//if the user_name is already inside the database, return -2
 	//if unknown error occurs, return -1
-	public static int register(String name, String password, String nickname)
+	public int register(String name, String password, String nickname)
 	{
 		result = null;
 		send_cmd("fetch_user_info.php?name="+name);
@@ -143,14 +150,14 @@ public class Communication_API {
 			e1.printStackTrace();
 		}
 		
-		send_cmd_ihome("register.php?name="+name+"&password="+password+"&nickname="+nickname);
+		send_cmd_ihome("xlu","register.php?name="+name+"&password="+password+"&nickname="+nickname);
 			
 		return 1;
 	}
 	
 	//if the password is correct, return 1
 	//else return -1
-	public static int check_password(String name, String password)
+	public int check_password(String name, String password)
 	{
 		result = null;
 		
@@ -180,7 +187,7 @@ public class Communication_API {
 	//if change setting successfully, return 1
 	//if the user_name does not exist inside the database, return -2
 	//if unknown error occurs, return -1
-	public static int change_user_setting(String name, String password, String nickname, int spicy, int vege, int meat)
+	public int change_user_setting(String name, String password, String nickname, int spicy, int vege, int meat)
 	{
 		result = null;
 		send_cmd("fetch_user_info.php?name="+name);
@@ -208,7 +215,7 @@ public class Communication_API {
 		return check_password(name, password);
 	}
 	
-	public static User get_user_info(String name, String password)
+	public User get_user_info(String name, String password)
 	{
 		User user=new User();
 		send_cmd("fetch_user_info.php?name="+name);
@@ -241,7 +248,7 @@ public class Communication_API {
 	/*******************************************************************************************
 	 * 									Methods Related to Dishes
 	 ******************************************************************************************/
-	public static Dish fetch_dish(int index)
+	public Dish fetch_dish(int index)
 	{
 		Dish dish=new Dish();
 		result = null;
@@ -257,6 +264,10 @@ public class Communication_API {
              dish.setDish_name(json_data.getString("dish_name"));
              dish.setDish_canteen(json_data.getString("dish_canteen"));
              dish.setDish_price(Float.valueOf(json_data.getString("dish_price")).floatValue());
+             dish.setDish_spicy(json_data.getInt("dish_spicy"));
+             dish.setDish_vege(json_data.getInt("dish_vege"));
+             dish.setDish_meat(json_data.getInt("dish_meat"));
+             dish.setDish_available_time(json_data.getString("dish_available_time"));
 		}
 		catch(JSONException e1)
 		{
@@ -269,7 +280,7 @@ public class Communication_API {
 		return dish;
 	}
 	
-	public static Dish random_dish()
+	public Dish random_dish()
 	{
 		
 		Dish dish=new Dish();
@@ -286,6 +297,10 @@ public class Communication_API {
              dish.setDish_name(json_data.getString("dish_name"));
              dish.setDish_canteen(json_data.getString("dish_canteen"));
              dish.setDish_price(Float.valueOf(json_data.getString("dish_price")).floatValue());
+             dish.setDish_spicy(json_data.getInt("dish_spicy"));
+             dish.setDish_vege(json_data.getInt("dish_vege"));
+             dish.setDish_meat(json_data.getInt("dish_meat"));
+             dish.setDish_available_time(json_data.getString("dish_available_time"));
 		}
 		catch(JSONException e1)
 		{
