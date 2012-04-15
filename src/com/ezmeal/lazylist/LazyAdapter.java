@@ -31,23 +31,30 @@ public class LazyAdapter extends BaseAdapter{
     }
 	*/
     public LazyAdapter(Activity a, Vector<Bundle>dishes) {
-        activity = a;
+    	activity = a;
+    	if(dishes.isEmpty()){
+        }
+        else{
         data = new String[dishes.size()];
         dishes_name = new String[dishes.size()];
         dishes_canteen = new String[dishes.size()];
         dishes_price = new Float[dishes.size()];
-        for(int i=0;i<dishes.size();i++){
-        	Bundle one_dish = dishes.elementAt(i);
-        	data[i]=mStrings[i];
-        	dishes_name[i]=one_dish.getString("name");
-        	dishes_canteen[i]=one_dish.getString("canteen");
-        	dishes_price[i]=one_dish.getFloat("price");
-        }
+	        for(int i=0;i<dishes.size();i++){
+	        	Bundle one_dish = dishes.elementAt(i);
+	        	data[i]=mStrings[i];
+	        	dishes_name[i]=one_dish.getString("name");
+	        	dishes_canteen[i]=one_dish.getString("canteen");
+	        	dishes_price[i]=one_dish.getFloat("price");
+	        }
+        
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageLoader=new ImageLoader(activity.getApplicationContext());
+        }
     }
 
     public int getCount() {
+//    	if(data.length==0)
+//    		return 1;
         return data.length;
     }
 
