@@ -24,11 +24,14 @@
     <string name="labelBlacklist">Blacklist</string>
     <string name="labelChangePassword">Change Password</string>
     <string name="labelConfirm">Confirm</string>
+    <string name="labelConfirmationCode">Confirmation Code</string>
     <string name="labelConfirmPassword">Confirm Password</string>
-    <string name="labelForgotPassword"><u>Forgot your password?</u></string>
+    <string name="labelForgotPasswd"><u>Forgot your password?</u></string>
+    <string name="labelForgotPasswdRemarks">By submitting your user name, a confirmation code will be sent to your HKUST mailbox. You can reset your password with this confirmation code.</string>
     <string name="labelHistory">History</string>
     <string name="labelMailAddrSuffix"> \@ ust.hk</string>
     <string name="labelNew">New</string>
+    <string name="labelNewPassword">New Password</string>
     <string name="labelNickName">Nickname</string>
     <string name="labelOld">Old</string>
     <string name="labelPassword">Password</string>
