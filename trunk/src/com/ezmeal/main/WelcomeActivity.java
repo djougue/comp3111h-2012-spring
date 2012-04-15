@@ -44,6 +44,7 @@ public class WelcomeActivity extends Activity implements OnClickListener {
 	private Handler refreshHandler;
 	private Thread postDataThread;
 	public static int serverResp;
+	private Communication_API api = new Communication_API();
 	
 	//constant strings
 	private String INVALID_INPUT = "Invalid user name or password!";
@@ -148,7 +149,7 @@ public class WelcomeActivity extends Activity implements OnClickListener {
     	    	postDataThread = new Thread(new Runnable() {
     	    		public void run() {
     	    			WelcomeActivity.serverResp =
-    	    					Communication_API.check_password(username, password);
+    	    					api.check_password(username, password);
     	    			
     	    			//Refresh the data of this app
     	    			refreshHandler.post(new Runnable() {
@@ -162,7 +163,7 @@ public class WelcomeActivity extends Activity implements OnClickListener {
     	    		    			((UserApp) thisActivity.getApplication()).setPassword(password);
     	    		    			
     	    		    			//get and set user info
-    	    		    			User user = Communication_API.get_user_info(username, password);
+    	    		    			User user = api.get_user_info(username, password);
     	    		    			((UserApp) thisActivity.getApplication()).setNickName(user.getUser_nickname());
     	    		    			boolean[] taste = {user.isUser_spicy(), user.isUser_meat(), user.isUser_vege()};
     	    		    			((UserApp) thisActivity.getApplication()).setTaste(taste);
