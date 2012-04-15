@@ -67,11 +67,11 @@
 27. When the user enters “a b” in the dish name field, will the dish with “a c b” as substring be returned? 
   Yes. Dishes with “a” and “b” as substrings will be returned. 
 28. When the user enters “a” in the dish name field, will the dish with “ac” as substring be returned? 
-  No. 
+  Yes. 
 29. When the user enters “a b” in the dish name field, will the dish with “ab” as substring be returned? 
-  No. 
+  No. "a b" is treated as a sub-string, and "ab" does not contain "a b". 
 30. Is there any difference between “a” and “a a” in the name field? 
-  No. 
+  Yes. "a a" is treated as a string with a space character between two 'a's, and therefore "a a" is different from a single "a"
 
 == Results ==
 Bugs found:
