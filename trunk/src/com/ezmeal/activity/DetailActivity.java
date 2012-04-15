@@ -3,6 +3,9 @@ package com.ezmeal.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -10,14 +13,15 @@ import com.ezmeal.lazylist.ImageLoader;
 import com.ezmeal.main.R;
 import com.ezmeal.shake.ShakeListener;
 
-public class DetailActivity extends FragmentActivity {
+public class DetailActivity extends FragmentActivity implements OnClickListener {
 
 	ShakeListener mShaker;
     public ImageLoader imageLoader; 
     private Bundle the_dish;
     private int fatherActivity;
     
-
+    private Button backBtn;
+	private TextView headerTitle;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +31,7 @@ public class DetailActivity extends FragmentActivity {
 
 /*		
 		mShaker = new ShakeListener(this);		
+>>>>>>> .r344
 		mShaker.setOnShakeListener(new ShakeListener.OnShakeListener() {  
 		    public void onShake() {
 		    	if(fatherActivity==0)
@@ -46,7 +51,7 @@ public class DetailActivity extends FragmentActivity {
 */
 	}
 	
-	void setView(){
+	void setView() {
 		if (the_dish != null) {
 	        fatherActivity = the_dish.getInt("ActivityFlag");
 			String dish_name = the_dish.getString("name");
@@ -62,6 +67,11 @@ public class DetailActivity extends FragmentActivity {
 			String pic = the_dish.getString("pic");
 	        imageLoader=new ImageLoader(this.getApplicationContext());
 	        imageLoader.DisplayImage(pic, image);
+	        //set the header
+			backBtn = (Button) findViewById(R.id.buttonBack);
+	        backBtn.setOnClickListener(this);
+	        headerTitle = (TextView) findViewById(R.id.labelHeader);
+	        headerTitle.setText("Dish");
 		}
 		else{
 			TextView view = (TextView) findViewById(R.id.textDishNameInDetail);
@@ -96,7 +106,9 @@ public class DetailActivity extends FragmentActivity {
 		return;
 	}
 
-	
-	
-	
+	public void onClick(View view) {
+		if (view == backBtn) {
+			finish();
+		}
+	}
 }

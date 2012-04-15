@@ -2,6 +2,7 @@ package com.ezmeal.activity;
 
 import com.ezmeal.main.R;
 import com.ezmeal.main.UserApp;
+import com.ezmeal.main.Utility;
 import com.ezmeal.server.Communication_API;
 
 import android.app.Activity;
@@ -41,9 +42,9 @@ OnCheckedChangeListener, TextWatcher {
 	private String EMPTY_NICKNAME      = "Nick name is required.";
 	private String SHORT_PASSWD        = "The length of password should be no less than 6 characters.";
 	private String LONG_PASSWD         = "The length of password should be no more than 20 characters.";
-	private String SPACE_IN_PASSWD     = "No space is allowed in password.";
+	private String INVALID_PASSWD      = "Password contains invalid characters.";
 	private String INCONSISTENT_PASSWD = "The confirmed password is inconsistent.";
-	private String SPACE_IN_NICKNAME   = "No space is allowed in nickname";
+	private String INVALID_NICKNAME    = "Nickname contains invalid characters.";
 	private String WRONG_OLD_PASSWD    = "Your old password is not correct.";
 	private String TIMEOUT             = "Connection error. Please try again later.";
 	private String LOADING             = "Loading...";
@@ -132,9 +133,9 @@ OnCheckedChangeListener, TextWatcher {
         		resultText.setText(LONG_PASSWD);
         		return false;
         	}
-        	//check if the password contains any space(s)
-        	else if (passwd.indexOf(" ") >= 0) {
-        		resultText.setText(SPACE_IN_PASSWD);
+        	//check if the password contains invalid characters
+        	else if (Utility.checkInput(passwd)) {
+        		resultText.setText(INVALID_PASSWD);
         		return false;
         	}
         	//check if confirmed password is consistent
@@ -150,9 +151,9 @@ OnCheckedChangeListener, TextWatcher {
     		return false;
     	}
 
-    	//check if the nickname contains any space(s)
-    	else if (nname.indexOf(" ") >= 0) {
-    		resultText.setText(SPACE_IN_NICKNAME);
+    	//check if the nickname contains invalid characters
+    	else if (Utility.checkInput(nname)) {
+    		resultText.setText(INVALID_NICKNAME);
     		return false;
     	}
     	return true;

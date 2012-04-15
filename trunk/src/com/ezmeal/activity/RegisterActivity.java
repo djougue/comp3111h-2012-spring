@@ -57,7 +57,7 @@ public class RegisterActivity extends Activity implements OnClickListener, TextW
 	private String LOADING             = "Loading...";
 	private String INVALID_PASSWD	   = "You can't use \' or \" in your password. "; 
 	private String INVALID_NICKNAME	   = "You can't use \' or \" in your nickname. "; 
-	private String SUCCESSFUL          = "You registration is successful.";
+	private String SUCCESSFUL          = "An activation email has been sent to your HKUST mailbox.";
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
