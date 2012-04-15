@@ -22,6 +22,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,6 +32,7 @@ import android.widget.TextView;
 import com.ezmeal.activity.MenuFragment;
 import com.ezmeal.activity.MyTasteActivity;
 import com.ezmeal.activity.QuitActivity;
+import com.ezmeal.activity.SearchFragment;
 import com.ezmeal.activity.SettingsActivity;
 import com.ezmeal.activity.ShakeActivity;
 import com.ezmeal.shake.ShakeListener;
@@ -52,9 +54,11 @@ public class MainActivity extends FragmentActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		Log.e("MainActivity", "creating MainActivity");
 		super.onCreate(savedInstanceState);
 
 		setContentView(com.ezmeal.main.R.layout.activity_swipeytab);
+		Log.e("MainActivity", "setting view");
 
 		mTabs = (SwipeyTabs) findViewById(com.ezmeal.main.R.id.swipeytabs);
 
@@ -62,6 +66,7 @@ public class MainActivity extends FragmentActivity {
 
 		SwipeyTabsPagerAdapter adapter = new SwipeyTabsPagerAdapter(this,
 				getSupportFragmentManager());
+		
 		//getSupportFragmentManager:
 		//	Return the FragmentManager for interacting with fragments associated with this activity.
 		mViewPager.setAdapter(adapter);
@@ -69,7 +74,9 @@ public class MainActivity extends FragmentActivity {
 		mViewPager.setOnPageChangeListener(mTabs);
 		//set mTabs as the listener
 		mViewPager.setCurrentItem(mTabs.getChildCount() / 2);  //By default, show the middle one of the tabs
+		Log.e("MainActivity", "setting viewPager");
 
+/*
 		mShaker = new ShakeListener(this);		
 		mShaker.setOnShakeListener(new ShakeListener.OnShakeListener() {  
 		    public void onShake() {  
@@ -78,6 +85,9 @@ public class MainActivity extends FragmentActivity {
 	   			startActivity(intent);
 		    }  
 		});
+*/
+		Log.e("MainActivity", "setting shaking");
+
 		/**
 		 * Button activities
 		 */
@@ -177,6 +187,9 @@ public class MainActivity extends FragmentActivity {
 			case 1:
 				MenuFragment mFragment = new MenuFragment();
 				return mFragment;
+			case 2:
+				SearchFragment sFragment = new SearchFragment();
+				return sFragment;
 			}
 			return SwipeyTabFragment.newInstance(TITLES[position]);
 		}
@@ -203,13 +216,13 @@ public class MainActivity extends FragmentActivity {
 	
 	@Override
 	protected void onPause(){
-		mShaker.pause();
+		//mShaker.pause();
 		super.onPause();
 	}
 	
 	@Override
 	protected void onResume(){
-		mShaker.resume();
+		//mShaker.resume();
 		super.onResume();
 	}
 
