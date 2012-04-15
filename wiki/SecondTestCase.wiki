@@ -9,7 +9,7 @@
 ----
 
 == Test Cases ==
-=== Forgot Password Page ===
+==== <u>Forgot Password Page</u> ====
 1. Can a user use a used confirmation code?
   No.
 2. Can a user login after a confirmation code has been sent to him/her, and before he/she resets the password?
@@ -41,7 +41,7 @@
 15. What if the user shakes the devices when he/she is in this page, if the SHAKE function is on?
   Automatically go to the SHAKE page.
 
-=== Search Page ===
+==== <u>Search Page</u> ====
 16. What if nothing is entered or chosen when pressing the submit button?
   The app will return all the dishes. 
 17. What if the network connection fails when pressing the submit button?
