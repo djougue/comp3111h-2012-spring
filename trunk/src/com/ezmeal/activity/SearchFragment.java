@@ -57,8 +57,7 @@ public class SearchFragment extends Fragment {
 	private static final String[] time_name={"Any time","Breakfast","Lunch","Tea","Dinner"};
 	private Spinner canteen_spinner;
 	private ArrayAdapter<String> canteen_adapter;
-	private static final String[] canteen_name={"Any Canteen","Coffee Shop","Chinese Restaurant","McDonald","Seafront","LG7 Asia Pacific","Gold Rice Bowl"};
-	private static final String[] canteen_search_name={"any","Coffee Shop","Chinese Restaurant","McDonald","Seafront Cafeteria","LG7 Asia Pacific Catering","LG7 Gold Rice Bowl"};
+	private static final String[] canteen_name={"Any Canteen","LG7 Asia Pacific","Gold Rice Bowl","McDonald","LG1 Canteen","Chinese Restaurant","Coffee Shop","Seafront"};
 	private CheckBox[] taste = new CheckBox[3];
 	private EditText dish_name_text;
 	
@@ -164,7 +163,13 @@ public class SearchFragment extends Fragment {
     				case FETCH:
 	    				cur_dish = api.search_dish(dish_counter,
 	    						dish_name_text.getText().toString().length()==0?"any":dish_name_text.getText().toString(),
-	    	    				canteen_search_name[canteen_spinner.getSelectedItemPosition()],
+	    						(canteen_spinner.getSelectedItemPosition()==1)||(canteen_spinner.getSelectedItemPosition()==0),
+	    						(canteen_spinner.getSelectedItemPosition()==2)||(canteen_spinner.getSelectedItemPosition()==0),
+	    						(canteen_spinner.getSelectedItemPosition()==3)||(canteen_spinner.getSelectedItemPosition()==0),
+	    						(canteen_spinner.getSelectedItemPosition()==4)||(canteen_spinner.getSelectedItemPosition()==0),
+	    						(canteen_spinner.getSelectedItemPosition()==5)||(canteen_spinner.getSelectedItemPosition()==0),
+	    						(canteen_spinner.getSelectedItemPosition()==6)||(canteen_spinner.getSelectedItemPosition()==0),
+	    						(canteen_spinner.getSelectedItemPosition()==7)||(canteen_spinner.getSelectedItemPosition()==0),
 	    						taste[0].isChecked()?1:2,
 	    						taste[1].isChecked()?1:2,
 	    						taste[2].isChecked()?1:2,
