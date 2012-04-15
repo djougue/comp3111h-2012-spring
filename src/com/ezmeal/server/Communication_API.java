@@ -419,9 +419,6 @@ public class Communication_API {
 		
 		send_cmd(cmd);
 		
-		//debugging
-		testing=cmd;
-		
 		try
 		{
 			if(result==null) return null;
