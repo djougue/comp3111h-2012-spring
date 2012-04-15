@@ -62,6 +62,30 @@ public class Dish {
 		return dish_available_time;
 	}
 
+	public boolean isDinner(){
+		if ((dish_available_time & 0x0001)==1)
+			return true;
+		return false;
+	}
+	
+	public boolean isTea(){
+		if ((dish_available_time & 0x0002)==1)
+			return true;
+		return false;
+	}
+	
+	public boolean isLunch(){
+		if ((dish_available_time & 0x0004)==1)
+			return true;
+		return false;
+	}
+	
+	public boolean isBreakfast(){
+		if ((dish_available_time & 0x0008)==1)
+			return true;
+		return false;
+	}
+	
 	public void setDish_available_time(int time) {
 		this.dish_available_time = time;
 	}
