@@ -18,6 +18,7 @@ import com.ezmeal.server.Dish;
 import com.ezmeal.shake.ShakeListener;
 
 public class ShakeActivity extends Activity implements OnClickListener{
+	private Communication_API api = new Communication_API();
 	private TextView headerTitle;
 	private Button backBtn;
 
@@ -52,13 +53,15 @@ public class ShakeActivity extends Activity implements OnClickListener{
             	reshake();
             }
 		});
-		
+
+/*		
 		mShaker = new ShakeListener(this);		
 		mShaker.setOnShakeListener(new ShakeListener.OnShakeListener() {  
 		    public void onShake() {  
 		    	reshake();
 		    }  
 		});
+*/
 		dishImage = (ImageView) findViewById(com.ezmeal.main.R.id.dishImageButton);
 
 		dishImage.setOnClickListener(new View.OnClickListener() {
@@ -83,7 +86,7 @@ public class ShakeActivity extends Activity implements OnClickListener{
 			public void run() {
 				while(true){
 					if(shake_state==0){
-						the_dish = Communication_API.random_dish();
+						the_dish = api.random_dish();
 						
 						if(the_dish!=null){
 							dish_name = the_dish.getDish_name();
@@ -124,7 +127,7 @@ public class ShakeActivity extends Activity implements OnClickListener{
     }
 
     protected void onPause() {
-    	mShaker.pause();
+//    	mShaker.pause();
     	super.onPause();
     	shake_state = 1;
     	finish();
@@ -132,7 +135,7 @@ public class ShakeActivity extends Activity implements OnClickListener{
     
     @Override
 	protected void onResume(){
-		mShaker.resume();
+//		mShaker.resume();
 		super.onResume();
 	}
 

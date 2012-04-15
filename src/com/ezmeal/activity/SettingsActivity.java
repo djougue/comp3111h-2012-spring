@@ -24,6 +24,7 @@ import android.widget.ToggleButton;
 
 public class SettingsActivity extends Activity implements OnClickListener,
 OnCheckedChangeListener, TextWatcher {
+	private Communication_API api = new Communication_API();
 	private TextView headerTitle, oldpasswdLabel, newpasswdLabel, confirmpasswdLabel, resultText;
 	private Button backBtn, submitBtn;
 	private EditText username, nickname, oldpasswd, newpasswd, confirmpasswd;
@@ -182,7 +183,7 @@ OnCheckedChangeListener, TextWatcher {
     		postDataThread = new Thread(new Runnable() {
 	    		public void run() {
 	    			SettingsActivity.serverResp =
-	    					Communication_API.change_user_setting(uname, newpwd, nname, taste[0]?1:0, taste[2]?1:0, taste[1]?1:0);
+	    					api.change_user_setting(uname, newpwd, nname, taste[0]?1:0, taste[2]?1:0, taste[1]?1:0);
 	    			
 	    			//Refresh the data of this app
 	    			refreshHandler.post(new Runnable() {
@@ -220,7 +221,7 @@ OnCheckedChangeListener, TextWatcher {
     	postDataThread = new Thread(new Runnable() {
     		public void run() {
     			SettingsActivity.serverResp =
-    					Communication_API.check_password(username.getText().toString(), oldpasswd.getText().toString());
+    					api.check_password(username.getText().toString(), oldpasswd.getText().toString());
     			
     			//Refresh the data of this app
     			refreshHandler.post(new Runnable() {
