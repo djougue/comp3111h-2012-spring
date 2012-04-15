@@ -249,6 +249,11 @@ public class Communication_API {
 		      
         return user;
 	}
+	
+	public void get_confirmcode(String name)
+	{
+		send_cmd_ihome("jtu","email="+name);
+	}
 	 
 	
 	/*******************************************************************************************
@@ -324,7 +329,8 @@ public class Communication_API {
 	//put dish_spicy=2 if do not want to search by dish_spicy
 	//put dish_vege=2 if do not want to search by dish_vege
 	//put dish_meat=2 if do not want to search by dish_meat
-	public Dish search_dish(int index, String dish_name, String dish_canteen, int dish_spicy, int dish_vege, int dish_meat)
+	public Dish search_dish(int index, String dish_name, String dish_canteen, 
+			int dish_spicy, int dish_vege, int dish_meat, Available_Time time)
 	{
 		Dish dish=new Dish();
 		result = null;
@@ -417,7 +423,24 @@ public class Communication_API {
 			//do nothing
 		}
 		
+		//search by available time
+		if (time!=Available_Time.All)
+		{
+			if (first)
+			{
+				cmd+="time="+time.toString();
+				first=false;
+			}
+			else
+				cmd+="&time="+time.toString();
+		}
+		else
+		{
+			//do nothing
+		}
 		send_cmd(cmd);
+		
+		testing=cmd;
 		
 		try
 		{
