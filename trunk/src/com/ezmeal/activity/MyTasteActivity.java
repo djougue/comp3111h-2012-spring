@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class MyTasteActivity extends Activity implements OnClickListener, OnCheckedChangeListener {
+	private Communication_API api;
 	private TextView headerTitle, resultText;
 	private Button submitBtn, backBtn;
 	private CheckBox spicyBtn, meatBtn, vegeBtn;
@@ -85,7 +86,7 @@ public class MyTasteActivity extends Activity implements OnClickListener, OnChec
     	postDataThread = new Thread(new Runnable() {
     		public void run() {
     			MyTasteActivity.serverResp =
-    					Communication_API.change_user_setting(uname, passwd, nname, isSpicy?1:0, isVege?1:0, isMeat?1:0);
+    					api.change_user_setting(uname, passwd, nname, isSpicy?1:0, isVege?1:0, isMeat?1:0);
     			
     			//Refresh the data of this app
     			refreshHandler.post(new Runnable() {

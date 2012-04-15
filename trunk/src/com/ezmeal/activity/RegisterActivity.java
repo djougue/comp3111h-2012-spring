@@ -32,6 +32,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class RegisterActivity extends Activity implements OnClickListener, TextWatcher {
+	private Communication_API api = new Communication_API();
 	private Button submitBtn, backBtn;
 	private TextView resultText, headerTitle;
 	private EditText uname, pwd, conPwd, nname;
@@ -181,7 +182,7 @@ public class RegisterActivity extends Activity implements OnClickListener, TextW
     		postDataThread = new Thread(new Runnable() {
 	    		public void run() {
 	    			RegisterActivity.serverResp =
-	    					Communication_API.register(username, password, nickname);
+	    					api.register(username, password, nickname);
 	    			
 	    			//Refresh the data of this app
 	    			refreshHandler.post(new Runnable() {

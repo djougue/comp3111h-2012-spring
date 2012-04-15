@@ -24,9 +24,9 @@ public class DetailActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.details_activity_layout);
 		the_dish = getIntent().getExtras();
-		
-		mShaker = new ShakeListener(this);
-		
+
+/*		
+		mShaker = new ShakeListener(this);		
 		mShaker.setOnShakeListener(new ShakeListener.OnShakeListener() {  
 		    public void onShake() {
 		    	if(fatherActivity==0)
@@ -43,6 +43,7 @@ public class DetailActivity extends FragmentActivity {
 		    	}
  		    }  
 		});
+*/
 	}
 	
 	void setView(){
@@ -52,7 +53,7 @@ public class DetailActivity extends FragmentActivity {
 			String dish_canteen = the_dish.getString("canteen");
 			String dish_price = the_dish.getString("price");
 			TextView name = (TextView) findViewById(R.id.textDishNameInDetail);
-			name.setText(dish_name);	
+			name.setText(dish_name);
 			TextView canteen = (TextView) findViewById(R.id.textDishCanteenInDetail);
 			canteen.setText(dish_canteen);
 			TextView price = (TextView) findViewById(R.id.textDishPriceInDetail);
@@ -61,7 +62,6 @@ public class DetailActivity extends FragmentActivity {
 			String pic = the_dish.getString("pic");
 	        imageLoader=new ImageLoader(this.getApplicationContext());
 	        imageLoader.DisplayImage(pic, image);
-
 		}
 		else{
 			TextView view = (TextView) findViewById(R.id.textDishNameInDetail);
@@ -71,13 +71,13 @@ public class DetailActivity extends FragmentActivity {
 
 	@Override
 	protected void onPause(){
-		mShaker.pause();
+		//mShaker.pause();
 		super.onPause();
 	}
 	
 	@Override
 	protected void onResume(){
-		mShaker.resume();
+		//mShaker.resume();
 		super.onResume();
 	}
 	
