@@ -31,6 +31,9 @@ public class Communication_API {
 	StringBuilder sb=null;
 	int timeoutConnection = 12000;
 	int timeoutSocket = 12000;
+	
+	//For debugging
+	static String testing;
 		
 	private void send_cmd(String cmd)
 	{
@@ -329,7 +332,7 @@ public class Communication_API {
 		boolean first=true; //indicate whether this is the first parameter to be passed
 		
 		//search by name
-		if (dish_name!="any")
+		if (dish_name=="any")
 		{
 			//do nothing
 		}
@@ -345,7 +348,7 @@ public class Communication_API {
 		}
 		
 		//search by canteen
-		if (dish_canteen!="any")
+		if (dish_canteen=="any")
 		{
 			//do nothing
 		}
@@ -415,6 +418,10 @@ public class Communication_API {
 		}
 		
 		send_cmd(cmd);
+		
+		//debugging
+		testing=cmd;
+		
 		try
 		{
 			if(result==null) return null;
