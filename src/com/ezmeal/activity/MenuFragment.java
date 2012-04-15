@@ -1,5 +1,7 @@
 package com.ezmeal.activity;
 
+import java.util.Calendar;
+import java.util.TimeZone;
 import java.util.Vector;
 
 import android.app.Activity;
@@ -10,14 +12,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.ezmeal.lazylist.LazyAdapter;
 import com.ezmeal.main.R;
@@ -25,6 +28,7 @@ import com.ezmeal.server.Communication_API;
 import com.ezmeal.server.Dish;
 
 public class MenuFragment extends Fragment {
+	private Communication_API api = new Communication_API();
 	LayoutInflater Inflater;
     ListView list;
     LazyAdapter adapter;
@@ -33,11 +37,15 @@ public class MenuFragment extends Fragment {
     private View view;
     private Activity activity;
 	private ProgressBar progressBar;
+	private TextView no_result_text;
 
 	private Spinner time_spinner;
 	private Spinner canteen_spinner;
 	private ArrayAdapter<String> canteen_adapter;
 	private static final String[] canteen_name={"Coffee Shop","Chinese Restaurant","McDonald","Seafront","LG7 Asia Pacific","Gold Rice Bowl"};
+	private static final String[] canteen_search_name={"Coffee","Chinese","McDonald","Seafront","Pacific","Bowl"};
+	private ArrayAdapter<String> time_adapter;
+	private static final String[] time_name={"Breakfast","Lunch","Tea","Dinner"};
 
 	private Button reconnectBt;
 	private Vector<Bundle> dishes;
@@ -73,8 +81,30 @@ public class MenuFragment extends Fragment {
 		progressBar = (ProgressBar) view.findViewById(R.id.progressBarMenu);
 		progressBar.setVisibility(View.VISIBLE);
 		
+		no_result_text = (TextView) view.findViewById(R.id.textNoResultMenu);
+		no_result_text.setVisibility(View.INVISIBLE);
+		
 		//initialize two spinner
 		time_spinner = (Spinner) view.findViewById(R.id.timeSpinner);
+		time_adapter = new ArrayAdapter<String>(activity,android.R.layout.simple_spinner_item,time_name);
+		time_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); 
+		time_spinner.setAdapter(time_adapter);
+		time_spinner.setOnItemSelectedListener(new SpinnerSelectedListener()); 
+		time_spinner.setVisibility(View.VISIBLE); 
+		Calendar rightNow = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
+		int hour =rightNow.get(Calendar.HOUR_OF_DAY);
+		int minutes = rightNow.get(Calendar.MINUTE);
+		int total_minutes = 60*hour+minutes;
+		if(total_minutes>=7*60&&total_minutes<11*60){
+			time_spinner.setSelection(0);
+		}else if(total_minutes<(14*60+30)){
+			time_spinner.setSelection(1);
+		}else if(total_minutes<(17*60+30)){
+			time_spinner.setSelection(2);
+		}else{
+			time_spinner.setSelection(3);
+		}
+		
 		canteen_spinner = (Spinner) view.findViewById(R.id.canteenSpinner);
 		canteen_adapter = new ArrayAdapter<String>(activity,android.R.layout.simple_spinner_item,canteen_name);
 		canteen_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); 
@@ -102,16 +132,22 @@ public class MenuFragment extends Fragment {
 		    			thread_state = FETCH;
 		    			break;
     				case FETCH:
-	    				cur_dish = Communication_API.fetch_dish(dish_counter);
-	    				if(cur_dish==null){ //time out. Then delete all loaded dishes    					
+	    				cur_dish = api.search_dish(dish_counter,
+	    						"any",
+	    						canteen_search_name[canteen_spinner.getSelectedItemPosition()],
+	    						2,2,2,
+	    						(time_spinner.getSelectedItemPosition()==3),
+	    						(time_spinner.getSelectedItemPosition()==2),
+	    						(time_spinner.getSelectedItemPosition()==1),
+	    						(time_spinner.getSelectedItemPosition()==0));
+	    				if(cur_dish==null){ //time out. Then delete all loaded dishes
 	    					dishes.clear();
 	    					thread_state = TIMEOUT;
-	    					Log.e("MenuFragment", "In fetch, timeout");
 	    					break;
 	    				}
 	    				if(cur_dish.getDish_id()==0) { //all dishes has been fetch
+	    			    	
 	    					thread_state = DISPLAY;
-	    					Log.e("MenuFragment", "In fetch, get all dishes");
 	    					break;
 	    				}
 	    				dish_counter++;
@@ -125,22 +161,27 @@ public class MenuFragment extends Fragment {
     				case DISPLAY:
 		    			refreshHandler.post(new Runnable() {
 		    				public void run() {						
-									// TODO Auto-generated method stub	
 		    					if(thread_state == TIMEOUT){
+		    						Log.e("MenuFragment", "Timeout!");
 					    	        progressBar.setVisibility(View.INVISIBLE);
 					    	        reconnectBt.getLayoutParams().height=LayoutParams.WRAP_CONTENT;
 		    						reconnectBt.setVisibility(View.VISIBLE);
 		    					}
 		    					else{
-		    						Log.e("MenuFragment", "In fetch, DISPLAY");
-					    	        adapter=new LazyAdapter(activity, dishes);
-					    	        list.setAdapter(adapter);
+		    						if(dish_counter == 0){
+						    	        progressBar.setVisibility(View.INVISIBLE);
+						    	        no_result_text.setVisibility(View.VISIBLE);
+						    	        Log.e("MenuFragment", "no result");
+		    						}
+		    						else{
+						    	        adapter=new LazyAdapter(activity, dishes);
+						    	        list.setAdapter(adapter);
+						    	        progressBar.setVisibility(View.INVISIBLE);
+//						    	        progressBar.getLayoutParams().height=0;
 
-					    	        progressBar.setVisibility(View.INVISIBLE);
-					    	        progressBar.getLayoutParams().height=0;
-
-					    	        list.getLayoutParams().height=LayoutParams.WRAP_CONTENT;
-					    	        list.setVisibility(View.VISIBLE);
+						    	        list.getLayoutParams().height=LayoutParams.WRAP_CONTENT;
+						    	        list.setVisibility(View.VISIBLE);
+		    						}
 		    					}
 		    				}
 		    			});
@@ -170,11 +211,9 @@ public class MenuFragment extends Fragment {
     }  
 
 	void refleshDish(){
-		reconnectBt.getLayoutParams().height = 0;
     	reconnectBt.setVisibility(View.INVISIBLE);
-
-    	list.getLayoutParams().height = 0;
-    	list.setVisibility(View.INVISIBLE);
+    	list.setVisibility(View.INVISIBLE);    	
+    	no_result_text.setVisibility(View.INVISIBLE);
 
     	progressBar.getLayoutParams().height=LayoutParams.WRAP_CONTENT;
     	progressBar.setVisibility(View.VISIBLE);
