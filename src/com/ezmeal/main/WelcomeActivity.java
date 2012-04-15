@@ -81,7 +81,6 @@ public class WelcomeActivity extends Activity implements OnClickListener {
 
     /**
      * Check the network connectivity.
-     * 
      * @return true if network connectivity is fine; other wise false.
      */
 	private boolean isNetworkAvailable() {
@@ -112,8 +111,21 @@ public class WelcomeActivity extends Activity implements OnClickListener {
 		    progressBar.setVisibility(View.INVISIBLE);
 		    return false;
 	    }
-	    //check if user name or password contains invalid character (i.e. space)
+	    //check if user name or password contains invalid character (i.e. space,
+	    //single and double quote mark)
 	    else if (username.indexOf(" ") >= 0 || password.indexOf(" ") >= 0) {
+	    	resultText.setTextColor(0xffff0000);
+		    resultText.setText(INVALID_INPUT);
+		    progressBar.setVisibility(View.INVISIBLE);
+		    return false;
+	    }
+	    else if (username.indexOf("'") >= 0 || password.indexOf("'") >= 0) {
+	    	resultText.setTextColor(0xffff0000);
+		    resultText.setText(INVALID_INPUT);
+		    progressBar.setVisibility(View.INVISIBLE);
+		    return false;
+	    }
+	    else if (username.indexOf("\"") >= 0 || password.indexOf("\"") >= 0) {
 	    	resultText.setTextColor(0xffff0000);
 		    resultText.setText(INVALID_INPUT);
 		    progressBar.setVisibility(View.INVISIBLE);
@@ -128,18 +140,17 @@ public class WelcomeActivity extends Activity implements OnClickListener {
     public void onClick(View view) {
     	if (!isNetworkAvailable())
     		return;
+		//add user name and password
+	    EditText uname = (EditText) findViewById(R.id.editTextUserName);
+	    final String username = uname.getText().toString();
+
+	    EditText pword = (EditText) findViewById(R.id.editTextPassword);
+	    final String password = pword.getText().toString();
     	
     	if (view == loginBtn) {
     		resultText.setTextColor(0xffffffff); //white
     		resultText.setText(LOADING);
     		progressBar.setVisibility(View.VISIBLE);
-    		
-    		//add user name and password
-    	    EditText uname = (EditText) findViewById(R.id.editTextUserName);
-    	    final String username = uname.getText().toString();
-
-    	    EditText pword = (EditText) findViewById(R.id.editTextPassword);
-    	    final String password = pword.getText().toString();
     	    
     	    final Activity thisActivity = this;
     	    
@@ -192,6 +203,7 @@ public class WelcomeActivity extends Activity implements OnClickListener {
     		startActivityForResult(intent, 0);
     		resultText.setText(NONE);   //Clear the result text
     	} else if (view == forgotPasswdLink) {
+    		((UserApp) this.getApplication()).setTmpUserName(username);
 			Intent intent = new Intent(view.getContext(), ForgotPasswdActivity.class);
     		startActivityForResult(intent, 0);
     		resultText.setText(NONE);   //Clear the result text

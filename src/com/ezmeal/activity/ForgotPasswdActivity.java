@@ -1,17 +1,3 @@
- /*
-  * Licensed under the Apache License, Version 2.0 (the "License");
-  * you may not use this file except in compliance with the License.
-  * You may obtain a copy of the License at
-  *
-  *      http://www.apache.org/licenses/LICENSE-2.0
-  *
-  * Unless required by applicable law or agreed to in writing, software
-  * distributed under the License is distributed on an "AS IS" BASIS,
-  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  * See the License for the specific language governing permissions and
-  * limitations under the License.
-  */
-
 package com.ezmeal.activity;
 
 import com.ezmeal.main.R;
@@ -28,27 +14,63 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class ForgotPasswdActivity extends Activity implements OnClickListener {
-	private Button backBtn;
-	private TextView headerTitle;
+	private Button backBtn, submitBtn;
+	private TextView headerTitle, remarks;
+	private EditText username;
+	private RelativeLayout resetPasswdLayout;
+	private boolean isRequestSent;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.forgot_passwd);
         
+        //set page header
         backBtn = (Button) findViewById(R.id.buttonBack);
         backBtn.setOnClickListener(this);
         headerTitle = (TextView) findViewById(R.id.labelHeader);
         headerTitle.setText("Forgot Password");
+        
+        //set the text for user name edit box
+        username = (EditText) findViewById(R.id.editTextForgotPasswdUserName);
+        String uname = ((UserApp) this.getApplication()).getTmpUserName();
+        username.setText(uname);
+        
+        //set remarks
+        remarks = (TextView) findViewById(R.id.labelForgotPasswdRemarks);
+        
+        //set the submit button
+        submitBtn = (Button) findViewById(R.id.buttonForgotPasswdSubmit);
+        submitBtn.setOnClickListener(this);
+        
+        //reset password area should be invisible
+        resetPasswdLayout = (RelativeLayout) findViewById(R.id.relativeLayoutForgotPasswdReset);
+        resetPasswdLayout.setVisibility(View.GONE);
+        
+        //initialize other variables
+        isRequestSent = false;
     }
-    
+	
     public void onClick(View view) {
     	if (view == backBtn) {
     		//Finish the activity, and go back to the welcome page.
     		finish();
     	}
+    	else if (view == submitBtn) {
+    		if (isRequestSent) {
+    			//TODO
+    		}
+    		else {
+    			//TODO
+    			resetPasswdLayout.setVisibility(View.VISIBLE);
+    			remarks.setText("A confirmation code has been sent to your HKUST mailbox.");
+    			username.setEnabled(false);
+    		}
+    	}
     }
 }
+

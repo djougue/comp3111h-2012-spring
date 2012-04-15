@@ -25,6 +25,7 @@ import android.app.Application;
 
 public class UserApp extends Application {
 	private String username, password, nickname;
+	private String tmpUsername;   //used before login
 	private boolean isVege, isSpicy, isMeat, isShake;
 	
 	/**
@@ -38,6 +39,9 @@ public class UserApp extends Application {
 	}
 	public String getNickName() {
 		return nickname;
+	}
+	public String getTmpUserName() {
+		return tmpUsername;
 	}
 	public boolean[] getTaste() {
 		boolean[] taste = {isSpicy, isMeat, isVege};
@@ -58,6 +62,9 @@ public class UserApp extends Application {
 	}
 	public void setNickName(String nname) {
 		nickname = nname;
+	}
+	public void setTmpUserName(String tmpuname) {
+		tmpUsername = tmpuname;
 	}
 	public void setTaste(boolean[] taste) {
 		isSpicy = taste[0];
