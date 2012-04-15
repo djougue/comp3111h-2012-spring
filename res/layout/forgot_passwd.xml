@@ -16,18 +16,141 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:gravity="center">
         
+        <!-- User Name -->
         <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#fff"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:text="Coming soon..."/>/>
+            android:id="@+id/labelForgotPasswdUserName"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/labelUserName"
+            android:textColor="#fff"
+            android:textStyle="bold" />
+        <EditText
+            android:id="@+id/editTextForgotPasswdUserName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/labelForgotPasswdUserName"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/labelForgotPasswdUserName"
+            android:background="@android:drawable/editbox_background"
+            android:inputType="none"
+            android:singleLine="true">
+        </EditText>
+ 
+        <!-- Hint (Remarks) -->
+        <TextView
+            android:id="@+id/labelForgotPasswdRemarks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:textColor="#eee"
+            android:layout_below="@id/editTextForgotPasswdUserName"
+            android:text="@string/labelForgotPasswdRemarks"/>
+        
+        <!-- Reset Password -->
+        <RelativeLayout
+            android:id="@+id/relativeLayoutForgotPasswdReset"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/labelForgotPasswdRemarks"
+            android:layout_marginTop="10dp"
+            android:gravity="center">
+            
+            <!-- Confirmation Code -->
+            <TextView
+                android:id="@+id/labelForgotPasswdConfirmationCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/labelConfirmationCode"
+                android:textColor="#fff"
+                android:textStyle="bold" />
+            <EditText
+                android:id="@+id/editTextForgotPasswdConfirmationCode"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/labelForgotPasswdConfirmationCode"
+                android:background="@android:drawable/editbox_background"
+                android:inputType="none"
+                android:singleLine="true">
+            </EditText>
+            
+            <!-- New Password -->
+            <TextView
+                android:id="@+id/labelForgotPasswdNewPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/labelNewPassword"
+                android:layout_below="@id/editTextForgotPasswdConfirmationCode"
+                android:textColor="#fff"
+                android:textStyle="bold" />
+            <EditText
+                android:id="@+id/editTextForgotPasswdNewPassword"
+                android:hint="@string/hintPassword"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/labelForgotPasswdNewPassword"
+                android:background="@android:drawable/editbox_background"
+                android:inputType="textPassword"
+                android:singleLine="true">
+            </EditText>
+            
+            <!-- Confirm Password -->
+            <TextView
+                android:id="@+id/labelForgotPasswdConfirmPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/labelConfirmPassword"
+                android:layout_below="@id/editTextForgotPasswdNewPassword"
+                android:textColor="#fff"
+                android:textStyle="bold" />
+            <EditText
+                android:id="@+id/editTextForgotPasswdConfirmPassword"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/labelForgotPasswdConfirmPassword"
+                android:background="@android:drawable/editbox_background"
+                android:inputType="textPassword"
+                android:singleLine="true">
+            </EditText>
+            
+        </RelativeLayout>
+        
+        <!-- Result -->
+        <TextView
+            android:id="@+id/labelForgotPasswdResult"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:paddingLeft="10dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="#fff"
+            android:layout_below="@id/relativeLayoutForgotPasswdReset"
+            android:layout_marginTop="12dp"/>
+        <ProgressBar
+            android:id="@+id/progressBarForgotPasswd"
+            style="@android:style/Widget.ProgressBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/labelForgotPasswdResult"
+            android:layout_toLeftOf="@+id/labelForgotPasswdResult"
+            android:visibility="gone" />
+        
+        <!-- Submit Button -->
+        <Button
+            android:id="@+id/buttonForgotPasswdSubmit"
+            android:layout_width="110dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/labelForgotPasswdResult"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/button_submit" />
 
     </RelativeLayout>
     

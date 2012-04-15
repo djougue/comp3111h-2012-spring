@@ -95,7 +95,7 @@
         android:id="@+id/labelForgotPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/labelForgotPassword"
+        android:text="@string/labelForgotPasswd"
         android:layout_gravity="center_horizontal"
         android:textColor="#fff"
         android:layout_marginTop="5dp"
