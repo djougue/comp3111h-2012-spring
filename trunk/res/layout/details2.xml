@@ -3,12 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
     android:background="@drawable/orange_bg">
+    
+    <!-- Page Header -->
+    <include
+        android:id="@+id/include1"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        layout="@layout/header" />
+    
 	<LinearLayout 
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
+	    android:paddingLeft="5dp"
+        android:paddingRight="5dp"
 	    android:paddingTop="10dip">
 	    <FrameLayout 
 	        android:layout_width="wrap_content"
