@@ -43,4 +43,9 @@
     <string name="labelUserNameRemarks">An authentication email will be sent to your SQmail inbox. You need to finish the activation process. After a successful registration, you are able to login to ezMeal using your ITSC account.</string>
     <string name="labelUserNameRemarksTemp">At this stage (pre-alpha version), users directly register to ezMeal. Later, an authentication method will be adopted, verifying if your ITSC account is valid.</string>
     
+    <string name="labelSearchName">Name contains: </string>
+    <string name="labelSearchCanteen">Canteen: </string>
+    <string name="labelSearchAvailableTime">Available Time: </string>
+    <string name="labelSearchTaste">Taste Preference: </string>
+    
 </resources>
