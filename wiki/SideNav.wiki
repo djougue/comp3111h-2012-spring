@@ -8,8 +8,8 @@
     * [GettingStarted Getting Started]
     * [UsefulLinks Useful Links]
   * Testing
-    * [FirstTestCase First Test Cases (2 Apr)]
-    * [SecondTestCase Second Test Cases (16 Apr)]
+    * [FirstTestCase 1st Test Cases (2 Apr)]
+    * [SecondTestCase 2nd Test Cases (16 Apr)]
   * Minutes
     * [Minutes0325 25, Mar]
     * [Minutes0311 11, Mar]
