@@ -42,8 +42,7 @@ public class MenuFragment extends Fragment {
 	private Spinner time_spinner;
 	private Spinner canteen_spinner;
 	private ArrayAdapter<String> canteen_adapter;
-	private static final String[] canteen_name={"Coffee Shop","Chinese Restaurant","McDonald","Seafront","LG7 Asia Pacific","Gold Rice Bowl"};
-	private static final String[] canteen_search_name={"Coffee","Chinese","McDonald","Seafront","Pacific","Bowl"};
+	private static final String[] canteen_name={"LG7 Asia Pacific","Gold Rice Bowl","McDonald","LG1 Canteen","Chinese Restaurant","Coffee Shop","Seafront"};
 	private ArrayAdapter<String> time_adapter;
 	private static final String[] time_name={"Breakfast","Lunch","Tea","Dinner"};
 
@@ -134,7 +133,13 @@ public class MenuFragment extends Fragment {
     				case FETCH:
 	    				cur_dish = api.search_dish(dish_counter,
 	    						"any",
-	    						canteen_search_name[canteen_spinner.getSelectedItemPosition()],
+	    						(canteen_spinner.getSelectedItemPosition()==0),
+	    						(canteen_spinner.getSelectedItemPosition()==1),
+	    						(canteen_spinner.getSelectedItemPosition()==2),
+	    						(canteen_spinner.getSelectedItemPosition()==3),
+	    						(canteen_spinner.getSelectedItemPosition()==4),
+	    						(canteen_spinner.getSelectedItemPosition()==5),
+	    						(canteen_spinner.getSelectedItemPosition()==6),
 	    						2,2,2,
 	    						(time_spinner.getSelectedItemPosition()==3),
 	    						(time_spinner.getSelectedItemPosition()==2),
