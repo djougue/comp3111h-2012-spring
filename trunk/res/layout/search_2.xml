@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <Button
+        android:id="@+id/buttonBackSearch"
+        android:layout_width="110dp"
+        android:layout_height="32dp"
+        android:layout_marginRight="10dip"
+        android:layout_gravity="right"
+        android:background="@drawable/button_submit" />
+
+    <TextView
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:textColor="#fff"
+       android:textStyle="bold"
+       android:text="Result:"/>
+    <FrameLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        >
+		<TextView
+	        android:id="@+id/textNoResultSearch"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:paddingTop="10dp"
+	        android:layout_gravity="center_horizontal"
+	        android:textColor="#eee"
+	        android:text="No result. "/>
+		<TextView
+	        android:id="@+id/textTimeoutSearch"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:paddingTop="10dp"
+	        android:layout_gravity="center_horizontal"
+	        android:textColor="#eee"
+	        android:text="Timeout. Please try it later. "/>
+				<ProgressBar
+	        android:id="@+id/progressBarSearch"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        style="@android:style/Widget.ProgressBar.Large"
+	        android:layout_gravity="center_horizontal|center_vertical"
+	        android:visibility="visible" />
+	    <ListView
+	        android:layout_marginLeft = "5dip"
+	 	    android:layout_marginRight = "5dip"
+	        android:id="@+id/listSearch"
+	        android:visibility="invisible"
+	        android:layout_width="fill_parent"
+	        android:layout_height="0dip"
+	        android:layout_weight="1"
+	    />        
+    </FrameLayout>    
+
+</LinearLayout>
