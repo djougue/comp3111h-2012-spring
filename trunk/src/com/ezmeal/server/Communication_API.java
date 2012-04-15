@@ -278,7 +278,7 @@ public class Communication_API {
              dish.setDish_spicy(json_data.getInt("dish_spicy"));
              dish.setDish_vege(json_data.getInt("dish_vege"));
              dish.setDish_meat(json_data.getInt("dish_meat"));
-             dish.setDish_available_time(json_data.getString("dish_available_time"));
+             dish.setDish_available_time(json_data.getInt("dish_available_time"));
 		}
 		catch(JSONException e1)
 		{
@@ -311,7 +311,7 @@ public class Communication_API {
              dish.setDish_spicy(json_data.getInt("dish_spicy"));
              dish.setDish_vege(json_data.getInt("dish_vege"));
              dish.setDish_meat(json_data.getInt("dish_meat"));
-             dish.setDish_available_time(json_data.getString("dish_available_time"));
+             dish.setDish_available_time(json_data.getInt("dish_available_time"));
 		}
 		catch(JSONException e1)
 		{
@@ -324,13 +324,24 @@ public class Communication_API {
 		return dish;
 	}
 	
-	//put dish_name="any" if do not want to search by name
-	//put dish_canteen="any" if do not want to search by canteen
-	//put dish_spicy=2 if do not want to search by dish_spicy
-	//put dish_vege=2 if do not want to search by dish_vege
-	//put dish_meat=2 if do not want to search by dish_meat
+	/*
+	 * 	put dish_name="any" if do not want to search by name
+	 *  put dish_canteen="any" if do not want to search by canteen
+	 *  put dish_spicy=2 if do not want to search by dish_spicy
+	 *	put dish_vege=2 if do not want to search by dish_vege
+	 *	put dish_meat=2 if do not want to search by dish_meat
+	 *	for available time, please pass to "time" a byte in which: 
+	 *		bit 0 --- Dinner
+	 *		bit 1 --- Tea
+	 *		bit 2 --- Lunch
+	 *		bit 3 --- Breakfast
+	 */
+		
 	public Dish search_dish(int index, String dish_name, String dish_canteen, 
-			int dish_spicy, int dish_vege, int dish_meat, Available_Time time)
+			int dish_spicy, int dish_vege, int dish_meat, //dish taste
+			boolean Dinner, boolean Tea, boolean Lunch, boolean Breakfast //dish available time
+			)
+	
 	{
 		Dish dish=new Dish();
 		result = null;
@@ -424,22 +435,29 @@ public class Communication_API {
 		}
 		
 		//search by available time
-		if (time!=Available_Time.All)
+		int time=0;
+		
+		if (Dinner)
+			time |= 1;
+		if (Tea)
+			time |= 2;
+		if (Lunch)
+			time |= 4;
+		if (Breakfast)
+			time |= 8;
+		
+		if (time!=15)
 		{
 			if (first)
 			{
-				cmd+="time="+time.toString();
+				cmd+="time="+time;
 				first=false;
 			}
 			else
-				cmd+="&time="+time.toString();
+				cmd+="&time="+time;
 		}
-		else
-		{
-			//do nothing
-		}
-		send_cmd(cmd);
 		
+		send_cmd(cmd);		
 		testing=cmd;
 		
 		try
@@ -456,7 +474,7 @@ public class Communication_API {
              dish.setDish_spicy(json_data.getInt("dish_spicy"));
              dish.setDish_vege(json_data.getInt("dish_vege"));
              dish.setDish_meat(json_data.getInt("dish_meat"));
-             dish.setDish_available_time(json_data.getString("dish_available_time"));
+             dish.setDish_available_time(json_data.getInt("dish_available_time"));
 		}
 		catch(JSONException e1)
 		{

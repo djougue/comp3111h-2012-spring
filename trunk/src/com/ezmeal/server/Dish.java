@@ -1,5 +1,6 @@
 package com.ezmeal.server;
 
+
 public class Dish {
 	private int dish_id;
 	private String dish_name;
@@ -8,6 +9,7 @@ public class Dish {
 	private boolean dish_spicy;
 	private boolean dish_vege;
 	private boolean dish_meat;
+	private int dish_available_time;
 	
 	Dish(){
 		dish_id=0;
@@ -17,7 +19,7 @@ public class Dish {
 		dish_spicy=false;
 		dish_vege=false;
 		dish_meat=false;
-		dish_available_time=Available_Time.Dinner;
+		dish_available_time=0;
 	}
 	
 	public boolean isDish_spicy() {
@@ -56,27 +58,12 @@ public class Dish {
 		this.dish_meat = (dish_meat!=0)?true:false;
 	}
 	
-	private Available_Time dish_available_time;
-	
-	public Available_Time getDish_available_time() {
+	public int getDish_available_time() {
 		return dish_available_time;
 	}
 
-	public void setDish_available_time(Available_Time dish_available_time) {
-		this.dish_available_time = dish_available_time;
-	}
-	
-	public void setDish_available_time(String s) {
-		if (s=="Breakfast")
-			this.dish_available_time = Available_Time.Breakfast;
-		else if (s=="Lunch")
-			this.dish_available_time = Available_Time.Lunch;
-		else if (s=="Tea")
-			this.dish_available_time = Available_Time.Tea;
-		else if (s=="Dinner")
-			this.dish_available_time = Available_Time.Dinner;
-		else 
-			this.dish_available_time = Available_Time.All;
+	public void setDish_available_time(int time) {
+		this.dish_available_time = time;
 	}
 	
 	public float getDish_price() {
