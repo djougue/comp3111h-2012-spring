@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
@@ -155,10 +156,8 @@ public class Communication_API {
 			e1.printStackTrace();
 		}
 		
-		//send_cmd_ihome("xlu","register.php?name="+name+"&password="+password+"&nickname="+nickname);
-		//need testing
-		send_cmd_ihome("jtu","signup_ac.php?name="+name+"&password="+password+"&nickname="+nickname);
-		
+		send_cmd_ihome("xlu","register.php?name="+name+"&password="+password+"&nickname="+nickname);
+			
 		return 1;
 	}
 	
@@ -254,12 +253,7 @@ public class Communication_API {
 	
 	public void get_confirmcode(String name)
 	{
-		send_cmd_ihome("jtu","get_confirmcode.php?name="+name);
-	}
-	
-	public int reset_password(String name, String confirm_code, String passwd){
-		send_cmd_ihome("jtu","conf_confirmcode.php?name="+name + "&passkey="+confirm_code + "&passwd="+passwd);
-		return 1;
+		send_cmd_ihome("jtu","email="+name);
 	}
 	 
 	
@@ -516,4 +510,66 @@ public class Communication_API {
 		}
 		return dish;
 	}
+	
+	/*******************************************************************************************
+	 * 									Methods Related to Comments
+	 ******************************************************************************************/
+	public void add_comment(String title, String content, String user_name, String dish_name)
+	{
+		try{
+			send_cmd("add_comment.php?title="+URLEncoder.encode(title,"utf-8")
+					+"&content="+URLEncoder.encode(content,"utf-8")
+					+"&author="+URLEncoder.encode(user_name,"utf-8")
+					+"&dish="+URLEncoder.encode(dish_name,"utf-8"));
+		}
+		catch(Exception e){
+			
+		}
+	}
+	
+	public Comment fetch_comment(int index, String dish)
+	{
+		Comment comment=new Comment();
+		result = null;
+
+		try{
+			send_cmd("fetch_comment.php?dish="+URLEncoder.encode(dish,"utf-8"));
+		}
+		catch(Exception e){
+			
+		}
+		
+		try
+		{
+			if(result==null) return null;
+		     jArray = new JSONArray(result);
+		     JSONObject json_data=null;
+
+             json_data = jArray.getJSONObject(index);
+             /*
+             comment.setDish_id(json_data.getInt("dish_id"));
+             dish.setDish_name(json_data.getString("dish_name"));
+             dish.setDish_canteen(json_data.getString("dish_canteen"));
+             dish.setDish_price(Float.valueOf(json_data.getString("dish_price")).floatValue());
+             dish.setDish_spicy(json_data.getInt("dish_spicy"));
+             dish.setDish_vege(json_data.getInt("dish_vege"));
+             dish.setDish_meat(json_data.getInt("dish_meat"));
+             dish.setDish_available_time(json_data.getInt("dish_available_time"));
+             */
+             comment.setTitle(json_data.getString("comment_title"));
+             comment.setContent(json_data.getString("comment_content"));
+             comment.setAuthor(json_data.getString("comment_author_name"));
+             comment.setTime(json_data.getString("comment_time"));
+		}
+		catch(JSONException e1)
+		{
+			e1.printStackTrace();
+		} 
+		catch (ParseException e1) 
+		{
+			e1.printStackTrace();
+		}
+		return comment;
+	}
+	
 }
