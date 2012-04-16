@@ -71,6 +71,7 @@ public class SearchFragment extends Fragment {
 	private static final int TIMEOUT = 	4;
 	
 	private int thread_state2  = WAIT;
+	private boolean isTimeout = false;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -157,6 +158,7 @@ public class SearchFragment extends Fragment {
 		    			dishes =new Vector<Bundle>();
 		    			Dish cur_dish;
 		    			dish_counter = 0;
+		    			isTimeout = false;
 		    			thread_state2 = FETCH;
     					Log.e("SearchFragment", "thread_state = FETCH");
 		    			break;
@@ -180,6 +182,7 @@ public class SearchFragment extends Fragment {
 	    				if(cur_dish==null){ //time out. Then delete all loaded dishes    					
 	    					dishes.clear();
 	    					thread_state2 = TIMEOUT;
+	    					isTimeout = true;
 	    					Log.e("SearchFragment", "thread_state = TIMEOUT");
 	    					break;
 	    				}
@@ -201,7 +204,7 @@ public class SearchFragment extends Fragment {
 		    			refreshHandler.post(new Runnable() {
 		    				public void run() {						
 									// TODO Auto-generated method stub	
-		    					if(thread_state2 == TIMEOUT){
+		    					if(thread_state2 == TIMEOUT||isTimeout){
 					    	        progressBar.setVisibility(View.INVISIBLE);
 					    	        timeout_text.setVisibility(View.VISIBLE);
 		    					}
@@ -273,13 +276,6 @@ public class SearchFragment extends Fragment {
             return mListViews.size();  
         }  
   
-        /** 
-         * 从指定的position创建page 
-         * 
-         * @param container ViewPager容器 
-         * @param position The page position to be instantiated. 
-         * @return 返回指定position的page，这里不需要是一个view，也可以是其他的视图容器. 
-         */  
         @Override  
         public Object instantiateItem(View collection, int position) {  
   
@@ -289,12 +285,6 @@ public class SearchFragment extends Fragment {
             return mListViews.get(position);  
         }  
   
-        /** 
-         * <span style="font-family:'Droid Sans';">从指定的position销毁page</span> 
-         *  
-         *  
-         *<span style="font-family:'Droid Sans';">参数同上</span> 
-         */  
         @Override  
         public void destroyItem(View collection, int position, Object view) {  
             ((ViewPager) collection).removeView(mListViews.get(position));  
