@@ -113,19 +113,7 @@ public class WelcomeActivity extends Activity implements OnClickListener {
 	    }
 	    //check if user name or password contains invalid character (i.e. space,
 	    //single and double quote mark)
-	    else if (username.indexOf(" ") >= 0 || password.indexOf(" ") >= 0) {
-	    	resultText.setTextColor(0xffff0000);
-		    resultText.setText(INVALID_INPUT);
-		    progressBar.setVisibility(View.INVISIBLE);
-		    return false;
-	    }
-	    else if (username.indexOf("'") >= 0 || password.indexOf("'") >= 0) {
-	    	resultText.setTextColor(0xffff0000);
-		    resultText.setText(INVALID_INPUT);
-		    progressBar.setVisibility(View.INVISIBLE);
-		    return false;
-	    }
-	    else if (username.indexOf("\"") >= 0 || password.indexOf("\"") >= 0) {
+	    else if (!Utility.checkInput(username) || !Utility.checkInput(password)) {
 	    	resultText.setTextColor(0xffff0000);
 		    resultText.setText(INVALID_INPUT);
 		    progressBar.setVisibility(View.INVISIBLE);

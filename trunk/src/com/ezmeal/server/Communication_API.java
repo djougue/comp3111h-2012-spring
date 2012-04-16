@@ -30,8 +30,8 @@ public class Communication_API {
 	String result = null;
 	InputStream is = null;
 	StringBuilder sb=null;
-	int timeoutConnection = 12000;
-	int timeoutSocket = 12000;
+	int timeoutConnection = 10000;  //timeout = 10 seconds
+	int timeoutSocket = 10000;
 	
 	//For debugging
 	static String testing;
@@ -145,6 +145,8 @@ public class Communication_API {
 				  if (jArray.length()>0)
 					  return -2;//User with the same user_name already exists	      
 			  }
+			  else
+				  return 0;  //timeout
 
 		}
 		catch(JSONException e1)
@@ -251,9 +253,63 @@ public class Communication_API {
         return user;
 	}
 	
-	public void get_confirmcode(String name)
+
+	/**
+	 * Get confirmation code from the server for Forgot Password function.
+	 * @param name = user name
+	 * @return  1 if successful
+	 *          0 if timeout
+	 *         -1 if unknown error occurs
+	 *         -2 if user name does not exist
+	 */
+	public int get_confirmcode(String name)
 	{
-		send_cmd_ihome("jtu","email="+name);
+		result = null;
+		
+		//Check whether there exists users with such user_name
+		send_cmd("fetch_user_info.php?name="+name);
+		try
+		{
+			  if(result != null){
+				  jArray = new JSONArray(result);
+				  if (jArray.length()<=0)
+					  return -2; //user does not exist
+			  }
+			  else
+				  return 0;  //timeout
+
+		}
+		catch(JSONException e1)
+		{
+			e1.printStackTrace();
+			return -2;  //user does not exist
+		} 
+		catch (ParseException e1) 
+		{
+			e1.printStackTrace();
+			return -1;  //unknown error
+		}
+		send_cmd_ihome("jtu","get_confirmcode.php?name="+name);
+		return 1;
+	}
+	
+	/**
+	 * Send the server a new password to reset.
+	 * @param name = user name
+	 * @param confirm_code = confirmation code
+	 * @param passwd = new password
+	 * @return  1 if successful
+	 *          0 if timeout
+	 *         -2 if confirmation code is invalid 
+	 */
+	public int reset_password(String name, String confirm_code, String passwd){
+		result = null;
+		send_cmd_ihome("jtu","conf_confirmcode.php?name="+name + "&passkey="+confirm_code + "&passwd="+passwd);
+		if (result == null)
+			return 0;
+		else if (result.length() < 5)
+			return -2;
+		return 1;
 	}
 	 
 	

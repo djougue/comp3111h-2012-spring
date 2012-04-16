@@ -159,7 +159,7 @@ public class SearchFragment extends Fragment {
 		    			dish_counter = 0;
 		    			thread_state2 = FETCH;
     					Log.e("SearchFragment", "thread_state = FETCH");
-		    			break;
+		    			break;/*
     				case FETCH:
 	    				cur_dish = api.search_dish(dish_counter,
 	    						dish_name_text.getText().toString().length()==0?"any":dish_name_text.getText().toString(),
@@ -195,6 +195,7 @@ public class SearchFragment extends Fragment {
 	    				bundle.putFloat("price", cur_dish.getDish_price());
 	    				dishes.add(bundle);
     					break;
+    					*/
     				case TIMEOUT:
     				case DISPLAY:
 		    			refreshHandler.post(new Runnable() {

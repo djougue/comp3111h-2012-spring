@@ -15,6 +15,7 @@
 package com.ezmeal.activity;
 
 import com.ezmeal.main.R;
+import com.ezmeal.main.Utility;
 import com.ezmeal.server.Communication_API;
 
 import android.app.Activity;
@@ -46,17 +47,15 @@ public class RegisterActivity extends Activity implements OnClickListener, TextW
 	private String EMPTY_USERNAME      = "Your ITSC account is required.";
 	private String EMPTY_PASSWD        = "Password is required.";
 	private String EMPTY_NICKNAME      = "Nick name is required.";
-	private String INVALID_ITSC        = "The ITSC is invalid. Have you entered Space,' or \"?";
+	private String INVALID_ITSC        = "The ITSC is invalid. Have you entered any spaces?";
 	private String SHORT_PASSWD        = "The length of password should be no less than 6 characters.";
 	private String LONG_PASSWD         = "The length of password should be no more than 20 characters.";
-	private String SPACE_IN_PASSWD     = "No space is allowed in password.";
 	private String INCONSISTENT_PASSWD = "The confirmed password is inconsistent.";
-	private String SPACE_IN_NICKNAME   = "No space is allowed in nickname";
 	private String EXISTED_ITSC        = "You have already signed up.";
-	private String TIMEOUT             = "Connection error. Please try again later.";
+	private String TIMEOUT             = "Connection timeout. Please try again later.";
 	private String LOADING             = "Loading...";
-	private String INVALID_PASSWD	   = "You can't use \' or \" in your password. "; 
-	private String INVALID_NICKNAME	   = "You can't use \' or \" in your nickname. "; 
+	private String INVALID_PASSWD	   = "Password contains invalid characters."; 
+	private String INVALID_NICKNAME	   = "Nickname contains invalid characters"; 
 	private String SUCCESSFUL          = "An activation email has been sent to your HKUST mailbox.";
 	
 	@Override
@@ -90,8 +89,9 @@ public class RegisterActivity extends Activity implements OnClickListener, TextW
      */
     private boolean checkInput(String uname, String passwd,String confPasswd,
     		String nname) {
+    	resultText.setTextColor(0xffff0000);  //red, for error
+    	
     	//check if the username field is empty
-    	resultText.setTextColor(0xffff0000);  //red
     	if (uname.length() == 0) {
     		resultText.setText(EMPTY_USERNAME);
     		return false;
@@ -106,16 +106,8 @@ public class RegisterActivity extends Activity implements OnClickListener, TextW
     		resultText.setText(EMPTY_NICKNAME);
     		return false;
     	}
-    	//check if the username contains any space(s)
-    	else if (uname.indexOf(" ") >= 0) {
-    		resultText.setText(INVALID_ITSC);
-    		return false;
-    	}
-    	else if (uname.indexOf("'") >= 0) {
-    		resultText.setText(INVALID_ITSC);
-    		return false;
-    	}
-    	else if (uname.indexOf("\"") >= 0) {
+    	//check if the username contains any invalid character(s)
+    	else if (!Utility.checkInput(uname)) {
     		resultText.setText(INVALID_ITSC);
     		return false;
     	}
@@ -129,18 +121,8 @@ public class RegisterActivity extends Activity implements OnClickListener, TextW
     		resultText.setText(LONG_PASSWD);
     		return false;
     	}
-    	//check if the password contains any space(s)
-    	else if (passwd.indexOf(" ") >= 0) {
-    		resultText.setText(SPACE_IN_PASSWD);
-    		return false;
-    	}
-    	//check if the password contains any space(s)
-    	else if (passwd.indexOf("'") >= 0) {
-    		resultText.setText(INVALID_PASSWD);
-    		return false;
-    	}
-    	//check if the password contains any space(s)
-    	else if (passwd.indexOf("\"") >= 0) {
+    	//check if the password contains any invalid character(s)
+    	else if (!Utility.checkInput(passwd)) {
     		resultText.setText(INVALID_PASSWD);
     		return false;
     	}
@@ -149,18 +131,8 @@ public class RegisterActivity extends Activity implements OnClickListener, TextW
     		resultText.setText(INCONSISTENT_PASSWD);
     		return false;
     	}
-    	//check if the nickname contains any space(s)
-    	else if (nname.indexOf(" ") >= 0) {
-    		resultText.setText(SPACE_IN_NICKNAME);
-    		return false;
-    	}
-    	//check if the nickname contains any space(s)
-    	else if (nname.indexOf("'") >= 0) {
-    		resultText.setText(INVALID_NICKNAME);
-    		return false;
-    	}
-    	//check if the nickname contains any space(s)
-    	else if (nname.indexOf("\"") >= 0) {
+    	//check if the nickname contains any invalid character(s)
+    	else if (!Utility.checkInput(nname)) {
     		resultText.setText(INVALID_NICKNAME);
     		return false;
     	}
@@ -187,7 +159,7 @@ public class RegisterActivity extends Activity implements OnClickListener, TextW
 	    			//Refresh the data of this app
 	    			refreshHandler.post(new Runnable() {
 	    				public void run() {
-	    		    		if (serverResp == -1) {
+	    		    		if (serverResp == 0) {
 	    		    			resultText.setTextColor(0xffff0000); //red
 	    		    			resultText.setText(TIMEOUT);
 	    		    		}
@@ -197,13 +169,13 @@ public class RegisterActivity extends Activity implements OnClickListener, TextW
 	    		    			resultText.setText(SUCCESSFUL);
 	    		    			submitBtn.setEnabled(false);  //cannot re-submit
 	    		    			
-	    		    			//stay on the register page for 1 seconds
+	    		    			//stay on the register page for 2 seconds
 	    		    			new Thread() {
 	    		    	        	@Override
 	    		    	        	public void run() {
 	    		    	        		try {
 	    		    	        			int waited = 0;
-	    		    	        			while (waited < 1000) {
+	    		    	        			while (waited < 2000) {
 	    		    	        				sleep(100);
 	    		    	        				waited += 100;
 	    		    	        			}
