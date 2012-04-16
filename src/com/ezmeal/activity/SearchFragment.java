@@ -141,7 +141,8 @@ public class SearchFragment extends Fragment {
 		back_button = (Button) page2.findViewById(R.id.buttonBackSearch);
 		back_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-            	refleshDish();
+            	//refleshDish();
+            	thread_state2 = WAIT;
             	awesomePager.setCurrentItem(0);
             }
 		});		
