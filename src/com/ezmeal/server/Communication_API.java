@@ -321,14 +321,14 @@ public class Communication_API {
 	{
 		Dish dish=new Dish();
 		result = null;
-		send_cmd("fetch_dish.php");
+		send_cmd("fetch_dish.php?index="+index);
 		try
 		{
 			if(result==null) return null;
 		     jArray = new JSONArray(result);
 		     JSONObject json_data=null;
 
-             json_data = jArray.getJSONObject(index);
+             json_data = jArray.getJSONObject(0);
              dish.setDish_id(json_data.getInt("dish_id"));
              dish.setDish_name(json_data.getString("dish_name"));
              dish.setDish_canteen(json_data.getString("dish_canteen"));
@@ -399,7 +399,7 @@ public class Communication_API {
 	{
 		Dish dish=new Dish();
 		result = null;
-		String cmd="search_dish.php?";
+		String cmd="search_dish.php?index="+index;
 		boolean first=true; //indicate whether this is the first parameter to be passed
 		boolean condition_specified=false; 	//indicate whether any condition has been specified for the search
 										  	//if no condition is specified, use fetch_dish()
@@ -534,11 +534,11 @@ public class Communication_API {
 		//if any condition has been speficied, send out the request
 		//else use fetch_dish()
 		if (!condition_specified)
-			cmd="fetch_dish.php";			
+			cmd="fetch_dish.php?index="+index;			
 		
 		//for debugging
 		testing=cmd;
-				
+		
 		send_cmd(cmd);
 		
 		try
@@ -547,7 +547,7 @@ public class Communication_API {
 		     jArray = new JSONArray(result);
 		     JSONObject json_data=null;
 
-             json_data = jArray.getJSONObject(index);
+             json_data = jArray.getJSONObject(0);
              dish.setDish_id(json_data.getInt("dish_id"));
              dish.setDish_name(json_data.getString("dish_name"));
              dish.setDish_canteen(json_data.getString("dish_canteen"));
