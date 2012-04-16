@@ -20,6 +20,7 @@ public class LazyAdapter extends BaseAdapter{
     private String[] dishes_name;
     private String[] dishes_canteen;
     private Float[] dishes_price;
+    private boolean isEmpty;
     private static LayoutInflater inflater=null;
     public ImageLoader imageLoader; 
     /*
@@ -33,8 +34,10 @@ public class LazyAdapter extends BaseAdapter{
     public LazyAdapter(Activity a, Vector<Bundle>dishes) {
     	activity = a;
     	if(dishes.isEmpty()){
+    		isEmpty = true;
         }
         else{
+        	isEmpty = false;
         data = new String[dishes.size()];
         dishes_name = new String[dishes.size()];
         dishes_canteen = new String[dishes.size()];
@@ -53,8 +56,8 @@ public class LazyAdapter extends BaseAdapter{
     }
 
     public int getCount() {
-//    	if(data.length==0)
-//    		return 1;
+    	if(isEmpty)
+    		return 0;
         return data.length;
     }
 
@@ -70,7 +73,8 @@ public class LazyAdapter extends BaseAdapter{
         View vi=convertView;
         if(convertView==null)
             vi = inflater.inflate(com.ezmeal.main.R.layout.menu_item, null);
-
+        if(isEmpty)
+        	return null;
         TextView text1=(TextView)vi.findViewById(com.ezmeal.main.R.id.text1);
         TextView text2=(TextView)vi.findViewById(com.ezmeal.main.R.id.text2);
         TextView text3=(TextView)vi.findViewById(com.ezmeal.main.R.id.text3);
