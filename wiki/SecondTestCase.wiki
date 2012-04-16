@@ -75,4 +75,6 @@
 
 == Results ==
 Bugs found:
-  To be posted.
+  * Test case 27 did not pass.
+    * <u><b>Reasons</u></b>: Error in server's PHP file.
+    * <u><b>Status</u></b>: Solved.
