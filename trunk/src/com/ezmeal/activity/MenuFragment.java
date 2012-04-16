@@ -129,7 +129,7 @@ public class MenuFragment extends Fragment {
 		    			Dish cur_dish;
 		    			dish_counter = 0;
 		    			thread_state = FETCH;
-		    			break;/*
+		    			break;
     				case FETCH:
 	    				cur_dish = api.search_dish(dish_counter,
 	    						"any",
@@ -161,7 +161,7 @@ public class MenuFragment extends Fragment {
 	    				bundle.putString("canteen", cur_dish.getDish_canteen());
 	    				bundle.putFloat("price", cur_dish.getDish_price());
 	    				dishes.add(bundle);
-    					break;*/
+    					break;
     				case TIMEOUT:
     				case DISPLAY:
 		    			refreshHandler.post(new Runnable() {
