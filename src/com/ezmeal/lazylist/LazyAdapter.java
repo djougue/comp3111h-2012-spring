@@ -44,7 +44,7 @@ public class LazyAdapter extends BaseAdapter{
         dishes_price = new Float[dishes.size()];
 	        for(int i=0;i<dishes.size();i++){
 	        	Bundle one_dish = dishes.elementAt(i);
-	        	data[i]=mStrings[i];
+	        	data[i]=mStrings[i%mStrings.length];
 	        	dishes_name[i]=one_dish.getString("name");
 	        	dishes_canteen[i]=one_dish.getString("canteen");
 	        	dishes_price[i]=one_dish.getFloat("price");
