@@ -76,5 +76,5 @@
 == Results ==
 Bugs found:
   * Test case 27 did not pass.
-    * <u><b>Reasons</b></u>: Error in server's PHP file.
+    * <u><b>Reasons</b></u>: Error in server's PHP file. The server treats "a b" as a whole string so that only dish with "a b" as a substring will be returned.
     * <u><b>Status</b></u>: Solved.
