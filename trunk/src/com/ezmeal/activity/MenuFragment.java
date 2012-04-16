@@ -57,6 +57,7 @@ public class MenuFragment extends Fragment {
 	private static final int TIMEOUT = 	4;
 	
 	private int thread_state  = WAIT;
+	private boolean isTimeout = false;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -128,6 +129,7 @@ public class MenuFragment extends Fragment {
 		    			dishes =new Vector<Bundle>();
 		    			Dish cur_dish;
 		    			dish_counter = 0;
+		    			isTimeout = false;
 		    			thread_state = FETCH;
 		    			break;
     				case FETCH:
@@ -147,12 +149,15 @@ public class MenuFragment extends Fragment {
 	    						(time_spinner.getSelectedItemPosition()==0));
 	    				if(cur_dish==null){ //time out. Then delete all loaded dishes
 	    					dishes.clear();
+			    			dish_counter = 0;
+//    						Log.e("MenuFragment", "Timeout!!");
+    						isTimeout = true;
 	    					thread_state = TIMEOUT;
 	    					break;
 	    				}
-	    				if(cur_dish.getDish_id()==0) { //all dishes has been fetch
-	    			    	
+	    				if(cur_dish.getDish_id()==0) { //all dishes has been fetch	    			    	
 	    					thread_state = DISPLAY;
+    						Log.e("MenuFragment", "change to DISPLAY");
 	    					break;
 	    				}
 	    				dish_counter++;
@@ -166,7 +171,7 @@ public class MenuFragment extends Fragment {
     				case DISPLAY:
 		    			refreshHandler.post(new Runnable() {
 		    				public void run() {						
-		    					if(thread_state == TIMEOUT){
+		    					if(thread_state == TIMEOUT||isTimeout){
 		    						Log.e("MenuFragment", "Timeout!");
 					    	        progressBar.setVisibility(View.INVISIBLE);
 					    	        reconnectBt.getLayoutParams().height=LayoutParams.WRAP_CONTENT;
@@ -191,8 +196,10 @@ public class MenuFragment extends Fragment {
 		    				}
 		    			});
 		    			thread_state = WAIT;
+		    			dish_counter = 0;
 		    			break;
     				case WAIT:
+		    			dish_counter = 0;
     					break;
     				}
     			}
