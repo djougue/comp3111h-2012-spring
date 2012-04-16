@@ -134,7 +134,7 @@ OnCheckedChangeListener, TextWatcher {
         		return false;
         	}
         	//check if the password contains invalid characters
-        	else if (Utility.checkInput(passwd)) {
+        	else if (!Utility.checkInput(passwd)) {
         		resultText.setText(INVALID_PASSWD);
         		return false;
         	}
@@ -152,7 +152,7 @@ OnCheckedChangeListener, TextWatcher {
     	}
 
     	//check if the nickname contains invalid characters
-    	else if (Utility.checkInput(nname)) {
+    	else if (!Utility.checkInput(nname)) {
     		resultText.setText(INVALID_NICKNAME);
     		return false;
     	}

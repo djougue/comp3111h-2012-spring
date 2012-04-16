@@ -126,12 +126,12 @@
         <TextView
             android:id="@+id/labelForgotPasswdResult"
             android:layout_width="wrap_content"
-            android:layout_height="45dp"
+            android:layout_height="40dp"
             android:paddingLeft="10dp"
             android:layout_centerHorizontal="true"
             android:textColor="#fff"
             android:layout_below="@id/relativeLayoutForgotPasswdReset"
-            android:layout_marginTop="12dp"/>
+            android:layout_marginTop="8dp"/>
         <ProgressBar
             android:id="@+id/progressBarForgotPasswd"
             style="@android:style/Widget.ProgressBar.Small"
