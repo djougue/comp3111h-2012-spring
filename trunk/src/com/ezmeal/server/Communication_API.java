@@ -399,8 +399,8 @@ public class Communication_API {
 	{
 		Dish dish=new Dish();
 		result = null;
-		String cmd="search_dish.php?index="+index;
-		boolean first=true; //indicate whether this is the first parameter to be passed
+		String cmd="search_dish.php?index="+index+"&";
+		boolean first=false; //indicate whether this is the first parameter to be passed
 		boolean condition_specified=false; 	//indicate whether any condition has been specified for the search
 										  	//if no condition is specified, use fetch_dish()
 		
@@ -441,28 +441,14 @@ public class Communication_API {
 		
 		if ((canteen!=127) && (canteen!=0))//not select all, nor deselect all
 		{
-			if (first)
-			{
-				cmd+="canteen="+canteen;
-				first=false;
-			}
-			else
-				cmd+="&canteen="+canteen;
-			
+			cmd+="&canteen="+canteen;
 			condition_specified=true;
 		}
 		
 		//search by spicy
 		if (dish_spicy<2)
 		{
-			if (first)
-			{
-				cmd+="spicy="+dish_spicy;
-				first=false;
-			}
-			else
-				cmd+="&spicy="+dish_spicy;
-			
+			cmd+="&spicy="+dish_spicy;
 			condition_specified=true;
 		}
 		else
@@ -473,14 +459,7 @@ public class Communication_API {
 		//search by vege
 		if (dish_vege<2)
 		{
-			if (first)
-			{
-				cmd+="vege="+dish_vege;
-				first=false;
-			}
-			else
-				cmd+="&vege="+dish_vege;
-			
+			cmd+="&vege="+dish_vege;
 			condition_specified=true;
 		}
 		else
@@ -491,14 +470,7 @@ public class Communication_API {
 		//search by meat
 		if (dish_meat<2)
 		{
-			if (first)
-			{
-				cmd+="meat="+dish_meat;
-				first=false;
-			}
-			else
-				cmd+="&meat="+dish_meat;
-			
+			cmd+="&meat="+dish_meat;
 			condition_specified=true;
 		}
 		else
@@ -520,14 +492,7 @@ public class Communication_API {
 		
 		if ((time!=15) && (time!=0))//not select all, nor deselect all
 		{
-			if (first)
-			{
-				cmd+="time="+time;
-				first=false;
-			}
-			else
-				cmd+="&time="+time;
-			
+			cmd+="&time="+time;
 			condition_specified=true;
 		}
 		
@@ -566,5 +531,67 @@ public class Communication_API {
 			e1.printStackTrace();
 		}
 		return dish;
+	}
+	
+
+	/*******************************************************************************************
+	 * 									Methods Related to Comments
+	 ******************************************************************************************/
+	public void add_comment(String title, String content, String user_name, String dish_name)
+	{
+		try{
+			send_cmd("add_comment.php?title="+URLEncoder.encode(title,"utf-8")
+					+"&content="+URLEncoder.encode(content,"utf-8")
+					+"&author="+URLEncoder.encode(user_name,"utf-8")
+					+"&dish="+URLEncoder.encode(dish_name,"utf-8"));
+		}
+		catch(Exception e){
+			
+		}
+	}
+	
+	public Comment fetch_comment(int index, String dish)
+	{
+		Comment comment=new Comment();
+		result = null;
+
+		try{
+			send_cmd("fetch_comment.php?dish="+URLEncoder.encode(dish,"utf-8"));
+		}
+		catch(Exception e){
+			
+		}
+		
+		try
+		{
+			if(result==null) return null;
+		     jArray = new JSONArray(result);
+		     JSONObject json_data=null;
+
+             json_data = jArray.getJSONObject(index);
+             /*
+             comment.setDish_id(json_data.getInt("dish_id"));
+             dish.setDish_name(json_data.getString("dish_name"));
+             dish.setDish_canteen(json_data.getString("dish_canteen"));
+             dish.setDish_price(Float.valueOf(json_data.getString("dish_price")).floatValue());
+             dish.setDish_spicy(json_data.getInt("dish_spicy"));
+             dish.setDish_vege(json_data.getInt("dish_vege"));
+             dish.setDish_meat(json_data.getInt("dish_meat"));
+             dish.setDish_available_time(json_data.getInt("dish_available_time"));
+             */
+             comment.setTitle(json_data.getString("comment_title"));
+             comment.setContent(json_data.getString("comment_content"));
+             comment.setAuthor(json_data.getString("comment_author_name"));
+             comment.setTime(json_data.getString("comment_time"));
+		}
+		catch(JSONException e1)
+		{
+			e1.printStackTrace();
+		} 
+		catch (ParseException e1) 
+		{
+			e1.printStackTrace();
+		}
+		return comment;
 	}
 }
