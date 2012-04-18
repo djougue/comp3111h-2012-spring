@@ -649,4 +649,57 @@ public class Communication_API {
 		}
 		return dish;
 	}
+	
+	/*******************************************************************************************
+	 * 									Methods Related to Ratings
+	 ******************************************************************************************/
+	//Add the rate if the user has not rated this dish before
+	//Change the rating value if he/she has rated it
+	public void rate_dish(String user_name, String dish_name, int rate)
+	{
+		try{
+			send_cmd("rate_dish.php?"
+					+"&username="+URLEncoder.encode(user_name,"utf-8")
+					+"&dishname="+URLEncoder.encode(dish_name,"utf-8")
+					+"&rate="+rate);
+		}
+		catch(Exception e){
+			
+		}
+	}
+	
+	//Return the average rate of a dish
+	//Return -1 if error occurs
+	public float fetch_rate(String dish_name)
+	{
+		result = null;
+
+		try{
+			send_cmd("fetch_rate.php?" + "dishname=" + URLEncoder.encode(dish_name,"utf-8"));
+			
+		}
+		catch(Exception e){
+			
+		}
+		
+		try
+		{
+			if(result==null) return -1;
+		     jArray = new JSONArray(result);
+		     JSONObject json_data=null;
+
+             json_data = jArray.getJSONObject(0);
+             
+             return(Float.valueOf(json_data.getString("avg(rate_value)")).floatValue());
+		}
+		catch(JSONException e1)
+		{
+			e1.printStackTrace();
+		} 
+		catch (ParseException e1) 
+		{
+			e1.printStackTrace();
+		}
+		return -1;
+	}
 }
