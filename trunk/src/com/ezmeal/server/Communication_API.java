@@ -556,7 +556,7 @@ public class Communication_API {
 		result = null;
 
 		try{
-			send_cmd("fetch_comment.php?dish="+URLEncoder.encode(dish,"utf-8"));
+			send_cmd("fetch_comment.php?index=" + index + "&dish="+URLEncoder.encode(dish,"utf-8"));
 		}
 		catch(Exception e){
 			
@@ -568,7 +568,7 @@ public class Communication_API {
 		     jArray = new JSONArray(result);
 		     JSONObject json_data=null;
 
-             json_data = jArray.getJSONObject(index);
+             json_data = jArray.getJSONObject(0);
              /*
              comment.setDish_id(json_data.getInt("dish_id"));
              dish.setDish_name(json_data.getString("dish_name"));
