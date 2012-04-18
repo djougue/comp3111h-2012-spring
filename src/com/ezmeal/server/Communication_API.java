@@ -594,4 +594,59 @@ public class Communication_API {
 		}
 		return comment;
 	}
+	
+	/*******************************************************************************************
+	 * 									Methods Related to Blacklist
+	 ******************************************************************************************/
+	public void add_blacklist(String user_name, String dish_name)
+	{
+		try{
+			send_cmd("add_blacklist.php?"
+					+"&username="+URLEncoder.encode(user_name,"utf-8")
+					+"&dishname="+URLEncoder.encode(dish_name,"utf-8"));
+		}
+		catch(Exception e){
+			
+		}
+	}
+	
+	//Return all the dishes that are on the blacklist of a particular user
+	//Attention: The returned dish has only information of the dish_name
+	public Dish fetch_blacklist(int index, String user_name)
+	{
+		Dish dish=new Dish();
+		result = null;
+
+		try{
+			testing="fetch_blacklist.php?index=" + index 
+					+ "&username=" + URLEncoder.encode(user_name,"utf-8");
+			
+			send_cmd("fetch_blacklist.php?index=" + index 
+					+ "&username=" + URLEncoder.encode(user_name,"utf-8"));
+			
+		}
+		catch(Exception e){
+			
+		}
+		
+		try
+		{
+			if(result==null) return null;
+		     jArray = new JSONArray(result);
+		     JSONObject json_data=null;
+
+             json_data = jArray.getJSONObject(0);
+             
+             dish.setDish_name(json_data.getString("blacklist_dishname"));
+		}
+		catch(JSONException e1)
+		{
+			e1.printStackTrace();
+		} 
+		catch (ParseException e1) 
+		{
+			e1.printStackTrace();
+		}
+		return dish;
+	}
 }
