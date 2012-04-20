@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="@string/labelUserName"
-            android:textColor="#000"
+            android:textColor="#fff"
             android:textStyle="bold" />
         <EditText
             android:id="@+id/editTextSettingsUserName"
@@ -54,7 +54,7 @@
             android:layout_below="@id/labelSettingsUserName"
             android:layout_marginTop="30dp"
             android:text="@string/labelNickName"
-            android:textColor="#000"
+            android:textColor="#fff"
             android:textStyle="bold" />
         <EditText
             android:id="@+id/editTextSettingsNickName"
@@ -75,7 +75,7 @@
             android:layout_below="@id/labelSettingsNickName"
             android:layout_marginTop="45dp"
             android:text="@string/labelChangePassword"
-            android:textColor="#000"
+            android:textColor="#fff"
             android:textStyle="bold" />
         <CheckBox 
             android:id="@+id/checkBoxSettingsChangePassword"
@@ -147,7 +147,7 @@
             android:layout_below="@id/labelSettingsConfirmPassword"
             android:layout_marginTop="45dp"
             android:text="@string/labelShakeSettings"
-            android:textColor="#000"
+            android:textColor="#fff"
             android:textStyle="bold" />
         <ToggleButton
             android:id="@+id/toggleButtonSettingsShake"

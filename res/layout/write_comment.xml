@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:shadowColor="#000"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="1"
+        android:text="@string/labelSaySomething"
+        android:textColor="#fff"
+        android:textSize="18dp"
+        android:textStyle="bold" />
+
+    <!-- Title -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal" >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:shadowColor="#000"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
+            android:text="@string/labelTitle"
+            android:textColor="#fff"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/labelCommentTitleCharRemaining"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:shadowColor="#000"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
+            android:textColor="#eee"
+            android:textSize="15dp"
+            android:textStyle="italic" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:shadowColor="#000"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
+            android:text="@string/labelMaxCommentTitle"
+            android:textColor="#eee"
+            android:textSize="15dp"
+            android:textStyle="italic" />
+    </LinearLayout>
+    <EditText
+        android:id="@+id/editTextCommentTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:background="@android:drawable/editbox_background"
+        android:inputType="text"
+        android:singleLine="true"
+        android:maxLength="40"
+        android:textSize="15dp" >
+    </EditText>
+
+    <!-- Content -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:shadowColor="#000"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
+            android:text="@string/labelWriteComment"
+            android:textColor="#fff"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/labelCommentContentCharRemaining"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:shadowColor="#000"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
+            android:textColor="#eee"
+            android:textSize="15dp"
+            android:textStyle="italic" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:shadowColor="#000"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
+            android:text="@string/labelMaxCommentContent"
+            android:textColor="#eee"
+            android:textSize="15dp"
+            android:textStyle="italic" />
+    </LinearLayout>
+    <EditText
+        android:id="@+id/editTextCommentContent"
+        android:layout_width="fill_parent"
+        android:layout_height="80dp"
+        android:background="@android:drawable/editbox_background"
+        android:inputType="textMultiLine"
+        android:singleLine="true"
+        android:maxLength="140"
+        android:textSize="15dp" >
+    </EditText>
+    
+    <RelativeLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="10dp">
+        
+        <!-- Send Button -->
+        <Button
+            android:id="@+id/buttonCommentSend"
+            android:layout_width="110dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/button_send">
+        </Button>
+        
+        <!-- Sending Result -->
+        <ProgressBar
+            android:id="@+id/progressBarWriteComment"
+            style="@android:style/Widget.ProgressBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/labelWriteCommentResult"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="5dp"
+            android:visibility="gone" />
+        <TextView
+            android:id="@+id/labelWriteCommentResult"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="#fff"
+            android:layout_alignTop="@+id/buttonWriteCommentSend"
+            android:layout_toRightOf="@id/progressBarWriteComment"
+            android:layout_toLeftOf="@id/buttonWriteCommentSend"
+            android:text=""/>
+        
+    </RelativeLayout>
+
+</LinearLayout>
