@@ -1,6 +1,7 @@
 package com.ezmeal.server;
 
 import java.io.BufferedReader;
+import java.net.SocketTimeoutException;
 import java.net.URLEncoder;
 
 import java.io.InputStream;
@@ -13,6 +14,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
@@ -25,18 +27,81 @@ import android.net.ParseException;
 import android.util.Log;
 
 public class Communication_API {
-	JSONArray jArray;
-	String result = null;
-	InputStream is = null;
-	StringBuilder sb=null;
-	int timeoutConnection = 10000;  //timeout = 10 seconds
-	int timeoutSocket = 10000;
+	private JSONArray jArray;
+    private String result = null;
+	private InputStream is = null;
+	private StringBuilder sb=null;
+	private int timeoutConnection = 10000;  //timeout = 10 seconds
+	private int timeoutSocket = 10000;
+	private boolean isTimeout = false;
 	
 	//For debugging
 	static String testing;
 		
+	/**
+	 * Send requests to and fetch results from the ezMeal main server
+	 * @param cmd
+	 */
 	private void send_cmd(String cmd)
 	{
+		isTimeout = false;
+		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		//http post
+		try{
+			//set time out
+		     HttpParams httpParameters = new BasicHttpParams();
+			 HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+			 HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+			 HttpClient httpclient = new DefaultHttpClient(httpParameters);
+		     HttpPost httppost = new HttpPost("http://143.89.220.19/COMP3111H/"+cmd);
+		     httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+		     HttpResponse response = httpclient.execute(httppost);
+		     HttpEntity entity = response.getEntity();
+		     is = entity.getContent();
+		}
+		catch (ConnectTimeoutException e)
+		{
+			Log.e("log_tag", "Error in http connection"+e.toString());
+			isTimeout = true;
+		}
+		catch (SocketTimeoutException e)
+		{
+			Log.e("log_tag", "Error in http connection"+e.toString());
+			isTimeout = true;
+		}
+		catch(Exception e)
+		{
+		     Log.e("log_tag", "Error in http connection"+e.toString());
+		}
+		//convert response to string
+		try{
+		    BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
+		    sb = new StringBuilder();
+		    sb.append(reader.readLine() + "\n");
+		       
+		       String line="0";
+		       while ((line = reader.readLine()) != null) 
+		       {
+		       	sb.append(line + "\n");
+		       }
+		       is.close();
+		       result = new String();
+		       result=sb.toString();
+		}
+		catch(Exception e)
+		{
+			Log.e("log_tag", "Error converting result "+e.toString());
+		}
+	}
+
+	/**
+	 * Send requests to and fetch results from the HKUST ihome server
+	 * @param destination
+	 * @param cmd
+	 */
+	private void send_cmd_ihome(String destination, String cmd)
+	{
+		isTimeout = false;
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		//http post
 		try{
@@ -46,11 +111,28 @@ public class Communication_API {
 			 HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
 			 
 			 HttpClient httpclient = new DefaultHttpClient(httpParameters);
-		     HttpPost httppost = new HttpPost("http://143.89.220.19/COMP3111H/"+cmd);
+			 HttpPost httppost;
+			 
+			 //Choose to send to Lu's or Tu's ihome
+			 if (destination=="xlu")
+				 httppost = new HttpPost("http://ihome.ust.hk/~xlu/cgi-bin/"+cmd);
+			 else
+				 httppost = new HttpPost("http://ihome.ust.hk/~jtu/cgi-bin/"+cmd);
+			 
 		     httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 		     HttpResponse response = httpclient.execute(httppost);
 		     HttpEntity entity = response.getEntity();
 		     is = entity.getContent();
+		}
+		catch (ConnectTimeoutException e)
+		{
+			Log.e("log_tag", "Error in http connection"+e.toString());
+			isTimeout = true;
+		}
+		catch (SocketTimeoutException e)
+		{
+			Log.e("log_tag", "Error in http connection"+e.toString());
+			isTimeout = true;
 		}
 		catch(Exception e)
 		{
@@ -76,54 +158,12 @@ public class Communication_API {
 			Log.e("log_tag", "Error converting result "+e.toString());
 		}
 	}
-
-	private void send_cmd_ihome(String destination, String cmd)
-	{
-		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		//http post
-		try{
-			//set time out
-		     HttpParams httpParameters = new BasicHttpParams();
-			 HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
-			 HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
-			 
-			 HttpClient httpclient = new DefaultHttpClient(httpParameters);
-			 HttpPost httppost;
-			 
-			 //Choose to send to Lu's or Tu's ihome
-			 if (destination=="xlu")
-				 httppost = new HttpPost("http://ihome.ust.hk/~xlu/cgi-bin/"+cmd);
-			 else
-				 httppost = new HttpPost("http://ihome.ust.hk/~jtu/cgi-bin/"+cmd);
-			 
-		     httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-		     HttpResponse response = httpclient.execute(httppost);
-		     HttpEntity entity = response.getEntity();
-		     is = entity.getContent();
-		}
-		catch(Exception e)
-		{
-		     Log.e("log_tag", "Error in http connection"+e.toString());
-		}
-		//convert response to string
-		try{
-		      BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
-		       sb = new StringBuilder();
-		       sb.append(reader.readLine() + "\n");
-		
-		       String line="0";
-		       while ((line = reader.readLine()) != null) 
-		       {
-		       	sb.append(line + "\n");
-		       }
-		       is.close();
-		       result = new String();
-		       result=sb.toString();
-		}
-		catch(Exception e)
-		{
-			Log.e("log_tag", "Error converting result "+e.toString());
-		}
+	
+	/**
+	 * @return true if connection is timeout
+	 */
+	public boolean isConnectionTimeout() {
+		return isTimeout;
 	}
 	/*******************************************************************************************
 	 * 									Methods Related to Users
@@ -559,38 +599,39 @@ public class Communication_API {
 			send_cmd("fetch_comment.php?index=" + index + "&dish="+URLEncoder.encode(dish,"utf-8"));
 		}
 		catch(Exception e){
-			
+			//do nothing
 		}
 		
 		try
 		{
 			if(result==null) return null;
-		     jArray = new JSONArray(result);
-		     JSONObject json_data=null;
-
-             json_data = jArray.getJSONObject(0);
-             /*
-             comment.setDish_id(json_data.getInt("dish_id"));
-             dish.setDish_name(json_data.getString("dish_name"));
-             dish.setDish_canteen(json_data.getString("dish_canteen"));
-             dish.setDish_price(Float.valueOf(json_data.getString("dish_price")).floatValue());
-             dish.setDish_spicy(json_data.getInt("dish_spicy"));
-             dish.setDish_vege(json_data.getInt("dish_vege"));
-             dish.setDish_meat(json_data.getInt("dish_meat"));
-             dish.setDish_available_time(json_data.getInt("dish_available_time"));
-             */
-             comment.setTitle(json_data.getString("comment_title"));
-             comment.setContent(json_data.getString("comment_content"));
-             comment.setAuthor(json_data.getString("comment_author_name"));
-             comment.setTime(json_data.getString("comment_time"));
+		    jArray = new JSONArray(result);
+		    JSONObject json_data=null;
+            json_data = jArray.getJSONObject(0);
+            /*
+            comment.setDish_id(json_data.getInt("dish_id"));
+            dish.setDish_name(json_data.getString("dish_name"));
+            dish.setDish_canteen(json_data.getString("dish_canteen"));
+            dish.setDish_price(Float.valueOf(json_data.getString("dish_price")).floatValue());
+            dish.setDish_spicy(json_data.getInt("dish_spicy"));
+            dish.setDish_vege(json_data.getInt("dish_vege"));
+            dish.setDish_meat(json_data.getInt("dish_meat"));
+            dish.setDish_available_time(json_data.getInt("dish_available_time"));
+            */
+            comment.setTitle(json_data.getString("comment_title"));
+            comment.setContent(json_data.getString("comment_content"));
+            comment.setAuthor(json_data.getString("comment_author_name"));
+            comment.setTime(json_data.getString("comment_time"));
 		}
 		catch(JSONException e1)
 		{
 			e1.printStackTrace();
+			return null;
 		} 
 		catch (ParseException e1) 
 		{
 			e1.printStackTrace();
+			return null;
 		}
 		return comment;
 	}
