@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@drawable/orange_bg">
+    
+    <!-- Page Header -->
+    <include
+        android:id="@+id/include1"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        layout="@layout/header" />
+	<TextView 
+		android:id="@+id/textDishNameInDetail"
+		android:layout_width="fill_parent"
+			
+        android:ellipsize="marquee"
+	    android:marqueeRepeatLimit="marquee_forever"
+	    android:scrollHorizontally="true"
+	    android:singleLine="true"
+		android:focusable="true" 
+		android:focusableInTouchMode="true" 
+		
+		android:layout_height="wrap_content"	            
+		android:textSize="20dip"
+		android:layout_marginLeft="5dip"
+		android:layout_marginTop="2dip"
+		android:padding="5dip"
+		android:textStyle="bold"
+		android:textColor="#000000"
+		android:shadowColor="#000000"
+		android:shadowDx="1"
+		android:shadowDy="1"
+		android:shadowRadius="1"
+		android:text="Fried Rice, Yeung Chow Style"/>
+	
+	<LinearLayout 
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+	    >
+		 <RatingBar
+	        android:id="@+id/ratingBarTotal"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" 
+	        android:layout_marginLeft="5dp"
+	        style = "@style/foodRatingBar"
+	     />
+		<TextView 
+			android:id="@+id/textRating"
+			android:layout_width="wrap_content"
+			android:layout_height="fill_parent"
+			android:gravity="center_vertical"
+			android:layout_gravity="center_vertical"
+			android:layout_marginLeft="10dp"
+			android:textSize="34dip"
+			android:textStyle="italic|bold"
+			android:textColor="#fff"
+			android:text="8.8"/>		
+
+		<TextView 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"	   	
+			android:layout_marginLeft="5dp"
+			android:textSize="10dip"
+			android:textStyle="italic"
+			android:textColor="#fff"
+			android:text="by"/>
+		<TextView 
+			android:id="@+id/textRatedBy"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"	   	
+			android:textSize="10dip"
+			android:layout_marginLeft="5dip"
+			android:layout_marginRight="5dip"
+			android:textColor="#fff"
+			android:text="10"/>
+		<TextView 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"	   	
+			android:textSize="10dip"
+			android:textColor="#fff"
+			android:text=" users"/>
+									 	    	    
+	</LinearLayout>
+	 
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+	    android:paddingTop="5dip">	    
+	    <FrameLayout 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        >
+		    <ImageView
+		  	    android:id="@+id/dishImage"
+			    android:layout_width="95dip"
+			    android:layout_height="95dip" 
+			    android:src="@drawable/stub" 
+			    android:layout_gravity="center_vertical|center_horizontal"
+			    android:scaleType="centerCrop"/>
+ 	        <ImageView 
+	            android:layout_width="100dip"
+		        android:layout_height="100dip"	            
+	            android:clickable="true"
+	            android:contentDescription="pic"
+	            android:src="@drawable/fm_png2"/>
+<!--    	        <ImageView 
+	            android:layout_width="30dip"
+		        android:layout_height="30dip"
+	            android:clickable="true"
+	            android:contentDescription="cancel"
+	            android:src="@drawable/cancel"/>-->
+	   	</FrameLayout>
+
+	    <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:layout_marginLeft = "5dip"
+	        android:layout_marginRight = "5dip" 
+	        android:orientation="vertical" >
+ 	        <LinearLayout
+		        android:layout_width="fill_parent"
+		        android:layout_height="fill_parent"
+		        android:orientation="horizontal" >
+		    <RatingBar
+		        android:id="@+id/ratingBar5"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content" 
+		        style = "@style/foodRatingBarSmall"
+		        />
+		    </LinearLayout>
+ 	        <LinearLayout
+		        android:layout_width="fill_parent"
+		        android:layout_height="fill_parent"
+		        android:orientation="horizontal" >
+		    <RatingBar
+		        android:id="@+id/ratingBar4"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content" 
+		        style = "@style/foodRatingBarSmall"
+		        />
+		    </LinearLayout>
+ 	        <LinearLayout
+		        android:layout_width="fill_parent"
+		        android:layout_height="fill_parent"
+		        android:orientation="horizontal" >
+		    <RatingBar
+		        android:id="@+id/ratingBar3"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content" 
+		        style = "@style/foodRatingBarSmall"
+		        />
+		    </LinearLayout>
+ 	        <LinearLayout
+		        android:layout_width="fill_parent"
+		        android:layout_height="fill_parent"
+		        android:orientation="horizontal" >
+		    <RatingBar
+		        android:id="@+id/ratingBar2"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content" 
+		        style = "@style/foodRatingBarSmall"
+		        />
+		    </LinearLayout>
+
+	    </LinearLayout>
+
+	</LinearLayout>
+
+	<LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" 
+	    android:layout_marginLeft="10dip"
+	    android:layout_marginRight="10dip"
+	    android:layout_marginBottom="5dip">
+        <TextView 
+		  	android:layout_width="wrap_content"
+			android:layout_height="wrap_content"	            
+            android:textSize="15dip"
+	        android:textColor="#000000"
+	        android:textStyle="bold"
+            android:text="Canteen: "/>
+        <TextView 
+			android:id="@+id/textDishCanteenInDetail"
+		  	android:layout_width="fill_parent"
+			android:layout_height="wrap_content"	            
+            android:textSize="15dip"
+            android:gravity="right"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:text="failed"/>	        	    
+	</LinearLayout>
+	<LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginLeft="10dip"
+	    android:layout_marginRight="10dip">
+        <TextView 
+		  	android:layout_width="wrap_content"
+			android:layout_height="wrap_content"	            
+            android:textSize="17dip"
+	        android:textColor="#000000"
+	        android:textStyle="bold"
+            android:text="Price: "/>
+        <TextView 
+			android:id="@+id/textDishPriceInDetail"
+		  	android:layout_width="fill_parent"
+			android:layout_height="wrap_content"	            
+            android:textSize="20dip"
+            android:gravity="right"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:text="failed"/>	        	    
+	</LinearLayout>
+	
+</LinearLayout>
