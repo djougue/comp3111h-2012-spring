@@ -59,5 +59,8 @@
     <string name="labelSearchCanteen">Canteen: </string>
     <string name="labelSearchAvailableTime">Available Time: </string>
     <string name="labelSearchTaste">Taste Preference: </string>
+	
+    <!-- Link -->
+    <string name="WebServiceURL">http://143.89.220.19/COMP3111H</string>
     
 </resources>
