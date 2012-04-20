@@ -23,8 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-public class SettingsActivity extends Activity implements OnClickListener,
-OnCheckedChangeListener, TextWatcher {
+public class SettingsActivity extends Activity implements OnClickListener, OnCheckedChangeListener, TextWatcher {
 	private Communication_API api = new Communication_API();
 	private TextView headerTitle, oldpasswdLabel, newpasswdLabel, confirmpasswdLabel, resultText;
 	private Button backBtn, submitBtn;
@@ -94,11 +93,11 @@ OnCheckedChangeListener, TextWatcher {
     
     private void EnablePasswd() {
     	oldpasswd.setEnabled(true);  //editable
-    	oldpasswdLabel.setTextColor(0xff000000); //black
+    	oldpasswdLabel.setTextColor(0xffffffff); //white
     	newpasswd.setEnabled(true);  //editable
-    	newpasswdLabel.setTextColor(0xff000000); //black
+    	newpasswdLabel.setTextColor(0xffffffff); //white
     	confirmpasswd.setEnabled(true);  //editable
-    	confirmpasswdLabel.setTextColor(0xff000000); //black
+    	confirmpasswdLabel.setTextColor(0xffffffff); //white
     }
     
     private void DisablePasswd() {
@@ -218,7 +217,7 @@ OnCheckedChangeListener, TextWatcher {
     	}
     }
     
-    private void checkPasswd() {
+    private void checkPasswdAndPostData() {
     	postDataThread = new Thread(new Runnable() {
     		public void run() {
     			SettingsActivity.serverResp =
@@ -254,7 +253,7 @@ OnCheckedChangeListener, TextWatcher {
     		resultText.setText(LOADING);
     		progressBar.setVisibility(View.VISIBLE);
         	if (changePasswd.isChecked()) {
-        		checkPasswd();
+        		checkPasswdAndPostData();
         	}
         	else {
         		postSettingsData();
@@ -311,10 +310,10 @@ OnCheckedChangeListener, TextWatcher {
 	}
 
 	public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-		// Nothing
+		//do nothing
 	}
 
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
-		// Nothing
+		//do nothing
 	}
 }
