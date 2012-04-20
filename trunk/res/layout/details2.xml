@@ -134,19 +134,6 @@
     	        android:shadowDy="1"
 	            android:shadowRadius="1"
                 android:text="Failed"/>
-            <TextView 
-		  	    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:layout_marginRight="4dp"	            
-                android:textSize="24dip"
-                android:layout_toLeftOf="@id/textDishPriceInDetail"
-                android:textColor="#fff"
-                android:textStyle="bold"
-                android:shadowColor="#000"
-	            android:shadowDx="1"
-    	        android:shadowDy="1"
-	            android:shadowRadius="1"
-                android:text="@string/labelDollarSign"/>
             
             <!-- Canteen -->
             <!--
