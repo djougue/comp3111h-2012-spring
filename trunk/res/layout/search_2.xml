@@ -19,6 +19,7 @@
        android:layout_height="wrap_content"
        android:textColor="#fff"
        android:textStyle="bold"
+       android:layout_marginLeft = "5dip"
        android:text="Result:"/>
     <FrameLayout 
         android:layout_width="fill_parent"
