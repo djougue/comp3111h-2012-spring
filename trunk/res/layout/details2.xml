@@ -5,126 +5,219 @@
     android:orientation="vertical" 
     android:background="@drawable/orange_bg">
     
+    
     <!-- Page Header -->
     <include
-        android:id="@+id/include1"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         layout="@layout/header" />
     
-	<LinearLayout 
-	    android:layout_width="match_parent"
+    <!-- Main Content -->
+    <ScrollView 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout 
+        android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
-	    android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-	    android:paddingTop="10dip">
-	    <FrameLayout 
+	    android:orientation="vertical"
+	    android:padding="12dp">
+	    
+	    <LinearLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content">
+	        
+	        <!-- Dish Thumb Nail -->
+	        <FrameLayout 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content" >
+	            <ImageView 
+	                android:layout_width="110dip"
+		            android:layout_height="110dip"	            
+	                android:clickable="true"
+	                android:contentDescription="pic"
+	                android:src="@drawable/fm_png3"/>
+		        <ImageView
+		  	        android:id="@+id/dishImage"
+			        android:layout_width="95dip"
+			        android:layout_height="95dip" 
+			        android:src="@drawable/stub" 
+			        android:layout_gravity="center_vertical|center_horizontal"
+			        android:scaleType="centerCrop"/>
+                <!--    	    
+                <ImageView 
+	                android:layout_width="30dip"
+		            android:layout_height="30dip"
+	                android:clickable="true"
+	                android:contentDescription="cancel"
+	                android:src="@drawable/cancel"/>
+	            -->
+	   	    </FrameLayout>
+	   	    
+	        <!-- Dish Detailed Info -->
+	        <LinearLayout 
+	            android:layout_width="fill_parent"
+	            android:layout_height="fill_parent"
+	            android:paddingLeft="12dip"
+	            android:paddingTop="2dip"
+	            android:orientation="vertical">
+ 	            
+ 	            <!-- Dish Name -->
+	            <TextView 
+	                android:id="@+id/textDishNameInDetail"
+			      	android:layout_width="fill_parent"
+			  	    android:ellipsize="marquee"
+       	        	android:marqueeRepeatLimit="marquee_forever"
+	    			android:layout_height="50dip"	            
+	                android:layout_gravity="top"
+	                android:textSize="20dip"
+	                android:textStyle="bold"
+	                android:textColor="#fff"
+	                android:shadowColor="#000"
+	                android:shadowDx="1"
+    	            android:shadowDy="1"
+	                android:shadowRadius="1"
+	                android:text="Fried Rice, Yeung Chow Style"/>
+	            
+	            <!-- Food Style (Taste) -->
+	            <TextView 
+			  	    android:layout_width="fill_parent"
+				    android:layout_height="20dip"	            
+	                android:textSize="15dip"
+	                android:textStyle="italic"
+	                android:textColor="#eee"
+	                android:shadowColor="#000"
+	                android:shadowDx="1"
+    	            android:shadowDy="1"
+	                android:shadowRadius="1"
+	                android:text="Food style:"/>
+	            <TextView 
+    			  	android:layout_width="fill_parent"
+				    android:layout_height="20dip"	            
+	                android:textSize="15dip"
+	                android:textStyle="italic"
+	                android:textColor="#eee"
+	                android:shadowColor="#000"
+	                android:shadowDx="1"
+    	            android:shadowDy="1"
+	                android:shadowRadius="1"
+	                android:text="   coming soon"/>	               	            
+	        </LinearLayout>
+	    </LinearLayout>
+
+	    <RelativeLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="5dip"
+	        android:layout_marginBottom="5dip"
+	        android:orientation="horizontal">
+	    
+	        <!-- Price -->
+            <!--
+            <TextView 
+		      	android:layout_width="wrap_content"
+		    	android:layout_height="wrap_content"	            
+                android:textSize="17dip"
+	            android:textColor="#000000"
+	            android:textStyle="bold"
+                android:text="Price: "/>
+            -->	
+            <TextView 
+			    android:id="@+id/textDishPriceInDetail"
+		  	    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"	            
+                android:textSize="24dip"
+                android:layout_alignParentRight="true"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:shadowColor="#000"
+	            android:shadowDx="1"
+    	        android:shadowDy="1"
+	            android:shadowRadius="1"
+                android:text="Failed"/>
+            <TextView 
+		  	    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_marginRight="4dp"	            
+                android:textSize="24dip"
+                android:layout_toLeftOf="@id/textDishPriceInDetail"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:shadowColor="#000"
+	            android:shadowDx="1"
+    	        android:shadowDy="1"
+	            android:shadowRadius="1"
+                android:text="@string/labelDollarSign"/>
+            
+            <!-- Canteen -->
+            <!--
+            <TextView 
+		      	android:layout_width="wrap_content"
+		    	android:layout_height="wrap_content"	            
+                android:textSize="15dip"
+	            android:textColor="#000000"
+	            android:textStyle="bold"
+                android:text="Canteen: "/>
+            -->
+            <TextView 
+			    android:id="@+id/textDishCanteenInDetail"
+		      	android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_alignBaseline="@id/textDishPriceInDetail"            
+                android:textSize="15dip"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:shadowColor="#000"
+	            android:shadowDx="1"
+    	        android:shadowDy="1"
+	            android:shadowRadius="1"
+                android:text="Failed"/>	    
+	    </RelativeLayout>
+	
+	    <include
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/write_comment" />
+	    
+	    <!-- User Comments -->
+	    <TextView
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        >
-		    <ImageView
-		  	    android:id="@+id/dishImage"
-			    android:layout_width="95dip"
-			    android:layout_height="95dip" 
-			    android:src="@drawable/stub" 
-			    android:layout_gravity="center_vertical|center_horizontal"
-			    android:scaleType="centerCrop"/>
- 	        <ImageView 
-	            android:layout_width="100dip"
-		        android:layout_height="100dip"	            
-	            android:clickable="true"
-	            android:contentDescription="pic"
-	            android:src="@drawable/fm_png2"/>
-<!--    	        <ImageView 
-	            android:layout_width="30dip"
-		        android:layout_height="30dip"
-	            android:clickable="true"
-	            android:contentDescription="cancel"
-	            android:src="@drawable/cancel"/>-->
-	   	</FrameLayout>
-	    <LinearLayout 
-	        android:layout_width="fill_parent"
-	        android:layout_height="fill_parent"
+	        android:layout_marginLeft="5dp"
+	        android:textColor="#fff"
+	        android:textStyle="bold"
+	        android:shadowColor="#000"
+	        android:shadowDx="1"
+            android:shadowDy="1"
+	        android:shadowRadius="1"
+	        android:textSize="18dp"
+	        android:text="@string/labelComment"
+	        android:layout_marginTop="10dp"/>
+	    <TextView
+	        android:id="@+id/labelCommentNoResult"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:textColor="#eee"
+	        android:textStyle="italic"
+	        android:shadowColor="#000"
+	        android:shadowDx="1"
+            android:shadowDy="1"
+	        android:shadowRadius="1"
+	        android:textSize="15dp"
+	        android:text="@string/labelNoComments"
+	        android:visibility="gone"
+	        android:layout_marginTop="2dp"/>
+	    <LinearLayout
+	        android:id="@+id/layoutComment"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
 	        android:orientation="vertical"
-	        >
-	        <TextView 
-	            android:id="@+id/textDishNameInDetail"
-			  	android:layout_width="fill_parent"
-			  	
-			  	android:ellipsize="marquee"
-   	        	android:marqueeRepeatLimit="marquee_forever"
-			  	
-				android:layout_height="50dip"	            
-	            android:layout_gravity="top"
-	            android:textSize="20dip"
-	            android:layout_marginLeft="5dip"
-	            android:layout_marginTop="2dip"
-	            android:textStyle="bold"
-	            android:textColor="#000000"
-	            android:shadowColor="#000000"
-	            android:shadowDx="1"
-	            android:shadowDy="1"
-	            android:shadowRadius="1"
-	            android:text="Fried Rice, Yeung Chow Style"/>
-	        <TextView 
-			  	android:layout_width="fill_parent"
-				android:layout_height="20dip"	            
-	            android:textSize="15dip"
-	            android:textStyle="italic"
-	            android:text="Food style:"/>
-	        <TextView 
-			  	android:layout_width="fill_parent"
-				android:layout_height="20dip"	            
-	            android:textSize="15dip"
-	            android:textStyle="italic"
-	            android:text="   coming soon"/>	               	            
-	    </LinearLayout>
-	</LinearLayout>
-
-	<LinearLayout
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content" 
-	    android:layout_marginLeft="10dip"
-	    android:layout_marginRight="10dip"
-	    android:layout_marginBottom="5dip">
-        <TextView 
-		  	android:layout_width="wrap_content"
-			android:layout_height="wrap_content"	            
-            android:textSize="15dip"
-	        android:textColor="#000000"
-	        android:textStyle="bold"
-            android:text="Canteen: "/>
-        <TextView 
-			android:id="@+id/textDishCanteenInDetail"
-		  	android:layout_width="fill_parent"
-			android:layout_height="wrap_content"	            
-            android:textSize="15dip"
-            android:gravity="right"
-            android:textColor="#000000"
-            android:textStyle="bold"
-            android:text="failed"/>	        	    
-	</LinearLayout>
-	<LinearLayout
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_marginLeft="10dip"
-	    android:layout_marginRight="10dip">
-        <TextView 
-		  	android:layout_width="wrap_content"
-			android:layout_height="wrap_content"	            
-            android:textSize="17dip"
-	        android:textColor="#000000"
-	        android:textStyle="bold"
-            android:text="Price: "/>
-        <TextView 
-			android:id="@+id/textDishPriceInDetail"
-		  	android:layout_width="fill_parent"
-			android:layout_height="wrap_content"	            
-            android:textSize="20dip"
-            android:gravity="right"
-            android:textColor="#000000"
-            android:textStyle="bold"
-            android:text="failed"/>	        	    
-	</LinearLayout>
-	
+	        android:layout_marginTop="5dp"
+	        android:layout_marginLeft="5dp"
+	        android:layout_marginBottom="10dp">
+        </LinearLayout>
+        
+    </LinearLayout>
+    </ScrollView>
+	 
 </LinearLayout>
