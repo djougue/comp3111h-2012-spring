@@ -743,4 +743,81 @@ public class Communication_API {
 		}
 		return -1;
 	}
+	
+	
+	//Return the rate of a dish from a particular user
+	//Return -1 if error occurs
+	public int fetch_user_rate(String user_name, String dish_name)
+	{
+		result = null;
+
+		try{
+			testing="fetch_user_rating.php?" 	
+					  +	"username=" + URLEncoder.encode(user_name,"utf-8")
+					  + "&dishname=" + URLEncoder.encode(dish_name,"utf-8");
+			send_cmd("fetch_user_rating.php?" 	
+					  +	"username=" + URLEncoder.encode(user_name,"utf-8")
+					  + "&dishname=" + URLEncoder.encode(dish_name,"utf-8"));
+			
+		}
+		catch(Exception e){
+			
+		}
+		
+		try
+		{
+			if(result==null) return -1;
+			testing=result;
+		     jArray = new JSONArray(result);
+		     JSONObject json_data=null;
+
+             json_data = jArray.getJSONObject(0);
+             return(json_data.getInt("rate_value"));
+		}
+		catch(JSONException e1)
+		{
+			e1.printStackTrace();
+		} 
+		catch (ParseException e1) 
+		{
+			e1.printStackTrace();
+		}
+		return -1;
+	}
+	
+	//Return the rate of a dish from a particular user
+	//Return -1 if error occurs
+	public int fetch_number_of_rater(String dish_name)
+	{
+		result = null;
+
+		try{
+			testing="fetch_number_rater.php?dishname=" + URLEncoder.encode(dish_name,"utf-8");
+			send_cmd("fetch_number_rater.php?dishname=" + URLEncoder.encode(dish_name,"utf-8"));
+			
+		}
+		catch(Exception e){
+			
+		}
+		
+		try
+		{
+			if(result==null) return -1;
+			testing=result;
+		     jArray = new JSONArray(result);
+		     JSONObject json_data=null;
+
+             json_data = jArray.getJSONObject(0);
+             return(json_data.getInt("count(*)"));
+		}
+		catch(JSONException e1)
+		{
+			e1.printStackTrace();
+		} 
+		catch (ParseException e1) 
+		{
+			e1.printStackTrace();
+		}
+		return -1;
+	}
 }
