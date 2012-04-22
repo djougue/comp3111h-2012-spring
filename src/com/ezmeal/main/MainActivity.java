@@ -76,7 +76,7 @@ public class MainActivity extends FragmentActivity {
 		mViewPager.setCurrentItem(mTabs.getChildCount() / 2);  //By default, show the middle one of the tabs
 		Log.e("MainActivity", "setting viewPager");
 
-/*
+
 		mShaker = new ShakeListener(this);		
 		mShaker.setOnShakeListener(new ShakeListener.OnShakeListener() {  
 		    public void onShake() {  
@@ -85,7 +85,7 @@ public class MainActivity extends FragmentActivity {
 	   			startActivity(intent);
 		    }  
 		});
-*/
+
 		Log.e("MainActivity", "setting shaking");
 
 		/**
@@ -126,44 +126,6 @@ public class MainActivity extends FragmentActivity {
             	finish();
             }
 		});
-
-		/*		
-		Button settingsBt = (Button) findViewById(com.ezmeal.main.R.id.buttonSettings);
-		settingsBt.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                Intent settingsBtIntent = new Intent(view.getContext(), SettingsActivity.class);
-                startActivityForResult(settingsBtIntent, 0);
-            }
-		});
-		
-		
-		Button shakeBt = (Button) findViewById(com.ezmeal.main.R.id.buttonShake);
-		shakeBt.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                Intent shakeBtIntent = new Intent(view.getContext(), ShakeActivity.class);
-                startActivityForResult(shakeBtIntent, 0);
-            }
-		});
-		
-		
-		Button myTasteBtn = (Button) findViewById(com.ezmeal.main.R.id.buttonMyTaste);
-		myTasteBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                Intent myTasteBtnIntent = new Intent(view.getContext(), MyTasteActivity.class);
-                startActivityForResult(myTasteBtnIntent, 0);
-            }
-		});
-		
-		
-		Button quitBt = (Button) findViewById(com.ezmeal.main.R.id.buttonQuit);
-		quitBt.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-            	Intent quit = new Intent(view.getContext(), QuitActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            	startActivity(quit);
-            	finish();
-            }
-		});
-*/
 	}
 	
 	
@@ -216,13 +178,13 @@ public class MainActivity extends FragmentActivity {
 	
 	@Override
 	protected void onPause(){
-		//mShaker.pause();
+		mShaker.pause();
 		super.onPause();
 	}
 	
 	@Override
 	protected void onResume(){
-		//mShaker.resume();
+		mShaker.resume();
 		super.onResume();
 	}
 
