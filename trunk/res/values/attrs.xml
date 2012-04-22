@@ -22,5 +22,6 @@
     </declare-styleable>
 	<dimen name="framesize">10dip</dimen>
 	<dimen name="menusize">54dip</dimen>
-	
+	<dimen name="iconsize">16dip</dimen>
+	<dimen name="iconsizelarge">38dip</dimen>	
 </resources>
