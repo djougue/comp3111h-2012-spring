@@ -24,7 +24,7 @@ As of 22 Apr, 2012
 || 2 Apr || 10 || Realize Rankings and Personal taste function || <font color="#009900">Completed</font> || 2 Apr ||
 || 9 Apr || Break || Release of the first alpha version (1.0a1) || <font color="#009900">Completed</font> || 9 Apr ||
 || 16 Apr || 11 || *Inner testing 2*, on all functions || <font color="#009900">Completed</font> || 16 Apr ||
-|| 16 Apr || 11 || Realize optional functions (news and Rice Friend) || Omitted || - ||
+|| 16 Apr || 11 || Realize optional functions (news and Rice Friend) || Omitted || N/A ||
 || 16 Apr || 11 || Release of the second alpha version (1.0a2) || <font color="#009900">Completed</font> || 16 Apr ||
 || 22 Apr || 12 || Release of the first beta version ([http://code.google.com/p/comp3111h-2012-spring/downloads/detail?name=ezMeal-1.0b1.apk&can=2&q= 1.0b1]) || <font color="#009900">Completed</font> || 22 Apr ||
 || 23 Apr || 12 || *Peer acceptance testing 1* || || ||
