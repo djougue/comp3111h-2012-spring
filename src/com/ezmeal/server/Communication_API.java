@@ -409,6 +409,7 @@ public class Communication_API {
              dish.setDish_spicy(json_data.getInt("dish_spicy"));
              dish.setDish_vege(json_data.getInt("dish_vege"));
              dish.setDish_meat(json_data.getInt("dish_meat"));
+             dish.setDish_image(json_data.getInt("dish_image"));
              dish.setDish_available_time(json_data.getInt("dish_available_time"));
 		}
 		catch(JSONException e1)
@@ -560,6 +561,7 @@ public class Communication_API {
              dish.setDish_spicy(json_data.getInt("dish_spicy"));
              dish.setDish_vege(json_data.getInt("dish_vege"));
              dish.setDish_meat(json_data.getInt("dish_meat"));
+             dish.setDish_image(json_data.getInt("dish_image"));
              dish.setDish_available_time(json_data.getInt("dish_available_time"));
 		}
 		catch(JSONException e1)
