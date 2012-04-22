@@ -46,6 +46,7 @@
     <string name="labelPreferMeat">I prefer meat.</string>
     <string name="labelPreferSpicy">I prefer spicy food.</string>
     <string name="labelPreferVege">I prefer vegetables.</string>
+    <string name="labelRateIt">Rate It!</string>
     <string name="labelSaySomething">Say Something...</string>
     <string name="labelShakeRemarks">If you turn on this function, you are able to shake your device to randomly get a dish. Otherwise, you can press the &quot;SHAKE&quot; button in the main page to achieve this function.</string>
     <string name="labelShakeSettings">SHAKE by Shaking Device</string>

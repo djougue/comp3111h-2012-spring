@@ -230,7 +230,7 @@ public class Communication_API {
 			e1.printStackTrace();
 		}
 			
-		return 0;
+		return -1;
 	}
 	
 	//if change setting successfully, return 1
@@ -783,6 +783,10 @@ public class Communication_API {
 			e1.printStackTrace();
 		} 
 		catch (ParseException e1) 
+		{
+			e1.printStackTrace();
+		}
+		catch (Exception e1)
 		{
 			e1.printStackTrace();
 		}

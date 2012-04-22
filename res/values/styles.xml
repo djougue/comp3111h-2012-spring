@@ -25,7 +25,7 @@
         <item name="android:indeterminateOnly">false</item>
         <item name="android:thumb">@null</item>
         <item name="android:isIndicator">true</item>
-        </style>
+    </style>
     <style name="foodRatingBar">
         <item name="android:progressDrawable">@drawable/food_rating_bar_full</item>
         <item name="android:indeterminateDrawable">@null</item>
@@ -34,5 +34,14 @@
         <item name="android:indeterminateOnly">false</item>
         <item name="android:thumb">@null</item>
         <item name="android:isIndicator">true</item>
-        </style>
+    </style>
+    <style name="starRatingBar"  parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/star_ratingbar</item>
+        <item name="android:indeterminateDrawable">@null</item>
+        <item name="android:minHeight">30dip</item>
+        <item name="android:maxHeight">30dip</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:thumb">@null</item>
+        <item name="android:isIndicator">true</item>
+    </style>
 </resources>

@@ -60,12 +60,13 @@
 	   	    </FrameLayout>
 	   	    
 	        <!-- Dish Detailed Info -->
-	        <LinearLayout 
+
+	        <LinearLayout
 	            android:layout_width="fill_parent"
-	            android:layout_height="fill_parent"
-	            android:paddingLeft="12dip"
-	            android:paddingTop="2dip"
-	            android:orientation="vertical">
+	            android:layout_height="wrap_content"
+	            android:orientation="vertical"
+	            android:paddingLeft="10dip"
+	            android:paddingTop="2dip" >
  	            
  	            <!-- Dish Name -->
 	            <TextView 
@@ -101,12 +102,12 @@
 	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content"
 	                android:layout_marginTop="5dp"
-	                layout="@layout/rating_stars"/>             	            
+	                layout="@layout/overall_rating"/>             	            
 	        </LinearLayout>
 	    </LinearLayout>
 
 	    <RelativeLayout
-	        android:layout_width="match_parent"
+	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_marginLeft="5dip"
 	        android:layout_marginBottom="5dip"
@@ -160,11 +161,19 @@
 	            android:shadowRadius="1"
                 android:text="Failed"/>	    
 	    </RelativeLayout>
-	
+	    
+	    <!-- Rate It! (Give Rating) -->
+	    <include 
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="5dp"
+	        layout="@layout/give_rating"/>
+
+	    <!-- Say Something... (Write Comment) -->
 	    <include
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/write_comment" />
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/write_comment" />
 	    
 	    <!-- User Comments -->
 	    <TextView
