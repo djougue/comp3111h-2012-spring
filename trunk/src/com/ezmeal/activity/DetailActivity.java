@@ -1,10 +1,12 @@
 package com.ezmeal.activity;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
@@ -19,7 +21,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ezmeal.lazylist.ImageLoader;
@@ -32,29 +33,32 @@ import com.ezmeal.shake.ShakeListener;
 public class DetailActivity extends FragmentActivity implements OnClickListener, TextWatcher {
 
 	ShakeListener mShaker;
-    public ImageLoader imageLoader; 
+    private ImageLoader imageLoader; 
     private Bundle the_dish;
     private int fatherActivity;
     private LinearLayout commentLayout;
-    Communication_API api = new Communication_API();
-    Handler refreshHandler = new Handler();
+    private Communication_API api = new Communication_API();
+    private Handler refreshHandler = new Handler();
     
     private Button backBtn, sendBtn;
 	private TextView headerTitle, labelNoComment, commentTitle, commentAuthor, commentTime,
-	        commentContent, labelTitleCharRem, labelContentCharRem, sendResultText;
+	        commentContent, labelTitleCharRem, labelContentCharRem, sendResultText,
+	        ratingScore;
 	private EditText writeTitle, writeContent;
 	private ProgressBar sendProgressBar;
 	private String dish_name, dish_price, dish_canteen;
+	private ImageView ratingStars;
 	
 	private int MAX_TITLE_LEN = 40;
 	private int MAX_CONTENT_LEN = 140;
+	private int FULL_RATING_SCORE = 5;
 	private int titleCharRem, contentCharRem;
 
-	private String TIMEOUT             = "Connection timeout.";
-	private String EMPTY_TITLE         = "Title cannot be empty.";
-	private String EMPTY_CONTENT       = "Comment cannot be empty.";
-	private String SENDING             = "Sending...";
-	private String SUCCESSFUL          = "Thanks for your comment!";
+	private String TIMEOUT       = "Connection timeout.";
+	private String EMPTY_TITLE   = "Title cannot be empty.";
+	private String EMPTY_CONTENT = "Comment cannot be empty.";
+	private String SENDING       = "Sending...";
+	private String SUCCESSFUL    = "Thanks for your comment!";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +110,11 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
 	        headerTitle = (TextView) findViewById(R.id.labelHeader);
 	        headerTitle.setText("Dish");
 	        
+	        //set rating section
+	        ratingScore = (TextView) findViewById(R.id.labelRatingScore);
+	        ratingStars = (ImageView) findViewById(R.id.imageRatingStars);
+	        displayRating();
+	        
 	        //set comment section
 	        sendBtn = (Button) findViewById(R.id.buttonCommentSend);
 	        sendBtn.setOnClickListener(this);
@@ -141,6 +150,27 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
 	}
 	
 	/**
+	 * Check if the comment is valid. An invalid comment has either an empty title or
+	 * an empty content (including title or content that has only spaces).
+	 * @param title = comment title
+	 * @param content = comment content
+	 * @return true if the comment is valid
+	 */
+	protected boolean checkComment(String title, String content) {
+		sendResultText.setTextColor(0xffff0000);  //red
+		if (title.trim().length() == 0) {
+			sendResultText.setText(EMPTY_TITLE);
+			return false;
+		}
+		else if (content.trim().length() == 0) {
+			sendResultText.setText(EMPTY_CONTENT);
+			return false;
+		}
+		sendResultText.setTextColor(0xffffffff); //white
+		return true;
+	}
+	
+	/**
 	 * Send comment to the server
 	 */
 	protected void sendComment() {
@@ -148,6 +178,8 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
 		final String title = writeTitle.getText().toString().trim();
 		final String content = writeContent.getText().toString().trim();
 		final String username = ((UserApp) this.getApplication()).getUserName();
+		
+		//check if the comment title or content is valid
 		if (checkComment(title, content)) {
 			Thread postDataThread = new Thread(new Runnable() {
 	    		public void run() {
@@ -197,6 +229,7 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
 	            	            		ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
 	    		    		}
 	    		    		sendProgressBar.setVisibility(View.GONE);
+	    		    		sendBtn.setEnabled(true);
 	    				}
 	    			});
 	    		}
@@ -205,33 +238,41 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
 		}
 		else {
 			sendProgressBar.setVisibility(View.GONE);
+			sendBtn.setEnabled(true);
 		}
 	}
 	
 	/**
-	 * Check if the comment is valid. An invalid comment has either an empty title or
-	 * an empty content (including title or content that has only spaces).
-	 * @param title = comment title
-	 * @param content = comment content
-	 * @return true if the comment is valid
+	 * Fetch and display overall rating
 	 */
-	protected boolean checkComment(String title, String content) {
-		sendResultText.setTextColor(0xffff0000);  //red
-		if (title.trim().length() == 0) {
-			sendResultText.setText(EMPTY_TITLE);
-			return false;
-		}
-		else if (content.trim().length() == 0) {
-			sendResultText.setText(EMPTY_CONTENT);
-			return false;
-		}
-		sendResultText.setTextColor(0xffffffff); //white
-		return true;
+	protected void displayRating() {
+		Thread postDataThread = new Thread(new Runnable() {
+			public void run() {
+				final float score = api.fetch_rate(dish_name);
+				Bitmap sourceStar = BitmapFactory.decodeResource(getResources(), R.drawable.stars_full);
+				int imgWidth = (int) ((score/FULL_RATING_SCORE) * sourceStar.getWidth());
+				int imgHeight = (int) sourceStar.getHeight();
+				imgWidth = (imgWidth <= 0) ? 1 : imgWidth;  //guarantee image width is larger than 0
+				final Bitmap star = Bitmap.createBitmap(sourceStar, 0, 0, imgWidth, imgHeight);
+				
+				//Refresh the data of this app
+    			refreshHandler.post(new Runnable() {
+    				public void run() {
+    					//Maintain one fraction for the overall rating score
+    					BigDecimal bd = new BigDecimal(score);
+    					String scoreStr = bd.setScale(1, BigDecimal.ROUND_HALF_UP).toString();
+    					if (score > 0) ratingStars.setImageBitmap(star);
+    					if (score == -1) ratingScore.setText("N/A");
+    					else ratingScore.setText(scoreStr);
+    				}
+    			});
+			}
+		});
+		postDataThread.start();
 	}
 
 	/**
 	 * Fetch and display users' comments
-	 * @param dName = dish name
 	 */
 	protected void displayComment() {
         Thread postDataThread = new Thread(new Runnable() {
@@ -324,6 +365,7 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
 		}
 		
 		else if (view == sendBtn) {
+			sendBtn.setEnabled(false);  //disable the button for a while, in case of innocent pressing
 			sendResultText.setTextColor(0xffffffff); //white
     		sendResultText.setText(SENDING);
     		sendProgressBar.setVisibility(View.VISIBLE);
