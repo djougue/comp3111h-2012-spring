@@ -41,6 +41,7 @@ public class ImageUpload extends Activity {
 	private Button upload;
 	private Button select;
 	private Bitmap bitmap;
+	private int id;
 	private ProgressDialog dialog;
 
 	/** Called when the activity is first created. */
@@ -48,6 +49,8 @@ public class ImageUpload extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.imageupload);
+		
+		id = getIntent().getExtras().getInt("id");
 
 		imgView = (ImageView) findViewById(R.id.ImageView);
 		upload = (Button) findViewById(R.id.Upload);
@@ -147,6 +150,7 @@ public class ImageUpload extends Activity {
 //				entity.addPart("returnformat", new StringBody("json"));
 				ArrayList<NameValuePair> entity = new  ArrayList<NameValuePair>();				 
 	            entity.add(new BasicNameValuePair("image",image_str));
+	            entity.add(new BasicNameValuePair("id",Integer.toString(id)));
 
 //				entity.addPart("image", new ByteArrayBody(data,
 //						"uploaded_image.jpg"));
@@ -269,4 +273,11 @@ public class ImageUpload extends Activity {
 		imgView.setImageBitmap(bitmap);
 
 	}
+
+	@Override
+	public void onBackPressed() {
+    		finish();
+		return;
+	}
+
 }
