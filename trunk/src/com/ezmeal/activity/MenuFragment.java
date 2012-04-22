@@ -47,7 +47,8 @@ public class MenuFragment extends Fragment {
 	private static final String[] time_name={"Breakfast","Lunch","Tea","Dinner"};
 
 	private Button reconnectBt;
-	private Vector<Bundle> dishes;
+//	private Vector<Bundle> dishes;
+	private Vector<Dish> dishes;
 	private int dish_counter = 0;
 
 	private static final int INIT = 	0;
@@ -58,6 +59,10 @@ public class MenuFragment extends Fragment {
 	
 	private int thread_state  = WAIT;
 	private boolean isTimeout = false;
+	private boolean isNull = false;
+	private boolean isLock = false;
+	private int retry_counter = 0;
+	private static final int RETRY_MAX =5;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -91,15 +96,17 @@ public class MenuFragment extends Fragment {
 		time_spinner.setAdapter(time_adapter);
 		time_spinner.setOnItemSelectedListener(new SpinnerSelectedListener()); 
 		time_spinner.setVisibility(View.VISIBLE); 
-		Calendar rightNow = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
+//		Calendar rightNow = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
+		Calendar rightNow = Calendar.getInstance();
 		int hour =rightNow.get(Calendar.HOUR_OF_DAY);
 		int minutes = rightNow.get(Calendar.MINUTE);
+		Log.e("time",hour+":"+minutes);
 		int total_minutes = 60*hour+minutes;
 		if(total_minutes>=7*60&&total_minutes<11*60){
 			time_spinner.setSelection(0);
-		}else if(total_minutes<(14*60+30)){
+		}else if(total_minutes<(14*60+30)&&total_minutes>=11*60){
 			time_spinner.setSelection(1);
-		}else if(total_minutes<(17*60+30)){
+		}else if(total_minutes<(17*60+30)&&total_minutes>=(14*60+30)){
 			time_spinner.setSelection(2);
 		}else{
 			time_spinner.setSelection(3);
@@ -126,10 +133,12 @@ public class MenuFragment extends Fragment {
     			while(true){
     				switch(thread_state){
     				case INIT:
-		    			dishes =new Vector<Bundle>();
+		    			dishes =new Vector<Dish>();
 		    			Dish cur_dish;
 		    			dish_counter = 0;
+		    			retry_counter = 0;
 		    			isTimeout = false;
+		    			isNull = false;
 		    			thread_state = FETCH;
 		    			break;
     				case FETCH:
@@ -148,40 +157,55 @@ public class MenuFragment extends Fragment {
 	    						(time_spinner.getSelectedItemPosition()==1),
 	    						(time_spinner.getSelectedItemPosition()==0));
 	    				if(cur_dish==null){ //time out. Then delete all loaded dishes
-	    					dishes.clear();
-			    			dish_counter = 0;
-//    						Log.e("MenuFragment", "Timeout!!");
-    						isTimeout = true;
-	    					thread_state = TIMEOUT;
-	    					break;
+	    					if(retry_counter<RETRY_MAX){
+	    						retry_counter++;
+	    						continue;
+	    					}
+	    					else{
+		    					dishes.clear();
+				    			dish_counter = 0;
+	//    						Log.e("MenuFragment", "Timeout!!");
+	    						isTimeout = true;
+		    					thread_state = TIMEOUT;
+		    					retry_counter = 0;
+		    					break;
+	    					}
 	    				}
-	    				if(cur_dish.getDish_id()==0) { //all dishes has been fetch	    			    	
+	    				retry_counter = 0;
+	    				if(cur_dish.getDish_id()==0) { //all dishes has been fetch	  
+	    					if(dish_counter==0){
+	    						isNull = true;
+	    					}
 	    					thread_state = DISPLAY;
-    						Log.e("MenuFragment", "change to DISPLAY");
 	    					break;
 	    				}
 	    				dish_counter++;
+	    				/*
 	    				Bundle bundle = new Bundle();
 	    				bundle.putString("name", cur_dish.getDish_name());
 	    				bundle.putString("canteen", cur_dish.getDish_canteen());
 	    				bundle.putFloat("price", cur_dish.getDish_price());
-	    				dishes.add(bundle);
+	    				bundle.putInt("id", cur_dish.getDish_id());
+	    				bundle.putBoolean("image", cur_dish.hasImage());	    					    				
+	    				dishes.add(bundle);*/
+	    				dishes.add(cur_dish);
     					break;
     				case TIMEOUT:
     				case DISPLAY:
 		    			refreshHandler.post(new Runnable() {
-		    				public void run() {						
-		    					if(thread_state == TIMEOUT||isTimeout){
-		    						Log.e("MenuFragment", "Timeout!");
+		    				public void run() {
+		    					isLock = true;
+		    					if(isTimeout){
 					    	        progressBar.setVisibility(View.INVISIBLE);
 					    	        reconnectBt.getLayoutParams().height=LayoutParams.WRAP_CONTENT;
 		    						reconnectBt.setVisibility(View.VISIBLE);
+		    		    			thread_state = WAIT;
 		    					}
 		    					else{
-		    						if(dish_counter == 0){
+		    						if(isNull){
 						    	        progressBar.setVisibility(View.INVISIBLE);
 						    	        no_result_text.setVisibility(View.VISIBLE);
-						    	        Log.e("MenuFragment", "no result");
+						    			thread_state = WAIT;
 		    						}
 		    						else{
 						    	        adapter=new LazyAdapter(activity, dishes);
@@ -191,15 +215,16 @@ public class MenuFragment extends Fragment {
 
 						    	        list.getLayoutParams().height=LayoutParams.WRAP_CONTENT;
 						    	        list.setVisibility(View.VISIBLE);
+						    			thread_state = WAIT;
 		    						}
 		    					}
+		    					isLock = false;
+		    					
 		    				}
 		    			});
-		    			thread_state = WAIT;
-		    			dish_counter = 0;
+		    			//while(isLock);
 		    			break;
     				case WAIT:
-		    			dish_counter = 0;
     					break;
     				}
     			}
