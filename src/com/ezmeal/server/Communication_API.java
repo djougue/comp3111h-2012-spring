@@ -741,6 +741,10 @@ public class Communication_API {
 		{
 			e1.printStackTrace();
 		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		return -1;
 	}
 	

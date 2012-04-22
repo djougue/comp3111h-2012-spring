@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--
+***********************************************************
+* This is the main view for the detailed dish page.
+***********************************************************
+-->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
     android:background="@drawable/orange_bg">
-    
     
     <!-- Page Header -->
     <include
@@ -89,18 +95,13 @@
 	                android:shadowDx="1"
     	            android:shadowDy="1"
 	                android:shadowRadius="1"
-	                android:text="Food style:"/>
-	            <TextView 
-    			  	android:layout_width="fill_parent"
-				    android:layout_height="20dip"	            
-	                android:textSize="15dip"
-	                android:textStyle="italic"
-	                android:textColor="#eee"
-	                android:shadowColor="#000"
-	                android:shadowDx="1"
-    	            android:shadowDy="1"
-	                android:shadowRadius="1"
-	                android:text="   coming soon"/>	               	            
+	                android:layout_marginTop="5dp"
+	                android:text="Food Style: Coming Soon"/>
+	            <include 
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_marginTop="5dp"
+	                layout="@layout/rating_stars"/>             	            
 	        </LinearLayout>
 	    </LinearLayout>
 
