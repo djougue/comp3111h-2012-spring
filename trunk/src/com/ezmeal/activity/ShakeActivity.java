@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.ezmeal.main.R;
+import com.ezmeal.main.UserApp;
 import com.ezmeal.server.Communication_API;
 import com.ezmeal.server.Dish;
 import com.ezmeal.shake.ShakeListener;
@@ -86,7 +87,7 @@ public class ShakeActivity extends Activity implements OnClickListener{
 			public void run() {
 				while(true){
 					if(shake_state==0){
-						the_dish = api.random_dish();
+						the_dish = api.random_dish(((UserApp)getApplication()).getUserName());
 						
 						if(the_dish!=null){
 							dish_name = the_dish.getDish_name();
