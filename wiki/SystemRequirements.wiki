@@ -12,15 +12,15 @@
 ----
 
 = Customer Registration =
-The user could register an account to store the personal data, such as favors, shaking history, etc. Registration involves entering the following personal information: username, password, nickname, contact telephone numbers, and msn. The first three are required while others are optional. 
+The user could register an account to store the personal data, such as favors, etc. Registration involves entering the following personal information: username, password and nickname. 
   * The student ITSC is used as username and also serves as email address. Upon registration, a confirm email with a link would be sent to the ITSC email address automatically. The account will be activated only after clicking the link. 
   * Nickname is what the user wants to be called and what appears in the comments window of the dishes. The nickname should be between 6 and 10 characters and contain only letters and numbers. The check should be done during the registration process. 
   * The customer should create a password with English letters and numbers during registration, which should be at least 8 characters, at most 15 characters and contain at least one number and one letter.
-After registration, the users should be able to change any of the above information except for their username since this is how the system identifies a user. Login is done by using the matched account (aka ITSC) and password. In case that the user forget the password, an email for resetting the password would be sent to the ITSC email address automatically upon “forget password” request.
+After registration, the users should be able to change any of the above information except for their username since this is how the system identifies a user. Login is done by using the matched account (aka ITSC) and password. In case that the user forget the password, an email for resetting the password would be sent to the ITSC email address automatically upon “forget password” request. The user receives a code with 4 numbers by email. Using the code, the user can reset the password. 
  
 = Browsing and Searching of Items =
 Each item should have its own web page that shows the item’s name, picture, favor, canteen, price, available time, rating and comments. 
-  * The name may be identical for several dishes but belong to belong to different canteen. 
+  * The name may be identical for several dishes but belong to different canteen. 
   * Favor is the style of the dish, such as spicy, vegetarian and so on. 
   * Available time is the period during which the dish is available. For example, some dishes are only offered as breakfast while some are exclusive only for dinner. 
   * Rating is the average of all rating of the dish.
