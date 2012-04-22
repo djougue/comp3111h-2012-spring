@@ -54,14 +54,14 @@ public class ShakeActivity extends Activity implements OnClickListener{
             }
 		});
 
-/*		
+		
 		mShaker = new ShakeListener(this);		
 		mShaker.setOnShakeListener(new ShakeListener.OnShakeListener() {  
 		    public void onShake() {  
 		    	reshake();
 		    }  
 		});
-*/
+
 		dishImage = (ImageView) findViewById(com.ezmeal.main.R.id.dishImageButton);
 
 		dishImage.setOnClickListener(new View.OnClickListener() {
@@ -127,7 +127,7 @@ public class ShakeActivity extends Activity implements OnClickListener{
     }
 
     protected void onPause() {
-//    	mShaker.pause();
+    	mShaker.pause();
     	super.onPause();
     	shake_state = 1;
     	finish();
@@ -135,7 +135,7 @@ public class ShakeActivity extends Activity implements OnClickListener{
     
     @Override
 	protected void onResume(){
-//		mShaker.resume();
+		mShaker.resume();
 		super.onResume();
 	}
 
