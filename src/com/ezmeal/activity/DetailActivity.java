@@ -1,6 +1,5 @@
 package com.ezmeal.activity;
 
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import android.app.Activity;
@@ -31,27 +30,36 @@ import com.ezmeal.main.R;
 import com.ezmeal.main.UserApp;
 import com.ezmeal.server.Comment;
 import com.ezmeal.server.Communication_API;
+import com.ezmeal.server.Dish;
 import com.ezmeal.shake.ShakeListener;
+import com.ezmeal.uploadimage.ImageUpload;
 
 public class DetailActivity extends FragmentActivity implements OnClickListener, OnRatingBarChangeListener, TextWatcher {
 
 	ShakeListener mShaker;
     private ImageLoader imageLoader; 
-    private Bundle the_dish;
+    private Bundle the_dish_bundle;
+    private Dish the_dish;
     private int fatherActivity;
     private LinearLayout commentLayout;
     private Communication_API api = new Communication_API();
     private Handler refreshHandler = new Handler();
     
-    private Button backBtn, sendBtn;
+    private LinearLayout uploadLayout;
+    private Button backBtn, sendBtn, uploadBtn;
 	private TextView headerTitle, labelNoComment, commentTitle, commentAuthor, commentTime,
 	        commentContent, labelTitleCharRem, labelContentCharRem, sendResultText,
 	        ratingNum, ratingLevel; //ratingScore;
 	private EditText writeTitle, writeContent;
 	private ProgressBar sendProgressBar;
 	private String dish_name, dish_price, dish_canteen;
+
+	private ImageView image;
+	private LinearLayout images;
+
 	private ImageView ratingStars;
 	private RatingBar ratingBar;
+
 	
 	private int MAX_TITLE_LEN = 40;
 	private int MAX_CONTENT_LEN = 140;
@@ -70,9 +78,9 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.details_activity_layout);
-		the_dish = getIntent().getExtras();
+		the_dish_bundle = getIntent().getExtras();
 
-/*		
+		
 		mShaker = new ShakeListener(this);
 		mShaker.setOnShakeListener(new ShakeListener.OnShakeListener() {  
 		    public void onShake() {
@@ -90,26 +98,32 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
 		    	}
  		    }  
 		});
-*/
+
 	}
 	
 	public void setView() {
-		if (the_dish != null) {
-	        fatherActivity = the_dish.getInt("ActivityFlag");
-			dish_name = the_dish.getString("name");
-			dish_canteen = the_dish.getString("canteen");
-			dish_price = the_dish.getString("price");
+		if (the_dish_bundle != null) {
+	        fatherActivity = the_dish_bundle.getInt("ActivityFlag");
+	        the_dish = new Dish(the_dish_bundle);
+			dish_name = the_dish.getDish_name();
+			dish_canteen = the_dish.getDish_canteen();
+			dish_price = Float.toString(the_dish.getDish_price());
 			TextView name = (TextView) findViewById(R.id.textDishNameInDetail);
 			name.setText(dish_name);
 			TextView canteen = (TextView) findViewById(R.id.textDishCanteenInDetail);
 			canteen.setText(dish_canteen);
 			TextView price = (TextView) findViewById(R.id.textDishPriceInDetail);
 			price.setText("HKD "+dish_price);
-			ImageView image = (ImageView) findViewById(R.id.dishImage);
-			String pic = the_dish.getString("pic");
+			image = (ImageView) findViewById(R.id.dishImage);
+			String pic = "http://143.89.220.19/COMP3111H/image/stub.png";
+			if(the_dish.hasImage())
+				pic ="http://143.89.220.19/COMP3111H/image/"+the_dish.getDish_id()+".jpg";
 	        imageLoader=new ImageLoader(this.getApplicationContext());
 	        imageLoader.DisplayImage(pic, image);
 	        
+	        uploadLayout = (LinearLayout) findViewById(R.id.layoutUploadImage);
+	        if(the_dish.hasImage())
+	        	uploadLayout.getLayoutParams().height=0;
 	        //set page header
 			backBtn = (Button) findViewById(R.id.buttonBack);
 	        backBtn.setOnClickListener(this);
@@ -127,6 +141,24 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
 	        displayRating();
 	        
 	        //set comment section
+	        uploadBtn = (Button)findViewById(R.id.buttonUploadImage);
+	        uploadBtn.setOnClickListener(this);
+	        
+	        images = (LinearLayout) findViewById(R.id.imageboxDetail);
+	        if(!the_dish.isDish_spicy()){
+	        	ImageView spicyImage = (ImageView)findViewById(com.ezmeal.main.R.id.iconSpicyDetail);
+	        	images.removeView(spicyImage);
+	        }
+	        if(!the_dish.isDish_vege()){
+	        	ImageView vegaImage = (ImageView)findViewById(com.ezmeal.main.R.id.iconVegaDetail);
+	        	images.removeView(vegaImage);
+	        }
+	        if(!the_dish.isDish_meat()){
+	        	ImageView meatImage = (ImageView)findViewById(com.ezmeal.main.R.id.iconMeatDetail);
+	        	images.removeView(meatImage);
+	        }
+
+	        
 	        sendBtn = (Button) findViewById(R.id.buttonCommentSend);
 	        sendBtn.setOnClickListener(this);
 	        labelTitleCharRem = (TextView) findViewById(R.id.labelCommentTitleCharRemaining);
@@ -372,11 +404,11 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
     	        }
     	        if (dish_num == 0) {  //No comments fetched for the dish
     	        	//Refresh the data of this app
-        			refreshHandler.post(new Runnable() {
-        				public void run() {
+//        			refreshHandler.post(new Runnable() {
+//        				public void run() {
     	        	        labelNoComment.setVisibility(View.VISIBLE);
-        				}
-        			});
+//        				}
+//        			});
     	        }
     		}
     	});
@@ -385,14 +417,15 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
 
 	@Override
 	protected void onPause(){
-		//mShaker.pause();
+		mShaker.pause();
 		super.onPause();
 	}
 	
 	@Override
 	protected void onResume(){
-		//mShaker.resume();
+		mShaker.resume();
 		super.onResume();
+		
 	}
 	
 	@Override
@@ -425,6 +458,14 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
     		sendProgressBar.setVisibility(View.VISIBLE);
     		sendComment();
 		}
+		
+		else if(view == uploadBtn) {
+			Intent intent = new Intent(view.getContext(), ImageUpload.class);
+			Bundle dishInfo = new Bundle();
+			dishInfo.putInt("id", the_dish.getDish_id());
+			intent.putExtras(dishInfo);
+            startActivityForResult(intent, 0);
+		}
 	}
 
 	/**
@@ -441,6 +482,15 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
 		//do nothing
 	}
 
+	private void checkImage(){
+        if(the_dish.hasImage()){
+        	uploadLayout.getLayoutParams().height=0;
+        	String pic ="http://143.89.220.19/COMP3111H/image/"+the_dish.getDish_id()+".jpg";
+	        imageLoader.DisplayImage(pic, image);
+        }
+	}
+
+
 	/**
 	 * OnRatingBarChanged Listener
 	 */
@@ -450,3 +500,4 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
 		}
 	}
 }
+
