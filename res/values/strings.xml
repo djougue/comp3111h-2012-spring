@@ -64,4 +64,7 @@
     <!-- Link -->
     <string name="WebServiceURL">http://143.89.220.19/COMP3111H</string>
     
+    <!-- Long -->
+    <string name="uploadImage">There is no image for this dish now. Please help us to upload it. </string>
+    
 </resources>
