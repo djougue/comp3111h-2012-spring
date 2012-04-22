@@ -404,11 +404,11 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
     	        }
     	        if (dish_num == 0) {  //No comments fetched for the dish
     	        	//Refresh the data of this app
-//        			refreshHandler.post(new Runnable() {
-//        				public void run() {
+        			refreshHandler.post(new Runnable() {
+        				public void run() {
     	        	        labelNoComment.setVisibility(View.VISIBLE);
-//        				}
-//        			});
+        				}
+        			});
     	        }
     		}
     	});
@@ -448,7 +448,17 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
 	 */
 	public void onClick(View view) {
 		if (view == backBtn) {
-			finish();
+	    	if(fatherActivity==0)
+	    	{
+	    		finish();
+	    	}
+	    	else if(fatherActivity==1){
+	   			Intent intent = new Intent(getApplicationContext(),
+						com.ezmeal.activity.ShakeActivity.class);
+	   			startActivity(intent);
+	    		finish();
+	    	}		
+			return;
 		}
 		
 		else if (view == sendBtn) {
