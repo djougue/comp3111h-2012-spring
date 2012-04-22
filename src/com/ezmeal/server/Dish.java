@@ -1,5 +1,7 @@
 package com.ezmeal.server;
 
+import android.os.Bundle;
+
 
 public class Dish {
 	private int dish_id;
@@ -9,6 +11,7 @@ public class Dish {
 	private boolean dish_spicy;
 	private boolean dish_vege;
 	private boolean dish_meat;
+	private boolean dish_image;
 	private int dish_available_time;
 	
 	Dish(){
@@ -20,6 +23,19 @@ public class Dish {
 		dish_vege=false;
 		dish_meat=false;
 		dish_available_time=0;
+		dish_image=false;
+	}
+	
+	public Dish(Bundle bundle){
+		dish_id=bundle.getInt("dish_id" );
+		dish_name=bundle.getString("dish_name");
+		dish_canteen=bundle.getString("dish_canteen");
+		dish_price=bundle.getFloat("dish_price");
+		dish_spicy=bundle.getBoolean("dish_spicy");
+		dish_vege=bundle.getBoolean("dish_vege");
+		dish_meat=bundle.getBoolean("dish_meat");
+		dish_image=bundle.getBoolean("dish_image");
+		dish_available_time=bundle.getInt("dish_available_time");			
 	}
 	
 	public boolean isDish_spicy() {
@@ -32,6 +48,14 @@ public class Dish {
 	
 	public void setDish_spicy(int dish_spicy) {
 		this.dish_spicy = (dish_spicy!=0)?true:false;
+	}
+	
+	public void setDish_image(boolean dish_image) {
+		this.dish_image = dish_image;
+	}
+
+	public void setDish_image(int dish_image) {
+		this.dish_image = (dish_image!=0)?true:false;
 	}
 
 	public boolean isDish_vege() {
@@ -115,6 +139,24 @@ public class Dish {
 	}
 	public void setDish_canteen(String dish_canteen) {
 		this.dish_canteen = dish_canteen;
+	}
+	
+	public boolean hasImage(){
+		return this.dish_image;
+	}
+	
+	public Bundle dishToBundle(){
+		Bundle bundle = new Bundle();
+		bundle.putInt("dish_id", dish_id);
+		bundle.putString("dish_name", dish_name);
+		bundle.putString("dish_canteen", dish_canteen);
+		bundle.putFloat("dish_price", dish_price);
+		bundle.putBoolean("dish_spicy", dish_spicy);
+		bundle.putBoolean("dish_vege", dish_vege);
+		bundle.putBoolean("dish_meat", dish_meat);
+		bundle.putBoolean("dish_image",dish_image);
+		bundle.putInt("dish_available_time", dish_available_time);		
+		return bundle;
 	}
 	
 	
