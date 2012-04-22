@@ -389,12 +389,12 @@ public class Communication_API {
 		return dish;
 	}
 	
-	public Dish random_dish()
+	public Dish random_dish(String username)
 	{
 		
 		Dish dish=new Dish();
 		result = null;
-		send_cmd("random_dish.php");
+		send_cmd("random_dish.php?username="+username);
 		try
 		{
 			if(result==null) return null;
