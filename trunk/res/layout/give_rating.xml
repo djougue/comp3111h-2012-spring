@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:shadowColor="#000"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="1"
+        android:text="@string/labelRateIt"
+        android:textColor="#fff"
+        android:textSize="18dp"
+        android:textStyle="bold" />
+    
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+        <RatingBar
+	        android:id="@+id/ratingBarGiveRating"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:isIndicator="false"
+	        android:stepSize="1"
+	        style = "@style/starRatingBar"/>
+
+        <TextView
+            android:id="@+id/labelRatingLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/ratingBarGiveRating"
+            android:shadowColor="#000"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
+            android:text="I didn't rate."
+            android:textColor="#eee"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+</LinearLayout>

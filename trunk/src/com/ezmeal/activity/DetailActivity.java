@@ -3,6 +3,7 @@ package com.ezmeal.activity;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -21,6 +22,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
+import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
 
 import com.ezmeal.lazylist.ImageLoader;
@@ -30,7 +33,7 @@ import com.ezmeal.server.Comment;
 import com.ezmeal.server.Communication_API;
 import com.ezmeal.shake.ShakeListener;
 
-public class DetailActivity extends FragmentActivity implements OnClickListener, TextWatcher {
+public class DetailActivity extends FragmentActivity implements OnClickListener, OnRatingBarChangeListener, TextWatcher {
 
 	ShakeListener mShaker;
     private ImageLoader imageLoader; 
@@ -43,11 +46,12 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
     private Button backBtn, sendBtn;
 	private TextView headerTitle, labelNoComment, commentTitle, commentAuthor, commentTime,
 	        commentContent, labelTitleCharRem, labelContentCharRem, sendResultText,
-	        ratingScore;
+	        ratingNum, ratingLevel; //ratingScore;
 	private EditText writeTitle, writeContent;
 	private ProgressBar sendProgressBar;
 	private String dish_name, dish_price, dish_canteen;
 	private ImageView ratingStars;
+	private RatingBar ratingBar;
 	
 	private int MAX_TITLE_LEN = 40;
 	private int MAX_CONTENT_LEN = 140;
@@ -59,6 +63,8 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
 	private String EMPTY_CONTENT = "Comment cannot be empty.";
 	private String SENDING       = "Sending...";
 	private String SUCCESSFUL    = "Thanks for your comment!";
+	
+	private String[] RATING_LEVELS = {"I didn't rate", "I hate it", "I dislike it", "It's fair", "It's good", "It's excellent!"};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +104,7 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
 			TextView canteen = (TextView) findViewById(R.id.textDishCanteenInDetail);
 			canteen.setText(dish_canteen);
 			TextView price = (TextView) findViewById(R.id.textDishPriceInDetail);
-			price.setText(dish_price);
+			price.setText("HKD "+dish_price);
 			ImageView image = (ImageView) findViewById(R.id.dishImage);
 			String pic = the_dish.getString("pic");
 	        imageLoader=new ImageLoader(this.getApplicationContext());
@@ -111,8 +117,13 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
 	        headerTitle.setText("Dish");
 	        
 	        //set rating section
-	        ratingScore = (TextView) findViewById(R.id.labelRatingScore);
+	        //ratingScore = (TextView) findViewById(R.id.labelRatingScore);
 	        ratingStars = (ImageView) findViewById(R.id.imageRatingStars);
+	        ratingNum = (TextView) findViewById(R.id.labelRatingNum);
+	        ratingLevel = (TextView) findViewById(R.id.labelRatingLevel);
+	        ratingBar = (RatingBar) findViewById(R.id.ratingBarGiveRating);
+	        ratingBar.setOnRatingBarChangeListener(this);
+	        ratingBar.setOnClickListener(this);
 	        displayRating();
 	        
 	        //set comment section
@@ -138,6 +149,77 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
 			view.setText("Fail");				
 		}
 	}
+	
+	/**
+	 * Fetch and display overall rating
+	 */
+	protected void displayRating() {
+		final Activity thisActivity = this;
+		Thread postDataThread = new Thread(new Runnable() {
+			public void run() {
+				final float score = api.fetch_rate(dish_name);
+				final int numRatings = api.fetch_number_of_rater(dish_name);
+				String user_name = ((UserApp)thisActivity.getApplication()).getUserName();
+				final int userRating = api.fetch_user_rate(user_name, dish_name);
+				Bitmap sourceStar = BitmapFactory.decodeResource(getResources(), R.drawable.stars_full);
+				int imgWidth = (int) ((score/FULL_RATING_SCORE) * sourceStar.getWidth());
+				int imgHeight = (int) sourceStar.getHeight();
+				imgWidth = (imgWidth <= 0) ? 1 : imgWidth;  //guarantee image width is larger than 0
+				final Bitmap star = Bitmap.createBitmap(sourceStar, 0, 0, imgWidth, imgHeight);
+				
+				//Refresh the data of this app
+    			refreshHandler.post(new Runnable() {
+    				public void run() {
+    					//Maintain one fraction for the overall rating score
+    					if (score > 0) ratingStars.setImageBitmap(star);
+    					if (score == 1) ratingNum.setText(Integer.toString(numRatings) + " rating");
+    					else ratingNum.setText(Integer.toString(numRatings) + " ratings");
+    					/*
+    					BigDecimal bd = new BigDecimal(score);
+    					String scoreStr = bd.setScale(2, BigDecimal.ROUND_HALF_UP).toString();
+    					if (score == -1) ratingScore.setText("N/A");
+    					else ratingScore.setText(scoreStr);
+    					*/
+    					
+    					//Set user rating
+    					setUserRating(userRating);
+    				}
+    			});
+			}
+		});
+		postDataThread.start();
+	}
+	
+	/**
+	 * Set the rating bar
+	 * @param rating = rating given by the user
+	 */
+	protected void setUserRating(int rating) {
+		rating = (rating >= 0) ? rating : 0;
+		ratingBar.setRating((float) rating);
+		ratingLevel.setText(RATING_LEVELS[rating]);
+	}
+	
+	/**
+	 * Send the latest updated user rating to the server
+	 * @param rating
+	 */
+	protected void sendNewRating(int rating) {
+		final String user_name = ((UserApp)this.getApplication()).getUserName();
+		final int rate = rating;
+		Thread postDataThread = new Thread(new Runnable() {
+			public void run() {
+				api.rate_dish(user_name, dish_name, rate);
+				refreshHandler.post(new Runnable() {
+    				public void run() {
+    					displayRating();
+    				}
+				});
+			}
+		});
+		postDataThread.start();
+	}
+
 	
 	/**
 	 * Update the number of characters remaining in the title and comment text fields.
@@ -242,35 +324,7 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
 		}
 	}
 	
-	/**
-	 * Fetch and display overall rating
-	 */
-	protected void displayRating() {
-		Thread postDataThread = new Thread(new Runnable() {
-			public void run() {
-				final float score = api.fetch_rate(dish_name);
-				Bitmap sourceStar = BitmapFactory.decodeResource(getResources(), R.drawable.stars_full);
-				int imgWidth = (int) ((score/FULL_RATING_SCORE) * sourceStar.getWidth());
-				int imgHeight = (int) sourceStar.getHeight();
-				imgWidth = (imgWidth <= 0) ? 1 : imgWidth;  //guarantee image width is larger than 0
-				final Bitmap star = Bitmap.createBitmap(sourceStar, 0, 0, imgWidth, imgHeight);
-				
-				//Refresh the data of this app
-    			refreshHandler.post(new Runnable() {
-    				public void run() {
-    					//Maintain one fraction for the overall rating score
-    					BigDecimal bd = new BigDecimal(score);
-    					String scoreStr = bd.setScale(1, BigDecimal.ROUND_HALF_UP).toString();
-    					if (score > 0) ratingStars.setImageBitmap(star);
-    					if (score == -1) ratingScore.setText("N/A");
-    					else ratingScore.setText(scoreStr);
-    				}
-    			});
-			}
-		});
-		postDataThread.start();
-	}
-
+	
 	/**
 	 * Fetch and display users' comments
 	 */
@@ -385,5 +439,14 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
 	}
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
 		//do nothing
+	}
+
+	/**
+	 * OnRatingBarChanged Listener
+	 */
+	public void onRatingChanged(RatingBar rb, float rating, boolean fromUser) {
+		if (rb == ratingBar) {
+			sendNewRating((int) rb.getRating());
+		}
 	}
 }
