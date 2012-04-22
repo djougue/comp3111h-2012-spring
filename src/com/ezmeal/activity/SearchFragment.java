@@ -61,7 +61,7 @@ public class SearchFragment extends Fragment {
 	private CheckBox[] taste = new CheckBox[3];
 	private EditText dish_name_text;
 	
-	private Vector<Bundle> dishes;
+	private Vector<Dish> dishes;
 	private int dish_counter = 0;
 
 	private static final int INIT = 	0;
@@ -72,6 +72,10 @@ public class SearchFragment extends Fragment {
 	
 	private int thread_state2  = WAIT;
 	private boolean isTimeout = false;
+	private boolean isNull = false;
+	private boolean isLock = false;
+	private int retry_counter = 0;
+	private static final int RETRY_MAX =5;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -156,9 +160,11 @@ public class SearchFragment extends Fragment {
     			while(true){
     				switch(thread_state2){
     				case INIT:
-		    			dishes =new Vector<Bundle>();
+		    			dishes =new Vector<Dish>();
 		    			Dish cur_dish;
 		    			dish_counter = 0;
+		    			retry_counter = 0;
+		    			isNull = false;
 		    			isTimeout = false;
 		    			thread_state2 = FETCH;
     					Log.e("SearchFragment", "thread_state = FETCH");
@@ -180,24 +186,37 @@ public class SearchFragment extends Fragment {
 	    						(time_spinner.getSelectedItemPosition()==3)||(time_spinner.getSelectedItemPosition()==0),
 	    						(time_spinner.getSelectedItemPosition()==2)||(time_spinner.getSelectedItemPosition()==0),
 	    						(time_spinner.getSelectedItemPosition()==1)||(time_spinner.getSelectedItemPosition()==0));
-	    				if(cur_dish==null){ //time out. Then delete all loaded dishes    					
-	    					dishes.clear();
-	    					thread_state2 = TIMEOUT;
-	    					isTimeout = true;
-	    					Log.e("SearchFragment", "thread_state = TIMEOUT");
-	    					break;
+	    				if(cur_dish==null){ //time out. Then delete all loaded dishes
+	    					if(retry_counter<RETRY_MAX){
+	    						retry_counter++;
+	    						continue;
+	    					}
+	    					else{
+		    					dishes.clear();
+		    					thread_state2 = TIMEOUT;
+		    					isTimeout = true;
+		    					Log.e("SearchFragment", "thread_state = TIMEOUT");
+		    					break;
+	    					}
 	    				}
+	    				retry_counter = 0;
 	    				if(cur_dish.getDish_id()==0) { //all dishes has been fetch
+	    					if(dish_counter==0){
+	    						isNull = true;
+	    					}
 	    					thread_state2 = DISPLAY;
 	    					Log.e("SearchFragment", "thread_state = DISPLAY");
 	    					break;
 	    				}
 	    				dish_counter++;
+	    				/*
 	    				Bundle bundle = new Bundle();
 	    				bundle.putString("name", cur_dish.getDish_name());
 	    				bundle.putString("canteen", cur_dish.getDish_canteen());
 	    				bundle.putFloat("price", cur_dish.getDish_price());
 	    				dishes.add(bundle);
+	    				*/
+	    				dishes.add(cur_dish);
     					break;
     					
     				case TIMEOUT:
@@ -205,15 +224,18 @@ public class SearchFragment extends Fragment {
 		    			refreshHandler.post(new Runnable() {
 		    				public void run() {						
 									// TODO Auto-generated method stub	
-		    					if(thread_state2 == TIMEOUT||isTimeout){
+		    					isLock = true;
+		    					if(isTimeout){
 					    	        progressBar.setVisibility(View.INVISIBLE);
 					    	        timeout_text.setVisibility(View.VISIBLE);
+					    	        thread_state2 = WAIT;
 		    					}
 		    					else{
-		    						if(dish_counter == 0){ //the result is empty
+		    						if(isNull){ //the result is empty
 			    						Log.e("SearchFragment", "In fetch, DISPLAY,empty");
 						    	        progressBar.setVisibility(View.INVISIBLE);
 						    	        no_result_text.setVisibility(View.VISIBLE);
+						    	        thread_state2 = WAIT;
 		    						}
 		    						else
 		    						{
@@ -226,12 +248,14 @@ public class SearchFragment extends Fragment {
 		
 						    	        list.getLayoutParams().height=LayoutParams.WRAP_CONTENT;
 						    	        list.setVisibility(View.VISIBLE);
+						    	        thread_state2 = WAIT;
 		    						}
 		    					}
+		    					isLock = false;
 		    				}
 		    			});
-		    			thread_state2 = WAIT;
-		    			Log.e("SearchFragment", "thread_state = WAIT");
+		    			//while(isLock);
+		    			Log.e("SearchFragment", "thread_state = WAIT(1)");
 		    			break;
     				case WAIT:
     					break;
@@ -240,7 +264,7 @@ public class SearchFragment extends Fragment {
       		}
     	});
         thread_state2 = WAIT;
-        Log.e("SearchFragment", "thread_state = WAIT");
+        Log.e("SearchFragment", "thread_state = WAIT(2)");
         getDataThread.start();
       
 		return view;
