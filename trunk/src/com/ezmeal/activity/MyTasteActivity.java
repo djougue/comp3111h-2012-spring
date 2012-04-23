@@ -19,7 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class MyTasteActivity extends Activity implements OnClickListener, OnCheckedChangeListener {
-	private Communication_API api;
+	private Communication_API api = new Communication_API();
 	private TextView headerTitle, resultText;
 	private Button submitBtn, backBtn;
 	private CheckBox spicyBtn, meatBtn, vegeBtn;
