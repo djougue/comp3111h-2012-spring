@@ -27,7 +27,7 @@ Each item should have its own web page that shows the item’s name, picture, fa
   * Comments come from the uses who have taken the dishes before. The nicknames are displayed for comments. 
   * There should be a button for user to upload the pictures. 
 The user is able to browse and filter the dishes. For easier browsing, the dishes are grouped into categories. The available categories are canteen and available time. 
-In addition to browsing, it should be possible to filter the dishes based on some criteria. The allowed filters include dish name, favor, canteen, price, available time and rating. By adding filters, the users could restrict the result to meet specific requirements. If more than one criterion is specified, then the filtering result should match all specified restrictions. 
+In addition to browsing, it should be possible to filter the dishes based on some criteria. The allowed filters include dish name, favor, canteen and available time. By adding filters, the users could restrict the result to meet specific requirements. If more than one criterion is specified, then the filtering result should match all specified restrictions. 
 The results of browsing or filtering should be displayed in a tabular format showing the dish thumbnail, if any, name, price, canteen and available time. From this display of dishes it should be possible to go directly to a dish’s web page. 
 
 = Comments and Picture Uploading System =
