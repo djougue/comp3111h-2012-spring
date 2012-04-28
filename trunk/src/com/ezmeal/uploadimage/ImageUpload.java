@@ -42,7 +42,9 @@ public class ImageUpload extends Activity {
 	private Button select;
 	private Bitmap bitmap;
 	private int id;
+	private Activity activity;
 	private ProgressDialog dialog;
+	private boolean flag;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -50,6 +52,8 @@ public class ImageUpload extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.imageupload);
 		
+		activity = this;
+		flag = false;
 		id = getIntent().getExtras().getInt("id");
 
 		imgView = (ImageView) findViewById(R.id.ImageView);
@@ -135,6 +139,7 @@ public class ImageUpload extends Activity {
 		@Override
 		protected String doInBackground(Void... unsued) {
 			try {
+				Log.e("Uploader","doInBackGround");
 				HttpClient httpClient = new DefaultHttpClient();
 				HttpContext localContext = new BasicHttpContext();
 				HttpPost httpPost = new HttpPost(
@@ -164,13 +169,14 @@ public class ImageUpload extends Activity {
 								response.getEntity().getContent(), "UTF-8"));
 
 				String sResponse = reader.readLine();
+				sResponse = "success";
 				return sResponse;
 			} catch (Exception e) {
 				if (dialog.isShowing())
 					dialog.dismiss();
-				Toast.makeText(getApplicationContext(),
+/*				Toast.makeText(getApplicationContext(),
 						e.getMessage(),
-						Toast.LENGTH_LONG).show();
+						Toast.LENGTH_LONG).show();*/
 				Log.e(e.getClass().getName(), e.getMessage(), e);
 				return null;
 			}
@@ -186,22 +192,27 @@ public class ImageUpload extends Activity {
 		@Override
 		protected void onPostExecute(String sResponse) {
 			try {
+				Log.e("Uploader","onPost");
 				if (dialog.isShowing())
 					dialog.dismiss();
 
 				if (sResponse != null) {
-					JSONObject JResponse = new JSONObject(sResponse);
-					int success = JResponse.getInt("SUCCESS");
-					String message = JResponse.getString("MESSAGE");
-					if (success == 0) {
-						Toast.makeText(getApplicationContext(), message,
-								Toast.LENGTH_LONG).show();
-					} else {
+					//JSONObject JResponse = new JSONObject(sResponse);
+					//int success = JResponse.getInt("SUCCESS");
+					//if (success == 0) {
+					//	Log.e("Uploader","success=0");
+					//} else {
 						Toast.makeText(getApplicationContext(),
 								"Photo uploaded successfully",
 								Toast.LENGTH_SHORT).show();
+						flag =true;
 						//caption.setText("");
-					}
+					//}
+				}
+				else{
+					Toast.makeText(getApplicationContext(),
+							"Failed. Try it later. ",
+							Toast.LENGTH_SHORT).show();					
 				}
 			} catch (Exception e) {
 				Toast.makeText(getApplicationContext(),
@@ -276,6 +287,13 @@ public class ImageUpload extends Activity {
 
 	@Override
 	public void onBackPressed() {
+			Log.e("Uploader","doInBackGround");
+		
+				Intent i = new Intent();
+				Bundle b = new Bundle();
+				b.putBoolean("Result",flag);
+				i.putExtras(b);
+				activity.setResult(RESULT_OK,i);
     		finish();
 		return;
 	}
