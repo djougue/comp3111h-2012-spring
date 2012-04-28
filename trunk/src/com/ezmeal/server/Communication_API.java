@@ -388,6 +388,33 @@ public class Communication_API {
 		}
 		return dish;
 	}
+	
+	public Dish fetch_dish_by_rank(int rank)
+	{
+		Dish dish=new Dish();
+		result = null;
+		send_cmd("fetch_id_by_rank.php?rank="+rank);
+		int id=0;
+		try
+		{
+			if(result==null) return null;
+		     jArray = new JSONArray(result);
+		     JSONObject json_data=null;
+
+             json_data = jArray.getJSONObject(0);
+             id=json_data.getInt("rate_dishid");
+		}
+		catch(JSONException e1)
+		{
+			e1.printStackTrace();
+		} 
+		catch (ParseException e1) 
+		{
+			e1.printStackTrace();
+		}
+		
+		return fetch_dish_by_id(id);
+	}
 
 	public Dish fetch_dish(int index)
 	{
