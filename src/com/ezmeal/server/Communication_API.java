@@ -357,6 +357,38 @@ public class Communication_API {
 	/*******************************************************************************************
 	 * 									Methods Related to Dishes
 	 ******************************************************************************************/
+	public Dish fetch_dish_by_id(int id)
+	{
+		Dish dish=new Dish();
+		result = null;
+		send_cmd("get_dish_by_id.php?id="+id);
+		try
+		{
+			if(result==null) return null;
+		     jArray = new JSONArray(result);
+		     JSONObject json_data=null;
+
+             json_data = jArray.getJSONObject(0);
+             dish.setDish_id(json_data.getInt("dish_id"));
+             dish.setDish_name(json_data.getString("dish_name"));
+             dish.setDish_canteen(json_data.getString("dish_canteen"));
+             dish.setDish_price(Float.valueOf(json_data.getString("dish_price")).floatValue());
+             dish.setDish_spicy(json_data.getInt("dish_spicy"));
+             dish.setDish_vege(json_data.getInt("dish_vege"));
+             dish.setDish_meat(json_data.getInt("dish_meat"));
+             dish.setDish_available_time(json_data.getInt("dish_available_time"));
+		}
+		catch(JSONException e1)
+		{
+			e1.printStackTrace();
+		} 
+		catch (ParseException e1) 
+		{
+			e1.printStackTrace();
+		}
+		return dish;
+	}
+
 	public Dish fetch_dish(int index)
 	{
 		Dish dish=new Dish();
@@ -641,12 +673,12 @@ public class Communication_API {
 	/*******************************************************************************************
 	 * 									Methods Related to Blacklist
 	 ******************************************************************************************/
-	public void add_blacklist(String user_name, String dish_name)
+	public void add_blacklist(String user_name, int dish_id)
 	{
 		try{
 			send_cmd("add_blacklist.php?"
 					+"&username="+URLEncoder.encode(user_name,"utf-8")
-					+"&dishname="+URLEncoder.encode(dish_name,"utf-8"));
+					+"&dishname="+dish_id);
 		}
 		catch(Exception e){
 			
@@ -677,10 +709,20 @@ public class Communication_API {
 			if(result==null) return null;
 		     jArray = new JSONArray(result);
 		     JSONObject json_data=null;
-
+/*
              json_data = jArray.getJSONObject(0);
              
-             dish.setDish_name(json_data.getString("blacklist_dishname"));
+             dish.setDish_name(json_data.getString("blacklist_dishname"));*/
+             json_data = jArray.getJSONObject(0);
+             dish.setDish_id(json_data.getInt("dish_id"));
+             dish.setDish_name(json_data.getString("dish_name"));
+             dish.setDish_canteen(json_data.getString("dish_canteen"));
+             dish.setDish_price(Float.valueOf(json_data.getString("dish_price")).floatValue());
+             dish.setDish_spicy(json_data.getInt("dish_spicy"));
+             dish.setDish_vege(json_data.getInt("dish_vege"));
+             dish.setDish_meat(json_data.getInt("dish_meat"));
+             dish.setDish_image(json_data.getInt("dish_image"));
+             dish.setDish_available_time(json_data.getInt("dish_available_time"));
 		}
 		catch(JSONException e1)
 		{
@@ -698,12 +740,12 @@ public class Communication_API {
 	 ******************************************************************************************/
 	//Add the rate if the user has not rated this dish before
 	//Change the rating value if he/she has rated it
-	public void rate_dish(String user_name, String dish_name, int rate)
+	public void rate_dish(String user_name, int dish_id, int rate)
 	{
 		try{
 			send_cmd("rate_dish.php?"
 					+"&username="+URLEncoder.encode(user_name,"utf-8")
-					+"&dishname="+URLEncoder.encode(dish_name,"utf-8")
+					+"&dishid="+dish_id
 					+"&rate="+rate);
 		}
 		catch(Exception e){
@@ -713,12 +755,12 @@ public class Communication_API {
 	
 	//Return the average rate of a dish
 	//Return -1 if error occurs
-	public float fetch_rate(String dish_name)
+	public float fetch_rate(int dish_id)
 	{
 		result = null;
 
 		try{
-			send_cmd("fetch_rate.php?" + "dishname=" + URLEncoder.encode(dish_name,"utf-8"));
+			send_cmd("fetch_rate.php?" + "dishid=" + dish_id);
 			
 		}
 		catch(Exception e){
@@ -753,17 +795,17 @@ public class Communication_API {
 	
 	//Return the rate of a dish from a particular user
 	//Return -1 if error occurs
-	public int fetch_user_rate(String user_name, String dish_name)
+	public int fetch_user_rate(String user_name, int dish_id)
 	{
 		result = null;
 
 		try{
 			testing="fetch_user_rating.php?" 	
 					  +	"username=" + URLEncoder.encode(user_name,"utf-8")
-					  + "&dishname=" + URLEncoder.encode(dish_name,"utf-8");
+					  + "&dishid=" + dish_id;
 			send_cmd("fetch_user_rating.php?" 	
 					  +	"username=" + URLEncoder.encode(user_name,"utf-8")
-					  + "&dishname=" + URLEncoder.encode(dish_name,"utf-8"));
+					  + "&dishid=" +dish_id);
 			
 		}
 		catch(Exception e){
@@ -797,13 +839,13 @@ public class Communication_API {
 	
 	//Return the rate of a dish from a particular user
 	//Return -1 if error occurs
-	public int fetch_number_of_rater(String dish_name)
+	public int fetch_number_of_rater(int dish_id)
 	{
 		result = null;
 
 		try{
-			testing="fetch_number_rater.php?dishname=" + URLEncoder.encode(dish_name,"utf-8");
-			send_cmd("fetch_number_rater.php?dishname=" + URLEncoder.encode(dish_name,"utf-8"));
+			testing="fetch_number_rater.php?dishid=" + dish_id;
+			send_cmd("fetch_number_rater.php?dishid=" + dish_id);
 			
 		}
 		catch(Exception e){
