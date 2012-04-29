@@ -34,6 +34,10 @@ public class ImageLoader{
     final int stub_id=com.ezmeal.main.R.drawable.stub;
     public void DisplayImage(String url, ImageView imageView)
     {
+    	if(url=="http://143.89.220.19/COMP3111H/image/stub.png"){
+    		imageView.setImageResource(stub_id);
+    		return;
+    	}
         imageViews.put(imageView, url);
         Bitmap bitmap=memoryCache.get(url);
         if(bitmap!=null)
