@@ -32,6 +32,7 @@ import android.widget.TextView;
 import com.ezmeal.activity.MenuFragment;
 import com.ezmeal.activity.MyTasteActivity;
 import com.ezmeal.activity.QuitActivity;
+import com.ezmeal.activity.RankFragment;
 import com.ezmeal.activity.SearchFragment;
 import com.ezmeal.activity.SettingsActivity;
 import com.ezmeal.activity.ShakeActivity;
@@ -48,9 +49,13 @@ public class MainActivity extends FragmentActivity {
 		"SEARCH"
 	};
 
-	private ViewPager mViewPager;
+	public ViewPager mViewPager;
 	private SwipeyTabs mTabs;
 	ShakeListener mShaker;
+	
+	public int isDirty = 0;
+	public int id = -1;
+	public int position = -1;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -146,6 +151,9 @@ public class MainActivity extends FragmentActivity {
 		@Override
 		public Fragment getItem(int position) {
 			switch (position) {
+			case 0:
+				RankFragment rFragment = new RankFragment();
+				return rFragment;
 			case 1:
 				MenuFragment mFragment = new MenuFragment();
 				return mFragment;
@@ -195,5 +203,22 @@ public class MainActivity extends FragmentActivity {
 		startActivity(intent);
 		finish();
 		return;
-	}	
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode,  
+            Intent data){  
+		switch (resultCode){  
+		case 10:  
+			Log.e("MainActivity","something changes");
+			Bundle b = data.getExtras();  
+			position = b.getInt("position"); 
+			id = b.getInt("id");
+			isDirty = 2;
+			break;
+		default:
+			Log.e("MainActivity","Nothing changes");
+			break;
+		}  
+	} 
 }
