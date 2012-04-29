@@ -86,6 +86,7 @@
 	                android:text="Fried Rice, Yeung Chow Style"/>
 	            
 	            <!-- Food Style (Taste) -->
+	            <!--
 	            <TextView 
 			  	    android:layout_width="fill_parent"
 				    android:layout_height="20dip"	            
@@ -97,6 +98,7 @@
     	            android:shadowDy="1"
 	                android:shadowRadius="1"
 	                android:text="Food style:"/>
+	            -->
 				  <LinearLayout
 				      android:orientation="horizontal" 
 				      android:layout_height="wrap_content"
@@ -129,7 +131,7 @@
 				          android:scaleType="fitXY"
 				          />
 				  </LinearLayout>
-            	            
+
 	            <include 
 	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content"
