@@ -130,15 +130,11 @@
 				          />
 				  </LinearLayout>
             	            
-=======
-	                android:layout_marginTop="5dp"
-	                android:text="Food Style: Coming Soon"/>
 	            <include 
 	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content"
 	                android:layout_marginTop="5dp"
 	                layout="@layout/overall_rating"/>             	            
->>>>>>> .r390
 	        </LinearLayout>
 	    </LinearLayout>
 
