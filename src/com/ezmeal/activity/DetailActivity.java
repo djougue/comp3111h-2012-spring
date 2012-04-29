@@ -210,7 +210,7 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
     				public void run() {
     					//Maintain one fraction for the overall rating score
     					if (score > 0) ratingStars.setImageBitmap(star);
-    					if (score == 1) ratingNum.setText(Integer.toString(numRatings) + " rating");
+    					if (numRatings == 1) ratingNum.setText(Integer.toString(numRatings) + " rating");
     					else ratingNum.setText(Integer.toString(numRatings) + " ratings");
     					/*
     					BigDecimal bd = new BigDecimal(score);
