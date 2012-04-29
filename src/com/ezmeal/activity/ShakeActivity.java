@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.ezmeal.lazylist.ImageLoader;
 import com.ezmeal.main.R;
 import com.ezmeal.main.UserApp;
 import com.ezmeal.server.Communication_API;
@@ -26,6 +27,7 @@ public class ShakeActivity extends Activity implements OnClickListener{
 	private String dish_name="Connection failed";
 	private String dish_canteen=" ";
 	private String dish_price=" ";
+	private String pic=" ";
 	private int shake_state = 0;
 	Dish the_dish;
     private Thread shakeThread;
@@ -34,7 +36,9 @@ public class ShakeActivity extends Activity implements OnClickListener{
 	private LinearLayout view;
 	ShakeListener mShaker;
 	ImageView dishImage;
-	
+	ImageView dishImageButton;
+    private ImageLoader imageLoader; 
+
 	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,14 +51,12 @@ public class ShakeActivity extends Activity implements OnClickListener{
         backBtn = (Button) findViewById(R.id.buttonBack);
         backBtn.setOnClickListener(this);
 
-		
 		Button reshakeBt = (Button) findViewById(com.ezmeal.main.R.id.reshake);
 		reshakeBt.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
             	reshake();
             }
 		});
-
 		
 		mShaker = new ShakeListener(this);		
 		mShaker.setOnShakeListener(new ShakeListener.OnShakeListener() {  
@@ -63,19 +65,16 @@ public class ShakeActivity extends Activity implements OnClickListener{
 		    }  
 		});
 
-		dishImage = (ImageView) findViewById(com.ezmeal.main.R.id.dishImageButton);
-
-		dishImage.setOnClickListener(new View.OnClickListener() {
+		imageLoader=new ImageLoader(this.getApplicationContext());
+		dishImage = (ImageView) findViewById(com.ezmeal.main.R.id.dishImageShake);
+		dishImageButton = (ImageView) findViewById(com.ezmeal.main.R.id.dishImageButton);
+		dishImageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
             	if(the_dish != null){
 	    			Intent intent = new Intent(getApplicationContext(),
 	    					com.ezmeal.activity.DetailActivity.class);
 	    			
-	    			Bundle dishInfo = new Bundle();
-	    			dishInfo.putString("name", dish_name);
-	    			dishInfo.putString("pic", " ");
-	    			dishInfo.putString("price", dish_price);
-	    			dishInfo.putString("canteen", dish_canteen);
+	    			Bundle dishInfo = the_dish.dishToBundle();
 	    			dishInfo.putInt("ActivityFlag", 1);
 	    			intent.putExtras(dishInfo);
 	    			startActivity(intent);
@@ -93,6 +92,10 @@ public class ShakeActivity extends Activity implements OnClickListener{
 							dish_name = the_dish.getDish_name();
 							dish_canteen = the_dish.getDish_canteen();
 							dish_price = "$"+Float.toString(the_dish.getDish_price());
+							pic = "http://143.89.220.19/COMP3111H/image/stub.png";
+							if(the_dish.hasImage())
+								pic ="http://143.89.220.19/COMP3111H/image/"+the_dish.getDish_id()+".jpg";
+
 							shake_state = 2;
 						}
 						else{
@@ -111,7 +114,7 @@ public class ShakeActivity extends Activity implements OnClickListener{
 									name.setText(dish_name);
 									canteen.setText(dish_canteen);
 									price.setText(dish_price);
-									
+							        imageLoader.DisplayImage(pic, dishImage);									
 									
 									view=(LinearLayout)findViewById(com.ezmeal.main.R.id.information);	
 									progressBar.setVisibility(View.INVISIBLE);

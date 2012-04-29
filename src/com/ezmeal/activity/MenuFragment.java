@@ -1,12 +1,14 @@
 package com.ezmeal.activity;
 
 import java.util.Calendar;
-import java.util.TimeZone;
 import java.util.Vector;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +25,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.ezmeal.lazylist.LazyAdapter;
+import com.ezmeal.main.MainActivity;
 import com.ezmeal.main.R;
 import com.ezmeal.server.Communication_API;
 import com.ezmeal.server.Dish;
@@ -32,7 +35,9 @@ public class MenuFragment extends Fragment {
 	LayoutInflater Inflater;
     ListView list;
     LazyAdapter adapter;
-    Thread getDataThread;
+    Runnable getDataThread;
+    Runnable updateUI;
+    MyHandler myHandler;
     Handler refreshHandler=new Handler();
     private View view;
     private Activity activity;
@@ -111,6 +116,7 @@ public class MenuFragment extends Fragment {
 		}else{
 			time_spinner.setSelection(3);
 		}
+		time_spinner.setClickable(false);
 		
 		canteen_spinner = (Spinner) view.findViewById(R.id.canteenSpinner);
 		canteen_adapter = new ArrayAdapter<String>(activity,android.R.layout.simple_spinner_item,canteen_name);
@@ -118,7 +124,8 @@ public class MenuFragment extends Fragment {
 		canteen_spinner.setAdapter(canteen_adapter);
 		canteen_spinner.setOnItemSelectedListener(new SpinnerSelectedListener()); 
 		canteen_spinner.setVisibility(View.VISIBLE);  
-		
+		canteen_spinner.setClickable(false);
+
 		//initialize the reconnect button
 		reconnectBt = (Button) view.findViewById(R.id.reconnectBt);
 		reconnectBt.setOnClickListener(new View.OnClickListener() {
@@ -127,12 +134,47 @@ public class MenuFragment extends Fragment {
             }
 		});
 
-		
-        getDataThread = new Thread(new Runnable() {
+		HandlerThread handlerThread = new HandlerThread("handler_thread");
+		handlerThread.start();
+		myHandler = new MyHandler(handlerThread.getLooper());
+		updateUI = new Runnable() {
+			public void run() {
+				isLock = true;
+				if(isTimeout){
+	    	        progressBar.setVisibility(View.INVISIBLE);
+	    	        reconnectBt.getLayoutParams().height=LayoutParams.WRAP_CONTENT;
+					reconnectBt.setVisibility(View.VISIBLE);
+	    			thread_state = WAIT;
+				}
+				else{
+					if(isNull){
+		    	        progressBar.setVisibility(View.INVISIBLE);
+		    	        no_result_text.setVisibility(View.VISIBLE);
+		    			thread_state = WAIT;
+					}
+					else{
+		    	        adapter=new LazyAdapter(activity, dishes);
+		    	        list.setAdapter(adapter);
+		    	        progressBar.setVisibility(View.INVISIBLE);
+//		    	        progressBar.getLayoutParams().height=0;
+
+		    	        list.getLayoutParams().height=LayoutParams.WRAP_CONTENT;
+		    	        list.setVisibility(View.VISIBLE);
+		    	        if(thread_state!=INIT||thread_state!=FETCH)
+		    	        	thread_state = WAIT;
+					}
+				}
+				time_spinner.setClickable(true);
+				canteen_spinner.setClickable(true);
+				isLock = false;
+			}
+		};
+        getDataThread = new Runnable() {
     		public void run() {
-    			while(true){
+    			//while(thread_state!=(WAIT+1)){
     				switch(thread_state){
     				case INIT:
+    	            	Log.e("getDataThread","init");
 		    			dishes =new Vector<Dish>();
 		    			Dish cur_dish;
 		    			dish_counter = 0;
@@ -142,6 +184,7 @@ public class MenuFragment extends Fragment {
 		    			thread_state = FETCH;
 		    			break;
     				case FETCH:
+    	            	Log.e("getDataThread","fetch");
 	    				cur_dish = api.search_dish(dish_counter,
 	    						"any",
 	    						(canteen_spinner.getSelectedItemPosition()==0),
@@ -159,7 +202,7 @@ public class MenuFragment extends Fragment {
 	    				if(cur_dish==null){ //time out. Then delete all loaded dishes
 	    					if(retry_counter<RETRY_MAX){
 	    						retry_counter++;
-	    						continue;
+	    						break;
 	    					}
 	    					else{
 		    					dishes.clear();
@@ -170,69 +213,40 @@ public class MenuFragment extends Fragment {
 		    					retry_counter = 0;
 		    					break;
 	    					}
+	    				}else{
+		    				retry_counter = 0;
+		    				if(cur_dish.getDish_id()==0) { //all dishes has been fetch	  
+		    					if(dish_counter==0){
+		    						isNull = true;
+		    					}
+		    					thread_state = DISPLAY;
+		    					break;
+		    				}
+		    				dish_counter++;
+		    				dishes.add(cur_dish);
 	    				}
-	    				retry_counter = 0;
-	    				if(cur_dish.getDish_id()==0) { //all dishes has been fetch	  
-	    					if(dish_counter==0){
-	    						isNull = true;
-	    					}
-	    					thread_state = DISPLAY;
-	    					break;
-	    				}
-	    				dish_counter++;
-	    				/*
-	    				Bundle bundle = new Bundle();
-	    				bundle.putString("name", cur_dish.getDish_name());
-	    				bundle.putString("canteen", cur_dish.getDish_canteen());
-	    				bundle.putFloat("price", cur_dish.getDish_price());
-	    				bundle.putInt("id", cur_dish.getDish_id());
-	    				bundle.putBoolean("image", cur_dish.hasImage());	    					    				
-	    				dishes.add(bundle);*/
-	    				dishes.add(cur_dish);
     					break;
     				case TIMEOUT:
     				case DISPLAY:
-		    			refreshHandler.post(new Runnable() {
-		    				public void run() {
-		    					isLock = true;
-		    					if(isTimeout){
-					    	        progressBar.setVisibility(View.INVISIBLE);
-					    	        reconnectBt.getLayoutParams().height=LayoutParams.WRAP_CONTENT;
-		    						reconnectBt.setVisibility(View.VISIBLE);
-		    		    			thread_state = WAIT;
-		    					}
-		    					else{
-		    						if(isNull){
-						    	        progressBar.setVisibility(View.INVISIBLE);
-						    	        no_result_text.setVisibility(View.VISIBLE);
-						    			thread_state = WAIT;
-		    						}
-		    						else{
-						    	        adapter=new LazyAdapter(activity, dishes);
-						    	        list.setAdapter(adapter);
-						    	        progressBar.setVisibility(View.INVISIBLE);
-//						    	        progressBar.getLayoutParams().height=0;
-
-						    	        list.getLayoutParams().height=LayoutParams.WRAP_CONTENT;
-						    	        list.setVisibility(View.VISIBLE);
-						    			thread_state = WAIT;
-		    						}
-		    					}
-		    					isLock = false;
-		    					
-		    				}
-		    			});
-		    			//while(isLock);
+    	            	Log.e("getDataThread","timeout/display");
+		    			
+		    			//thread_state = WAIT;
 		    			break;
     				case WAIT:
+    	            	Log.e("getDataThread","wait");
+    					//thread_state++;
     					break;
     				}
+    	      		Message msg = new Message();
+    				Bundle bundle = new Bundle();
+    				bundle.putInt("thread_state",thread_state);
+    				myHandler.sendMessage(msg);
     			}
-      		}
-    	});
+
+    	};
         thread_state = INIT;
-        getDataThread.start();
-      
+        myHandler.post(getDataThread);
+        
 		return view;
 	}
 
@@ -254,6 +268,45 @@ public class MenuFragment extends Fragment {
 
     	progressBar.getLayoutParams().height=LayoutParams.WRAP_CONTENT;
     	progressBar.setVisibility(View.VISIBLE);
-    	thread_state = INIT;
+		time_spinner.setClickable(false);
+		canteen_spinner.setClickable(false);
+		thread_state = INIT;
+    	myHandler.post(getDataThread);
+	}
+	
+	@Override
+	public void onResume(){
+		super.onResume();
+		Log.e("MenuFragment","onResume");
+		if(this.getActivity() instanceof MainActivity){
+			if(((MainActivity)this.getActivity()).isDirty!=0){
+				((MainActivity)this.getActivity()).isDirty--;
+				if(adapter!=null)
+					adapter.updateDish(((MainActivity)this.getActivity()).position,((MainActivity)this.getActivity()).id);
+			}
+		}
+	}
+	
+	class MyHandler extends Handler{
+        public MyHandler(Looper looper){  
+            super(looper);  
+        }  
+        @Override  
+        public void handleMessage(Message msg) {  
+            System.out.println("MyHandler Thread :" + Thread.currentThread().getId());  
+            // 
+            if(thread_state==DISPLAY||thread_state==TIMEOUT){
+            	System.out.println("MyHandler Thread removed");  
+                removeCallbacks(getDataThread);  
+                refreshHandler.post(updateUI);
+            }else if(thread_state==WAIT){
+            	System.out.println("MyHandler Thread removed");  
+                removeCallbacks(getDataThread); 
+                refreshHandler.removeCallbacks(updateUI);
+            }else{
+            	System.out.println("MyHandler Thread post");
+            	post(getDataThread); 
+            }
+        }
 	}
  }
