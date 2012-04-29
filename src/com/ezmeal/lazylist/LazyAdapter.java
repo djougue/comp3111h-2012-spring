@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,6 +28,7 @@ public class LazyAdapter extends BaseAdapter{
     private static LayoutInflater inflater=null;
     public ImageLoader imageLoader; 
     private Vector<Dish> input;
+    private Vector<ImageView> imageList; //just for update purpose
     /*
     public LazyAdapter(Activity a, String[] d) {
         activity = a;
@@ -47,6 +49,7 @@ public class LazyAdapter extends BaseAdapter{
 	        dishes_name = new String[dishes.size()];
 	        dishes_canteen = new String[dishes.size()];
 	        dishes_price = new Float[dishes.size()];
+	        imageList = new Vector<ImageView>(dishes.size());
 	        for(int i=0;i<dishes.size();i++){
 	        	Dish one_dish = dishes.elementAt(i);
 	        	if(one_dish.hasImage())
@@ -63,6 +66,20 @@ public class LazyAdapter extends BaseAdapter{
         }
     }
 
+    public boolean updateDish(int position,int id){
+    	if(position>getCount()) return false;
+    	else{
+    		if(input.elementAt(position).getDish_id()==id){
+	    		input.elementAt(position).setDish_image(true);
+	    		data[position]="http://143.89.220.19/COMP3111H/image/"+input.elementAt(position).getDish_id()+".jpg";
+	    		imageLoader.DisplayImage(data[position], imageList.elementAt(position));
+	    		notifyDataSetChanged();
+	    		Log.e("Adapter","Updated");
+	    		return true;
+    		}
+    		return false;
+    	}
+    }
     public int getCount() {
     	if(isEmpty)
     		return 0;
@@ -87,7 +104,7 @@ public class LazyAdapter extends BaseAdapter{
         TextView text2=(TextView)vi.findViewById(com.ezmeal.main.R.id.text2);
         TextView text3=(TextView)vi.findViewById(com.ezmeal.main.R.id.text3);
         ImageView image=(ImageView)vi.findViewById(com.ezmeal.main.R.id.image);
-        
+        imageList.addElement(image);
         text1.setText("$"+Float.toString(dishes_price[position]));
         text2.setText(dishes_name[position]);
         //text2.setText(Float.toString(dishes_price[position]));
@@ -115,16 +132,10 @@ public class LazyAdapter extends BaseAdapter{
     			Intent intent = new Intent(activity.getApplicationContext(),
     					com.ezmeal.activity.DetailActivity.class);
     			Bundle dishInfo = input.elementAt(position).dishToBundle();
-/*    			dishInfo.putString("name", dishes_name[position]);
-    			dishInfo.putString("pic", data[position]);
-    			dishInfo.putString("price", Float.toString(dishes_price[position]));
-    			dishInfo.putString("canteen", dishes_canteen[position]);
-
-    			dishInfo.putString("canteen", dishes_canteen[position]);
-*/
     			dishInfo.putInt("ActivityFlag", 0);
+    			dishInfo.putInt("position",position);
     			intent.putExtras(dishInfo);
-    			activity.startActivity(intent);
+    			activity.startActivityForResult(intent,0);
             }        	
         };
         vi.setOnClickListener(itemListener);
