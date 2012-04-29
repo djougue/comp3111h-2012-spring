@@ -216,10 +216,10 @@ public class Communication_API {
 			  if(result != null){
 				  jArray = new JSONArray(result);
 				  if (jArray.length()>0)
-				 return 1;	      
+				 return 1;  
 			  }
 			  else
-				  return -1;
+				  return -1; //timeout return -1
 		}
 		catch(JSONException e1)
 		{
@@ -230,7 +230,7 @@ public class Communication_API {
 			e1.printStackTrace();
 		}
 			
-		return -1;
+		return 0;//wrong
 	}
 	
 	//if change setting successfully, return 1
@@ -247,6 +247,8 @@ public class Communication_API {
 				  jArray = new JSONArray(result);
 				  if (jArray.length()<=0)
 					  return -2;//User with the same user_name does not exist    
+			  }else{
+				  return -1; // timeout
 			  }
 
 		}
