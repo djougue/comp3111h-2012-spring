@@ -1,22 +1,33 @@
 package com.ezmeal.activity;
 
-import com.ezmeal.main.R;
-import com.ezmeal.main.UserApp;
-import com.ezmeal.server.Communication_API;
+import java.util.Vector;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.ezmeal.activity.MenuFragment.MyHandler;
+import com.ezmeal.lazylist.LazyAdapter;
+import com.ezmeal.lazylist.LinearLayoutForListView;
+import com.ezmeal.main.R;
+import com.ezmeal.main.UserApp;
+import com.ezmeal.server.Communication_API;
+import com.ezmeal.server.Dish;
 
 public class MyTasteActivity extends Activity implements OnClickListener, OnCheckedChangeListener {
 	private Communication_API api = new Communication_API();
@@ -25,9 +36,41 @@ public class MyTasteActivity extends Activity implements OnClickListener, OnChec
 	private CheckBox spicyBtn, meatBtn, vegeBtn;
 	private ProgressBar progressBar;
 	private Thread postDataThread;
-	private Handler refreshHandler;
+	private Handler refreshHandler = new Handler();
+
+	//variable for blacklist
+	private Communication_API api_for_black_list = new Communication_API();
+    LazyAdapter adapter;
+	private LinearLayoutForListView black_list= null;
+	//-------------------------------------
+	private Handler refreshHandler_for_black_list;
+	private Runnable getBlackListThread;
+    private Runnable getDataThread;
+    private Runnable updateUI;
+    MyHandler myHandler;
+    //-------------------------------------
 	private static int serverResp;
 	private boolean isChanged = false;
+	private Activity activity;
+	private Vector<Dish> dishes;
+	private int dish_counter = 0;
+	private TextView noresult_blacklist;
+	private TextView timeout_blacklist;
+	private ProgressBar progressBar_blacklist;
+
+	private static final int INIT = 	0;
+	private static final int FETCH = 	1;
+	private static final int DISPLAY = 	2;
+	private static final int WAIT = 	3;
+	private static final int TIMEOUT2 = 	4;
+	
+	private int thread_state  = WAIT;
+	private boolean isTimeout = false;
+	private boolean isNull = false;
+	private boolean isLock = false;
+	private int retry_counter = 0;
+	private static final int RETRY_MAX =5;
+
 	
 	private String TIMEOUT    = "Connection error. Please try again later.";
 	private String LOADING    = "Loading...";
@@ -37,7 +80,7 @@ public class MyTasteActivity extends Activity implements OnClickListener, OnChec
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mytaste);
-        refreshHandler = new Handler();
+        refreshHandler_for_black_list = new Handler();
         
         //set the header title
         headerTitle = (TextView) findViewById(R.id.labelHeader);
@@ -68,6 +111,113 @@ public class MyTasteActivity extends Activity implements OnClickListener, OnChec
         submitBtn.setOnClickListener(this);
         backBtn = (Button) findViewById(R.id.buttonBack);
         backBtn.setOnClickListener(this);
+        
+        black_list = (LinearLayoutForListView) findViewById(R.id.blacklist);
+    	noresult_blacklist = (TextView) findViewById(R.id.textNoResultBlacklist);
+    	timeout_blacklist = (TextView) findViewById(R.id.textTimeoutBlacklist);
+    	progressBar_blacklist = (ProgressBar) findViewById(R.id.progressBarBlacklist);
+    	timeout_blacklist.setVisibility(View.INVISIBLE);
+    	noresult_blacklist.setVisibility(View.INVISIBLE);
+        black_list.setVisibility(View.INVISIBLE);
+    	progressBar_blacklist.setVisibility(View.VISIBLE);
+
+		HandlerThread handlerThread = new HandlerThread("handler_thread");
+		handlerThread.start();
+		myHandler = new MyHandler(handlerThread.getLooper());
+
+        activity = this;
+    	final String username = ((UserApp) this.getApplication()).getUserName();
+    	
+    	updateUI = new Runnable(){
+     		public void run() {
+				isLock = true;
+				if(isTimeout){
+	    	        progressBar_blacklist.setVisibility(View.INVISIBLE);
+	    	        timeout_blacklist.setVisibility(View.VISIBLE);
+	    			thread_state = WAIT;
+	    			Log.e("Blacklist","timeout_show");
+				}
+				else{
+					if(isNull){
+		    	        progressBar_blacklist.setVisibility(View.INVISIBLE);
+		    	        noresult_blacklist.setVisibility(View.VISIBLE);
+		    			thread_state = WAIT;
+		    			Log.e("Blacklist","Null_show");
+					}
+					else{
+		    	        adapter=new LazyAdapter(activity, dishes);
+		    	        black_list.setAdapter(adapter);
+		    	        progressBar_blacklist.setVisibility(View.INVISIBLE);
+//				    	        progressBar.getLayoutParams().height=0;
+
+		    	        black_list.getLayoutParams().height=LayoutParams.WRAP_CONTENT;
+		    	        black_list.setVisibility(View.VISIBLE);
+		    			thread_state = WAIT;
+		    			Log.e("Blacklist","Success_show");
+					}
+				}
+				isLock = false;	
+			}
+    	};
+     		
+     		getDataThread = new Runnable() {
+     		public void run() {
+ 				switch(thread_state){
+ 				case INIT:
+	    			dishes =new Vector<Dish>();
+	    			Dish cur_dish;
+	    			dish_counter = 0;
+	    			retry_counter = 0;
+	    			isTimeout = false;
+	    			isNull = false;
+	    			thread_state = FETCH;
+	    			Log.e("Blacklist","start Fetch");
+	    			break;
+ 				case FETCH:
+    				cur_dish = api_for_black_list.fetch_blacklist(dish_counter,username);
+    				if(cur_dish==null){ //time out. Then delete all loaded dishes
+    					if(retry_counter<RETRY_MAX){
+    						retry_counter++;
+    						break;
+    					}
+    					else{
+	    					dishes.clear();
+			    			dish_counter = 0;
+    						Log.e("Blacklist", "Timeout!!");
+    						isTimeout = true;
+	    					thread_state = TIMEOUT2;
+	    					retry_counter = 0;
+	    					break;
+    					}
+    				}
+    				retry_counter = 0;
+    				if(cur_dish.getDish_id()==0) { //all dishes has been fetch	  
+    					if(dish_counter==0){
+    						isNull = true;
+    					}
+    					thread_state = DISPLAY;
+		    			Log.e("Blacklist","Success_show");
+    					break;
+    				}
+    				dish_counter++;
+    				Log.e("Blacklist", "dish"+dish_counter);
+    				dishes.add(cur_dish);
+ 					break;
+ 				case TIMEOUT2:
+ 				case DISPLAY:
+	    			break;
+ 				case WAIT:
+ 					break;
+ 				}
+	      		Message msg = new Message();
+				Bundle bundle = new Bundle();
+				bundle.putInt("thread_state",thread_state);
+				myHandler.sendMessage(msg);
+       		}
+     	};
+        thread_state = INIT;
+        myHandler.post(getDataThread);
+        Log.e("Blacklist","INIT");        
     }
     
     /**
@@ -153,4 +303,43 @@ public class MyTasteActivity extends Activity implements OnClickListener, OnChec
 	public void onCheckedChanged(CompoundButton btn, boolean isChecked) {
 		isChanged = true;
 	}
+	
+	@Override
+	protected void onResume(){
+		super.onResume();
+		reflesh();
+	}
+	
+	private void reflesh(){
+    	timeout_blacklist.setVisibility(View.INVISIBLE);
+    	noresult_blacklist.setVisibility(View.INVISIBLE);
+        black_list.setVisibility(View.INVISIBLE);
+    	progressBar_blacklist.setVisibility(View.VISIBLE);
+    	thread_state = INIT;
+    	myHandler.post(getDataThread);
+	}
+	
+	class MyHandler extends Handler{
+        public MyHandler(Looper looper){  
+            super(looper);  
+        }  
+        @Override  
+        public void handleMessage(Message msg) {  
+            System.out.println("MyHandler Thread :" + Thread.currentThread().getId());  
+            // 
+            if(thread_state==DISPLAY||thread_state==TIMEOUT2){
+            	System.out.println("MyHandler Thread removed");  
+                removeCallbacks(getDataThread);  
+                refreshHandler.post(updateUI);
+            }else if(thread_state==WAIT){
+            	System.out.println("MyHandler Thread removed");  
+                removeCallbacks(getDataThread); 
+                refreshHandler.removeCallbacks(updateUI);
+            }else{
+            	System.out.println("MyHandler Thread post");
+            	post(getDataThread); 
+            }
+        }
+	};
+	
 }

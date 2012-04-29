@@ -7,6 +7,9 @@ import java.util.Vector;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
+import android.os.Message;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
@@ -27,7 +30,9 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.ezmeal.activity.MenuFragment.MyHandler;
 import com.ezmeal.lazylist.LazyAdapter;
+import com.ezmeal.main.MainActivity;
 import com.ezmeal.main.R;
 import com.ezmeal.server.Communication_API;
 import com.ezmeal.server.Dish;
@@ -37,18 +42,20 @@ public class SearchFragment extends Fragment {
 	LayoutInflater Inflater;
 	private List<View> mListViews; 
     ListView list;
-    private ViewPager awesomePager;  
-    private AwesomePagerAdapter awesomeAdapter; 
+    private ViewPager awesomePager = null;  
+    private AwesomePagerAdapter awesomeAdapter = null; 
     
-    private LazyAdapter adapter;
-    private Thread getDataThread;
+    private LazyAdapter adapter = null;
+    Runnable getDataThread = null;
+    Runnable updateUI = null;
+    MyHandler myHandler = null;
     private Handler refreshHandler=new Handler();
-    private View view;
-    private View page1;
-    private View page2;
-    private Activity activity;
-	private ProgressBar progressBar;
-	private Button submit_button;
+    private View view = null;
+    private View page1 = null;
+    private View page2 = null;
+    private Activity activity = null;
+	private ProgressBar progressBar = null;
+	private Button submit_button = null;
 	private Button back_button;
 	private TextView no_result_text;
 	private TextView timeout_text;
@@ -73,24 +80,143 @@ public class SearchFragment extends Fragment {
 	private int thread_state2  = WAIT;
 	private boolean isTimeout = false;
 	private boolean isNull = false;
-	private boolean isLock = false;
+	private boolean isInterrupt = false;
+	private boolean isInit = false;
 	private int retry_counter = 0;
 	private static final int RETRY_MAX =5;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Log.e("SearchFragment","OnCreate");
+		HandlerThread handlerThread = new HandlerThread("handler_thread");
+		handlerThread.start();
+		myHandler = new MyHandler(handlerThread.getLooper());
+		
+		updateUI = new Runnable() {
+			public void run() {						
+					// TODO Auto-generated method stub	
+				Log.e("SearchFragment","Update UI list");
+				if(isTimeout){
+	    	        progressBar.setVisibility(View.INVISIBLE);
+	    	        timeout_text.setVisibility(View.VISIBLE);
+	    	        thread_state2 = WAIT;
+				}
+				else{
+					if(isNull){ //the result is empty
+						Log.e("SearchFragment", "In fetch, DISPLAY,empty");
+		    	        progressBar.setVisibility(View.INVISIBLE);
+		    	        no_result_text.setVisibility(View.VISIBLE);
+		    	        thread_state2 = WAIT;
+					}
+					else
+					{
+						Log.e("SearchFragment", "In fetch, DISPLAY,non empty");
+		    	        adapter=new LazyAdapter(activity, dishes);
+		    	        list.setAdapter(adapter);
+
+		    	        progressBar.setVisibility(View.INVISIBLE);
+//					    	        progressBar.getLayoutParams().height=0;
+
+		    	        list.getLayoutParams().height=LayoutParams.WRAP_CONTENT;
+		    	        list.setVisibility(View.VISIBLE);
+		    	        if(thread_state2!=INIT||thread_state2!=FETCH)
+		    	        	thread_state2 = WAIT;
+					}
+				}
+			}
+		};
+
+        getDataThread = new Runnable() {
+    		public void run() {
+/*    			if(!isInterrupt){
+    				if(!itself.isVisible())
+    					isInterrupt = true;
+    			}*/
+				switch(thread_state2){
+				case INIT:
+					Log.e("SearchFragment", "thread_state = INIT");
+	    			dishes =new Vector<Dish>();
+	    			Dish cur_dish;
+	    			dish_counter = 0;
+	    			retry_counter = 0;
+	    			isNull = false;
+	    			isTimeout = false;
+	    			thread_state2 = FETCH;
+					
+	    			break;
+				case FETCH:
+					Log.e("SearchFragment", "thread_state = FETCH");
+    				cur_dish = api.search_dish(dish_counter,
+    						dish_name_text.getText().toString().length()==0?"any":dish_name_text.getText().toString(),
+    						(canteen_spinner.getSelectedItemPosition()==1)||(canteen_spinner.getSelectedItemPosition()==0),
+    						(canteen_spinner.getSelectedItemPosition()==2)||(canteen_spinner.getSelectedItemPosition()==0),
+    						(canteen_spinner.getSelectedItemPosition()==3)||(canteen_spinner.getSelectedItemPosition()==0),
+    						(canteen_spinner.getSelectedItemPosition()==4)||(canteen_spinner.getSelectedItemPosition()==0),
+    						(canteen_spinner.getSelectedItemPosition()==5)||(canteen_spinner.getSelectedItemPosition()==0),
+    						(canteen_spinner.getSelectedItemPosition()==6)||(canteen_spinner.getSelectedItemPosition()==0),
+    						(canteen_spinner.getSelectedItemPosition()==7)||(canteen_spinner.getSelectedItemPosition()==0),
+    						taste[0].isChecked()?1:2,
+    						taste[1].isChecked()?1:2,
+    						taste[2].isChecked()?1:2,
+    						(time_spinner.getSelectedItemPosition()==4)||(time_spinner.getSelectedItemPosition()==0),
+    						(time_spinner.getSelectedItemPosition()==3)||(time_spinner.getSelectedItemPosition()==0),
+    						(time_spinner.getSelectedItemPosition()==2)||(time_spinner.getSelectedItemPosition()==0),
+    						(time_spinner.getSelectedItemPosition()==1)||(time_spinner.getSelectedItemPosition()==0));
+    				if(cur_dish==null){ //time out. Then delete all loaded dishes
+    					if(retry_counter<RETRY_MAX){
+    						retry_counter++;
+    						break;
+    					}
+    					else{
+	    					dishes.clear();
+	    					thread_state2 = TIMEOUT;
+	    					isTimeout = true;
+	    					Log.e("SearchFragment", "thread_state = TIMEOUT");
+	    					break;
+    					}
+    				}else{
+	    				retry_counter = 0;
+	    				if(cur_dish.getDish_id()==0) { //all dishes has been fetch
+	    					if(dish_counter==0){
+	    						isNull = true;
+	    					}
+	    					thread_state2 = DISPLAY;
+	    					Log.e("SearchFragment", "thread_state = DISPLAY");
+	    					break;
+	    				}
+	    				dish_counter++;
+	    				dishes.add(cur_dish);
+    				}
+					break;
+					
+				case TIMEOUT:
+				case DISPLAY:
+	    			Log.e("SearchFragment", "thread_state = TIMEOUT/DISPLAY");
+	    			break;
+				case WAIT:
+					Log.e("SearchFragment", "thread_state = WAIT");
+					break;
+				}
+	      		Message msg = new Message();
+				Bundle bundle = new Bundle();
+				bundle.putInt("thread_state",thread_state2);
+				myHandler.sendMessage(msg);
+      		}
+    	};
+
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		Log.e("SearchFragment","OnActivityCreate");
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-        
+		Log.e("SearchFragment","OnCreateView");
 		view = inflater.inflate(com.ezmeal.main.R.layout.search, container, false);
 		page1 = inflater.inflate(R.layout.search_1, null);
 		page2 = inflater.inflate(R.layout.search_2, null);
@@ -104,13 +230,11 @@ public class SearchFragment extends Fragment {
         mListViews = new ArrayList<View>();  
         mListViews.add(page1);  
         mListViews.add(page2);            
-    
 		list=(ListView)page2.findViewById(com.ezmeal.main.R.id.listSearch);
-		list.setVisibility(View.INVISIBLE);
-		
+		no_result_text = (TextView) page2.findViewById(R.id.textNoResultSearch);
+		timeout_text = (TextView) page2.findViewById(R.id.textTimeoutSearch);
 		progressBar = (ProgressBar) page2.findViewById(R.id.progressBarSearch);
-		progressBar.setVisibility(View.INVISIBLE);
-		
+        
 		//initialize two spinner
 		time_spinner = (Spinner) page1.findViewById(R.id.spinnerTimeSearch);
 		time_adapter = new ArrayAdapter<String>(activity,android.R.layout.simple_spinner_item,time_name);
@@ -139,6 +263,8 @@ public class SearchFragment extends Fragment {
             public void onClick(View view) {
             	refleshDish();
             	awesomePager.setCurrentItem(1);
+            	if(!isInit)
+            		isInit = true;
             }
 		});
         
@@ -149,123 +275,33 @@ public class SearchFragment extends Fragment {
             	thread_state2 = WAIT;
             	awesomePager.setCurrentItem(0);
             }
-		});		
-		no_result_text = (TextView) page2.findViewById(R.id.textNoResultSearch);
-		no_result_text.setVisibility(View.VISIBLE);
-		timeout_text = (TextView) page2.findViewById(R.id.textTimeoutSearch);
-		timeout_text.setVisibility(View.INVISIBLE);
-		
-        getDataThread = new Thread(new Runnable() {
-    		public void run() {
-    			while(true){
-    				switch(thread_state2){
-    				case INIT:
-		    			dishes =new Vector<Dish>();
-		    			Dish cur_dish;
-		    			dish_counter = 0;
-		    			retry_counter = 0;
-		    			isNull = false;
-		    			isTimeout = false;
-		    			thread_state2 = FETCH;
-    					Log.e("SearchFragment", "thread_state = FETCH");
-		    			break;
-    				case FETCH:
-	    				cur_dish = api.search_dish(dish_counter,
-	    						dish_name_text.getText().toString().length()==0?"any":dish_name_text.getText().toString(),
-	    						(canteen_spinner.getSelectedItemPosition()==1)||(canteen_spinner.getSelectedItemPosition()==0),
-	    						(canteen_spinner.getSelectedItemPosition()==2)||(canteen_spinner.getSelectedItemPosition()==0),
-	    						(canteen_spinner.getSelectedItemPosition()==3)||(canteen_spinner.getSelectedItemPosition()==0),
-	    						(canteen_spinner.getSelectedItemPosition()==4)||(canteen_spinner.getSelectedItemPosition()==0),
-	    						(canteen_spinner.getSelectedItemPosition()==5)||(canteen_spinner.getSelectedItemPosition()==0),
-	    						(canteen_spinner.getSelectedItemPosition()==6)||(canteen_spinner.getSelectedItemPosition()==0),
-	    						(canteen_spinner.getSelectedItemPosition()==7)||(canteen_spinner.getSelectedItemPosition()==0),
-	    						taste[0].isChecked()?1:2,
-	    						taste[1].isChecked()?1:2,
-	    						taste[2].isChecked()?1:2,
-	    						(time_spinner.getSelectedItemPosition()==4)||(time_spinner.getSelectedItemPosition()==0),
-	    						(time_spinner.getSelectedItemPosition()==3)||(time_spinner.getSelectedItemPosition()==0),
-	    						(time_spinner.getSelectedItemPosition()==2)||(time_spinner.getSelectedItemPosition()==0),
-	    						(time_spinner.getSelectedItemPosition()==1)||(time_spinner.getSelectedItemPosition()==0));
-	    				if(cur_dish==null){ //time out. Then delete all loaded dishes
-	    					if(retry_counter<RETRY_MAX){
-	    						retry_counter++;
-	    						continue;
-	    					}
-	    					else{
-		    					dishes.clear();
-		    					thread_state2 = TIMEOUT;
-		    					isTimeout = true;
-		    					Log.e("SearchFragment", "thread_state = TIMEOUT");
-		    					break;
-	    					}
-	    				}
-	    				retry_counter = 0;
-	    				if(cur_dish.getDish_id()==0) { //all dishes has been fetch
-	    					if(dish_counter==0){
-	    						isNull = true;
-	    					}
-	    					thread_state2 = DISPLAY;
-	    					Log.e("SearchFragment", "thread_state = DISPLAY");
-	    					break;
-	    				}
-	    				dish_counter++;
-	    				/*
-	    				Bundle bundle = new Bundle();
-	    				bundle.putString("name", cur_dish.getDish_name());
-	    				bundle.putString("canteen", cur_dish.getDish_canteen());
-	    				bundle.putFloat("price", cur_dish.getDish_price());
-	    				dishes.add(bundle);
-	    				*/
-	    				dishes.add(cur_dish);
-    					break;
-    					
-    				case TIMEOUT:
-    				case DISPLAY:
-		    			refreshHandler.post(new Runnable() {
-		    				public void run() {						
-									// TODO Auto-generated method stub	
-		    					isLock = true;
-		    					if(isTimeout){
-					    	        progressBar.setVisibility(View.INVISIBLE);
-					    	        timeout_text.setVisibility(View.VISIBLE);
-					    	        thread_state2 = WAIT;
-		    					}
-		    					else{
-		    						if(isNull){ //the result is empty
-			    						Log.e("SearchFragment", "In fetch, DISPLAY,empty");
-						    	        progressBar.setVisibility(View.INVISIBLE);
-						    	        no_result_text.setVisibility(View.VISIBLE);
-						    	        thread_state2 = WAIT;
-		    						}
-		    						else
-		    						{
-			    						Log.e("SearchFragment", "In fetch, DISPLAY,non empty");
-						    	        adapter=new LazyAdapter(activity, dishes);
-						    	        list.setAdapter(adapter);
-		
-						    	        progressBar.setVisibility(View.INVISIBLE);
-		//					    	        progressBar.getLayoutParams().height=0;
-		
-						    	        list.getLayoutParams().height=LayoutParams.WRAP_CONTENT;
-						    	        list.setVisibility(View.VISIBLE);
-						    	        thread_state2 = WAIT;
-		    						}
-		    					}
-		    					isLock = false;
-		    				}
-		    			});
-		    			//while(isLock);
-		    			Log.e("SearchFragment", "thread_state = WAIT(1)");
-		    			break;
-    				case WAIT:
-    					break;
-    				}
-    			}
-      		}
-    	});
-        thread_state2 = WAIT;
-        Log.e("SearchFragment", "thread_state = WAIT(2)");
-        getDataThread.start();
+		});	
+        if(!isInterrupt){
+			list.setVisibility(View.INVISIBLE);
+			no_result_text.setVisibility(View.VISIBLE);
+			timeout_text.setVisibility(View.INVISIBLE);		
+			progressBar.setVisibility(View.INVISIBLE);
+	        thread_state2 = WAIT;
+	        Log.e("SearchFragment", "thread_state = WAIT(2)");
+	        myHandler.post(getDataThread);
+        }else{
+        	isInterrupt = false;
+        	list.getLayoutParams().height = 0;
+        	list.setVisibility(View.INVISIBLE);
+        	
+        	no_result_text.setVisibility(View.INVISIBLE);
+        	timeout_text.setVisibility(View.INVISIBLE);
+        	
+        	progressBar.setVisibility(View.VISIBLE);
+        	
+        	if(thread_state2 == WAIT)
+        		thread_state2 = DISPLAY;
+        	Message msg = new Message();
+			Bundle bundle = new Bundle();
+			bundle.putInt("thread_state",thread_state2);
+			myHandler.sendMessage(msg);
+        }
+
       
 		return view;
 	}
@@ -289,10 +325,43 @@ public class SearchFragment extends Fragment {
     	timeout_text.setVisibility(View.INVISIBLE);
     	
     	progressBar.setVisibility(View.VISIBLE);
+
     	thread_state2 = INIT;
+    	myHandler.post(getDataThread);
     	Log.e("SearchFragment", "thread_state = INIT");
 	}
 	
+	@Override
+	public void onResume(){
+		super.onResume();
+		Log.e("SearchFragment","onResume");
+		if(this.getActivity() instanceof MainActivity){
+			if(((MainActivity)this.getActivity()).isDirty>0){
+				((MainActivity)this.getActivity()).isDirty--;
+				if(adapter!=null)
+					adapter.updateDish(((MainActivity)this.getActivity()).position,((MainActivity)this.getActivity()).id);
+			}
+		}
+	}
+	
+	@Override
+	public void onPause(){
+		super.onPause();
+		Log.e("SearchFragment","onPause");
+	}
+	@Override
+	public void onStop(){
+		super.onStop();
+		Log.e("SearchFragment","onStop");
+	}
+	@Override
+	public void onDestroyView(){
+		super.onDestroyView();
+		if(isInit)
+			isInterrupt = true;
+		Log.e("SearchFragment","onDestroyView");
+	}
+
 	private class AwesomePagerAdapter extends PagerAdapter{  
 		  
         
@@ -330,7 +399,7 @@ public class SearchFragment extends Fragment {
         public void restoreState(Parcelable arg0, ClassLoader arg1) {}  
   
         @Override  
-        public Parcelable saveState() {  
+        public Parcelable saveState() {
             return null;  
         }  
   
@@ -338,4 +407,28 @@ public class SearchFragment extends Fragment {
         public void startUpdate(View arg0) {}  
           
     }
+	class MyHandler extends Handler{
+        public MyHandler(Looper looper){  
+            super(looper);  
+        }  
+        @Override  
+        public void handleMessage(Message msg) {  
+            //System.out.println("MyHandler Thread :" + Thread.currentThread().getId());  
+            // 
+            if(thread_state2==DISPLAY||thread_state2==TIMEOUT){
+            	//System.out.println("MyHandler Thread removed");  
+                removeCallbacks(getDataThread);  
+                if(isInterrupt);
+                else
+                	refreshHandler.post(updateUI);
+            }else if(thread_state2==WAIT){
+            	//System.out.println("MyHandler Thread removed");  
+                removeCallbacks(getDataThread); 
+                refreshHandler.removeCallbacks(updateUI);
+            }else{
+            	//System.out.println("MyHandler Thread post");
+            	post(getDataThread); 
+            }
+        }
+	}
 }

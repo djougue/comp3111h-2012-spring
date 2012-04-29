@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -53,7 +54,9 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
 	private EditText writeTitle, writeContent;
 	private ProgressBar sendProgressBar;
 	private String dish_name, dish_price, dish_canteen;
-
+	private int dish_id;
+	private int position;
+	
 	private ImageView image;
 	private LinearLayout images;
 
@@ -104,10 +107,13 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
 	public void setView() {
 		if (the_dish_bundle != null) {
 	        fatherActivity = the_dish_bundle.getInt("ActivityFlag");
+	        position = the_dish_bundle.getInt("position");
 	        the_dish = new Dish(the_dish_bundle);
 			dish_name = the_dish.getDish_name();
 			dish_canteen = the_dish.getDish_canteen();
 			dish_price = Float.toString(the_dish.getDish_price());
+			dish_id = the_dish.getDish_id();
+			
 			TextView name = (TextView) findViewById(R.id.textDishNameInDetail);
 			name.setText(dish_name);
 			TextView canteen = (TextView) findViewById(R.id.textDishCanteenInDetail);
@@ -189,10 +195,10 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
 		final Activity thisActivity = this;
 		Thread postDataThread = new Thread(new Runnable() {
 			public void run() {
-				final float score = api.fetch_rate(dish_name);
-				final int numRatings = api.fetch_number_of_rater(dish_name);
+				final float score = api.fetch_rate(dish_id);
+				final int numRatings = api.fetch_number_of_rater(dish_id);
 				String user_name = ((UserApp)thisActivity.getApplication()).getUserName();
-				final int userRating = api.fetch_user_rate(user_name, dish_name);
+				final int userRating = api.fetch_user_rate(user_name, dish_id);
 				Bitmap sourceStar = BitmapFactory.decodeResource(getResources(), R.drawable.stars_full);
 				int imgWidth = (int) ((score/FULL_RATING_SCORE) * sourceStar.getWidth());
 				int imgHeight = (int) sourceStar.getHeight();
@@ -241,7 +247,7 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
 		final int rate = rating;
 		Thread postDataThread = new Thread(new Runnable() {
 			public void run() {
-				api.rate_dish(user_name, dish_name, rate);
+				api.rate_dish(user_name, dish_id, rate);
 				refreshHandler.post(new Runnable() {
     				public void run() {
     					displayRating();
@@ -474,7 +480,7 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
 			Bundle dishInfo = new Bundle();
 			dishInfo.putInt("id", the_dish.getDish_id());
 			intent.putExtras(dishInfo);
-            startActivityForResult(intent, 0);
+            startActivityForResult(intent, 10);
 		}
 	}
 
@@ -493,6 +499,7 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
 	}
 
 	private void checkImage(){
+		Log.e("Detail","checkImage");
         if(the_dish.hasImage()){
         	uploadLayout.getLayoutParams().height=0;
         	String pic ="http://143.89.220.19/COMP3111H/image/"+the_dish.getDish_id()+".jpg";
@@ -509,5 +516,30 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
 			sendNewRating((int) rb.getRating());
 		}
 	}
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode,  
+            Intent data){  
+		switch (resultCode){  
+		case RESULT_OK:  
+			Log.e("Detail","back");
+			Bundle b = data.getExtras();  
+			Boolean result = b.getBoolean("Result");  
+			if(result !=null && result){
+				Log.e("Detail","return true");
+				the_dish.setDish_image(true);
+				Intent i = new Intent();
+				Bundle c = new Bundle();
+				c.putBoolean("isChanged",true);
+				c.putInt("position", position);
+				c.putInt("id", the_dish.getDish_id());
+				i.putExtras(c);
+				setResult(10,i);//10 is just an id
+				checkImage();
+			}
+			break;
+		default:
+			break;
+		}  
+	} 
 }
 
