@@ -14,13 +14,23 @@
         layout="@layout/header" />
 
     <!-- Main Content -->
-    <RelativeLayout
+    <ScrollView 
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        >
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:orientation="vertical">    
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginTop="15dp"
-        android:gravity="center" >
+        android:gravity="center" 
+        >
 
         <!-- Personal Taste -->
         <TextView
@@ -59,43 +69,6 @@
             android:textColor="#fff"
             android:text="@string/labelPreferVege" />
         
-        <!-- Blacklist -->
-        <TextView
-            android:id="@+id/labelMyTasteBlacklist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/labelBlacklist"
-            android:layout_below="@id/checkBoxMyTasteVege"
-            android:layout_marginTop="30dp"
-            android:textColor="#fff"
-            android:textStyle="bold" />
-        <TextView
-            android:id="@+id/labelMyTasteComingSoon1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Coming soon..."
-            android:layout_below="@id/labelMyTasteBlacklist"
-            android:textColor="#eee"
-            android:textStyle="bold" />
-
-         <!-- History -->
-         <TextView
-            android:id="@+id/labelMyTasteHistory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/labelHistory"
-            android:layout_below="@id/labelMyTasteComingSoon1"
-            android:layout_marginTop="30dp"
-            android:textColor="#fff"
-            android:textStyle="bold" />
-         <TextView
-            android:id="@+id/labelMyTasteComingSoon2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Coming soon..."
-            android:layout_below="@id/labelMyTasteHistory"
-            android:textColor="#eee"
-            android:textStyle="bold" />
         
         <!-- Result of My Taste-->
         <TextView
@@ -105,7 +78,7 @@
             android:paddingLeft="10dp"
             android:layout_centerHorizontal="true"
             android:textColor="#fff"
-            android:layout_below="@id/labelMyTasteComingSoon2"
+            android:layout_below="@id/checkBoxMyTasteVege"
             android:layout_marginTop="15dp"/>
         <ProgressBar
             android:id="@+id/progressBarMyTaste"
@@ -122,12 +95,64 @@
             android:layout_width="110dp"
             android:layout_height="32dp"
             android:layout_alignParentRight="true"
-            android:layout_below="@id/labelMyTasteComingSoon2"
+            android:layout_below="@id/checkBoxMyTasteVege"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="55dp"
             android:background="@drawable/button_submit" />
-        
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="vertical"
+            >
+             <!-- Blacklist -->
+        <TextView
+            android:id="@+id/labelMyTasteBlacklist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/labelBlacklist"
+            android:layout_marginTop="30dp"
+            android:textColor="#fff"
+            android:textStyle="bold" />
+	    <FrameLayout 
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"        
+	        >
+			<TextView
+		        android:id="@+id/textNoResultBlacklist"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:paddingTop="10dp"
+		        android:layout_gravity="center_horizontal"
+		        android:textColor="#eee"
+		        android:text="No result. "/>
+			<TextView
+		        android:id="@+id/textTimeoutBlacklist"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:paddingTop="10dp"
+		        android:layout_gravity="center_horizontal"
+		        android:textColor="#eee"
+		        android:text="Timeout. Please try it later. "/>
+			<ProgressBar
+		        android:id="@+id/progressBarBlacklist"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        style="@android:style/Widget.ProgressBar.Large"
+		        android:layout_gravity="center_horizontal|center_vertical"
+		        android:visibility="visible" />
+	        <com.ezmeal.lazylist.LinearLayoutForListView
+	            android:orientation="vertical" android:layout_width="fill_parent"
+	                    android:layout_marginBottom="5dp"
+	            android:layout_height="wrap_content" android:id="@+id/blacklist"/>       
+	    </FrameLayout>    
         <!-- TODO -->
-    </RelativeLayout>
+        </LinearLayout>
+     </LinearLayout>
+     </ScrollView>
     
 </LinearLayout>
