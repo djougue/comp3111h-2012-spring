@@ -231,10 +231,14 @@ public class SettingsActivity extends Activity implements OnClickListener, OnChe
     		    			resultText.setText(TIMEOUT);
     		    		}
     		    		else if (serverResp == 1) {
+    		    			resultText.setTextColor(0xffffffff); //white
     		    			postSettingsData();
-    		    		} else if (serverResp == -1) {
+    		    		} else if (serverResp == 0) {
     		    			resultText.setTextColor(0xffff0000); //red
     		    			resultText.setText(WRONG_OLD_PASSWD);
+    		    		} else {
+    		    			resultText.setTextColor(0xffff0000); //red
+    		    			resultText.setText(ERROR_MSG);
     		    		}
     		    		progressBar.setVisibility(View.GONE);
     				}
