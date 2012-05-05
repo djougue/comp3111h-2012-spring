@@ -87,6 +87,7 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
 		mShaker = new ShakeListener(this);
 		mShaker.setOnShakeListener(new ShakeListener.OnShakeListener() {  
 		    public void onShake() {
+		    	if(((UserApp)getApplication()).isShake()){
 		    	if(fatherActivity==0)
 		    	{
 		   			Intent intent = new Intent(getApplicationContext(),
@@ -98,6 +99,7 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
 	    					com.ezmeal.activity.ShakeActivity.class);
 		   			startActivity(intent);
 		    		finish();
+		    	}
 		    	}
  		    }  
 		});
@@ -210,7 +212,7 @@ public class DetailActivity extends FragmentActivity implements OnClickListener,
     				public void run() {
     					//Maintain one fraction for the overall rating score
     					if (score > 0) ratingStars.setImageBitmap(star);
-    					if (numRatings == 1) ratingNum.setText(Integer.toString(numRatings) + " rating");
+    					if (score == 1) ratingNum.setText(Integer.toString(numRatings) + " rating");
     					else ratingNum.setText(Integer.toString(numRatings) + " ratings");
     					/*
     					BigDecimal bd = new BigDecimal(score);
