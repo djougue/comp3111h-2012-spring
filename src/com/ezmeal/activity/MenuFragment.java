@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -43,6 +44,7 @@ public class MenuFragment extends Fragment {
     private Activity activity;
 	private ProgressBar progressBar;
 	private TextView no_result_text;
+	private ImageView frame;
 
 	private Spinner time_spinner;
 	private Spinner canteen_spinner;
@@ -93,6 +95,9 @@ public class MenuFragment extends Fragment {
 		
 		no_result_text = (TextView) view.findViewById(R.id.textNoResultMenu);
 		no_result_text.setVisibility(View.INVISIBLE);
+		
+		frame = (ImageView) view.findViewById(R.id.frameMenu);
+		frame.setVisibility(View.INVISIBLE);
 		
 		//initialize two spinner
 		time_spinner = (Spinner) view.findViewById(R.id.timeSpinner);
@@ -160,6 +165,8 @@ public class MenuFragment extends Fragment {
 
 		    	        list.getLayoutParams().height=LayoutParams.WRAP_CONTENT;
 		    	        list.setVisibility(View.VISIBLE);
+		    	        frame.setVisibility(View.VISIBLE);
+		    	        frame.bringToFront();
 		    	        if(thread_state!=INIT||thread_state!=FETCH)
 		    	        	thread_state = WAIT;
 					}
@@ -264,6 +271,7 @@ public class MenuFragment extends Fragment {
 	void refleshDish(){
     	reconnectBt.setVisibility(View.INVISIBLE);
     	list.setVisibility(View.INVISIBLE);    	
+    	frame.setVisibility(View.INVISIBLE);
     	no_result_text.setVisibility(View.INVISIBLE);
 
     	progressBar.getLayoutParams().height=LayoutParams.WRAP_CONTENT;
