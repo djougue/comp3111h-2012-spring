@@ -166,7 +166,7 @@ public class SettingsActivity extends Activity implements OnClickListener, OnChe
     	final String uname = username.getText().toString();
     	final String nname = nickname.getText().toString();
     	final String newpwd, cpwd;
-    	final boolean[] taste = ((UserApp) this.getApplication()).getTaste();
+    	final int[] taste = ((UserApp) this.getApplication()).getTaste();
     	final Activity thisActivity = this;
     	final boolean isShake = shakeBtn.isChecked();
     	
@@ -183,7 +183,7 @@ public class SettingsActivity extends Activity implements OnClickListener, OnChe
     		postDataThread = new Thread(new Runnable() {
 	    		public void run() {
 	    			SettingsActivity.serverResp =
-	    					api.change_user_setting(uname, newpwd, nname, taste[0]?1:0, taste[2]?1:0, taste[1]?1:0);
+	    					api.change_user_setting(uname, newpwd, nname, taste[0], taste[2], taste[1]);
 	    			
 	    			//Refresh the data of this app
 	    			refreshHandler.post(new Runnable() {
