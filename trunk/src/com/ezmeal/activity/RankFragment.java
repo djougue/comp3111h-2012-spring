@@ -1,6 +1,5 @@
 package com.ezmeal.activity;
 
-import java.util.Calendar;
 import java.util.Vector;
 
 import android.app.Activity;
@@ -16,17 +15,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.ezmeal.lazylist.LazyAdapter;
 import com.ezmeal.lazylist.LinearLayoutForListView;
-import com.ezmeal.main.MainActivity;
 import com.ezmeal.main.R;
 import com.ezmeal.server.Communication_API;
 import com.ezmeal.server.Dish;
@@ -44,6 +40,7 @@ public class RankFragment extends Fragment {
     private Activity activity;
 	private ProgressBar progressBar;
 	private TextView no_result_text;
+	private ImageView frame;
 
 /*	private Spinner time_spinner;
 	private Spinner canteen_spinner;
@@ -102,6 +99,9 @@ public class RankFragment extends Fragment {
             	refleshDish();
             }
 		});
+		
+		frame = (ImageView) view.findViewById(R.id.frameRank);
+		frame.setVisibility(View.INVISIBLE);
 
 		HandlerThread handlerThread = new HandlerThread("handler_thread");
 		handlerThread.start();
@@ -129,6 +129,8 @@ public class RankFragment extends Fragment {
 
 		    	        list.getLayoutParams().height=LayoutParams.WRAP_CONTENT;
 		    	        list.setVisibility(View.VISIBLE);
+		    			frame.setVisibility(View.VISIBLE);
+		    			frame.bringToFront();
 		    	        if(thread_state!=INIT||thread_state!=FETCH)
 		    	        	thread_state = WAIT;
 					}
@@ -218,6 +220,7 @@ public class RankFragment extends Fragment {
 	void refleshDish(){
     	reconnectBt.setVisibility(View.INVISIBLE);
     	list.setVisibility(View.INVISIBLE);    	
+		frame.setVisibility(View.INVISIBLE);
     	no_result_text.setVisibility(View.INVISIBLE);
 
     	progressBar.getLayoutParams().height=LayoutParams.WRAP_CONTENT;
