@@ -44,7 +44,10 @@
     <string name="labelPassword">Password</string>
     <string name="labelPersonalTaste">Personal Taste</string>
     <string name="labelPreferMeat">I prefer meat.</string>
+    <string name="labelNoPreferSpicy">Either spicy or not is OK.</string>
     <string name="labelPreferSpicy">I prefer spicy food.</string>
+    <string name="labelPreferNoSpicy">I prefer mild food.</string> 
+    <string name="labelNoPreferMeat">Either meat or vegetables is OK.</string>
     <string name="labelPreferVege">I prefer vegetables.</string>
     <string name="labelRateIt">Rate It!</string>
     <string name="labelSaySomething">Say Something...</string>

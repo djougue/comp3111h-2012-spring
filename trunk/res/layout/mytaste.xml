@@ -40,8 +40,68 @@
             android:text="@string/labelPersonalTaste"
             android:textColor="#fff"
             android:textStyle="bold" />
-
-        <CheckBox
+		<RadioGroup
+		    android:id="@+id/spicyGroup"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_alignLeft="@+id/labelMyTastePersonalTaste"
+            android:layout_below="@+id/labelMyTastePersonalTaste"  
+            android:layout_marginTop="3dp"
+		    >
+		    <RadioButton 
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:id="@+id/spicyDefault"
+		        android:textColor="#fff"
+		        android:text="@string/labelNoPreferSpicy"
+		    />	
+		    <RadioButton 
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:id="@+id/spicyPrefer"
+		        android:textColor="#fff"
+		        android:text="@string/labelPreferSpicy"
+		    />	
+		    <RadioButton 
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:id="@+id/spicyNotPrefer"
+		        android:textColor="#fff"
+		        android:text="@string/labelPreferNoSpicy"
+		    />			        	
+		</RadioGroup>
+		<RadioGroup
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_alignLeft="@+id/spicyGroup"
+            android:layout_below="@+id/spicyGroup"  
+            android:layout_marginTop="3dp"
+            android:id="@+id/meatGroup"
+		    >
+		    <RadioButton 
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:id="@+id/meatDefault"
+		        android:textColor="#fff"
+		        android:text="@string/labelNoPreferMeat"
+		    />	
+		    <RadioButton 
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:id="@+id/meatPrefer"
+		        android:textColor="#fff"
+		        android:text="@string/labelPreferMeat"
+		    />	
+		    <RadioButton 
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:id="@+id/veganPrefer"
+		        android:textColor="#fff"
+		        android:text="@string/labelPreferVege"
+		    />			        	
+		</RadioGroup>
+		<!--  
+		<CheckBox
             android:id="@+id/checkBoxMyTasteSpicy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -68,7 +128,7 @@
             android:layout_below="@+id/checkBoxMyTasteMeat"
             android:textColor="#fff"
             android:text="@string/labelPreferVege" />
-        
+        -->
         
         <!-- Result of My Taste-->
         <TextView
@@ -78,7 +138,7 @@
             android:paddingLeft="10dp"
             android:layout_centerHorizontal="true"
             android:textColor="#fff"
-            android:layout_below="@id/checkBoxMyTasteVege"
+            android:layout_below="@id/meatGroup"
             android:layout_marginTop="15dp"/>
         <ProgressBar
             android:id="@+id/progressBarMyTaste"
@@ -95,10 +155,11 @@
             android:layout_width="110dp"
             android:layout_height="32dp"
             android:layout_alignParentRight="true"
-            android:layout_below="@id/checkBoxMyTasteVege"
+            android:layout_below="@id/meatGroup"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="55dp"
             android:background="@drawable/button_submit" />
+
         </RelativeLayout>
         <LinearLayout
             android:layout_width="fill_parent"
