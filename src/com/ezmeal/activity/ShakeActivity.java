@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
+import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -12,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.ezmeal.activity.MenuFragment.MyHandler;
 import com.ezmeal.lazylist.ImageLoader;
 import com.ezmeal.main.R;
 import com.ezmeal.main.UserApp;
@@ -32,6 +36,11 @@ public class ShakeActivity extends Activity implements OnClickListener{
 	Dish the_dish;
     private Thread shakeThread;
     Handler shakeHandler=new Handler();
+    Runnable getDataThread;
+    Runnable updateUI;
+    MyHandler myHandler;
+    Handler refreshHandler=new Handler();
+
 	private ProgressBar progressBar;
 	private LinearLayout view;
 	ShakeListener mShaker;
@@ -61,7 +70,9 @@ public class ShakeActivity extends Activity implements OnClickListener{
 		mShaker = new ShakeListener(this);		
 		mShaker.setOnShakeListener(new ShakeListener.OnShakeListener() {  
 		    public void onShake() {  
-		    	reshake();
+		    	if(((UserApp)getApplication()).isShake()){
+		    		reshake();
+		    	}
 		    }  
 		});
 
@@ -82,19 +93,86 @@ public class ShakeActivity extends Activity implements OnClickListener{
     		}
 		});
         
-		shakeThread = new Thread(new Runnable() {
+		HandlerThread handlerThread = new HandlerThread("handler_thread");
+		handlerThread.start();
+		myHandler = new MyHandler(handlerThread.getLooper());
+		updateUI = new Runnable() {
 			public void run() {
-				while(true){
-					if(shake_state==0){
-						the_dish = api.random_dish(((UserApp)getApplication()).getUserName());
-						
-						if(the_dish!=null){
+				if(shake_state == 2){
+					TextView name=(TextView)findViewById(com.ezmeal.main.R.id.textDishNameInShake);	
+					TextView canteen=(TextView)findViewById(com.ezmeal.main.R.id.textDishCanteenInShake);
+					TextView price=(TextView)findViewById(com.ezmeal.main.R.id.textDishPriceInShake);
+					name.setText(dish_name);
+					canteen.setText(dish_canteen);
+					price.setText(dish_price);
+			        imageLoader.DisplayImage(pic, dishImage);									
+					
+					view=(LinearLayout)findViewById(com.ezmeal.main.R.id.information);	
+					progressBar.setVisibility(View.INVISIBLE);
+					view.setVisibility(View.VISIBLE);
+					shake_state = 1;
+				}
+			}
+		};
+        getDataThread = new Runnable() {
+    		public void run() {
+				if(shake_state==0){
+					the_dish = api.random_dish(((UserApp)getApplication()).getUserName(),((UserApp)getApplication()).getTaste()[0],((UserApp)getApplication()).getTaste()[1]);
+					
+					if(the_dish!=null){
+						if(the_dish.getDish_price()==0.00){ //no result
+							dish_name = "no result. Please modify your preference.";
+							dish_canteen = "";
+							dish_price = "";
+							pic = "";
+							
+						}
+						else{
 							dish_name = the_dish.getDish_name();
 							dish_canteen = the_dish.getDish_canteen();
 							dish_price = "$"+Float.toString(the_dish.getDish_price());
 							pic = "http://143.89.220.19/COMP3111H/image/stub.png";
 							if(the_dish.hasImage())
 								pic ="http://143.89.220.19/COMP3111H/image/"+the_dish.getDish_id()+".jpg";
+						}
+
+						shake_state = 2;
+					}
+					else{
+						dish_name="Connection failed";
+						dish_canteen=" ";
+						dish_price=" ";
+						shake_state = 2;
+					}	
+				}
+	      		Message msg = new Message();
+				Bundle bundle = new Bundle();
+				bundle.putInt("thread_state",shake_state);
+				myHandler.sendMessage(msg);
+    		}
+        };
+/*		shakeThread = new Thread(new Runnable() {
+			public void run() {
+				while(true){
+					if(shake_state==0){
+						the_dish = api.random_dish(((UserApp)getApplication()).getUserName(),((UserApp)getApplication()).getTaste()[0],((UserApp)getApplication()).getTaste()[1]);
+						
+						if(the_dish!=null){
+							if(the_dish.getDish_price()==0.00){ //no result
+								dish_name = "no result. Please modify your preference.";
+								dish_canteen = "";
+								dish_price = "";
+								pic = "";
+								
+							}
+							else{
+								dish_name = the_dish.getDish_name();
+								dish_canteen = the_dish.getDish_canteen();
+								dish_price = "$"+Float.toString(the_dish.getDish_price());
+								pic = "http://143.89.220.19/COMP3111H/image/stub.png";
+								if(the_dish.hasImage())
+									pic ="http://143.89.220.19/COMP3111H/image/"+the_dish.getDish_id()+".jpg";
+							}
 
 							shake_state = 2;
 						}
@@ -127,7 +205,9 @@ public class ShakeActivity extends Activity implements OnClickListener{
 				}
 	  		}});
 		shakeThread.start();
-		
+*/
+        shake_state = 0;
+        myHandler.post(getDataThread);
     }
 
     protected void onPause() {
@@ -150,6 +230,7 @@ public class ShakeActivity extends Activity implements OnClickListener{
     		view.setVisibility(View.INVISIBLE);
     		progressBar.setVisibility(View.VISIBLE);
     		shake_state = 0;
+    		myHandler.post(getDataThread);
     	}
     	else 
     		return;
@@ -163,5 +244,26 @@ public class ShakeActivity extends Activity implements OnClickListener{
     		finish();
     	}
     }
-        
+	class MyHandler extends Handler{
+        public MyHandler(Looper looper){  
+            super(looper);  
+        }  
+        @Override  
+        public void handleMessage(Message msg) {  
+            System.out.println("MyHandler Thread :" + Thread.currentThread().getId());  
+            // 
+            if(shake_state==2){
+            	System.out.println("MyHandler Thread removed");  
+                removeCallbacks(getDataThread);  
+                refreshHandler.post(updateUI);
+            }else if(shake_state==1){
+            	System.out.println("MyHandler Thread removed");  
+                removeCallbacks(getDataThread); 
+                refreshHandler.removeCallbacks(updateUI);
+            }else{
+            	System.out.println("MyHandler Thread post");
+            	post(getDataThread); 
+            }
+        }
+	}        
 }
