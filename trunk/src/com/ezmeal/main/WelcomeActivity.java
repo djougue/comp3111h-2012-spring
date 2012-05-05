@@ -164,7 +164,7 @@ public class WelcomeActivity extends Activity implements OnClickListener {
     	    		    			//get and set user info
     	    		    			User user = api.get_user_info(username, password);
     	    		    			((UserApp) thisActivity.getApplication()).setNickName(user.getUser_nickname());
-    	    		    			boolean[] taste = {user.isUser_spicy(), user.isUser_meat(), user.isUser_vege()};
+    	    		    			int[] taste = {user.isUser_spicy(), user.isUser_meat(), user.isUser_vege()};
     	    		    			((UserApp) thisActivity.getApplication()).setTaste(taste);
     	    		    			((UserApp) thisActivity.getApplication()).setShake(true);
     	    		    			
