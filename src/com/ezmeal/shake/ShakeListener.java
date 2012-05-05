@@ -6,6 +6,8 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
+import com.ezmeal.main.UserApp;
+
 public class ShakeListener implements SensorEventListener {
 
 	private static final int FORCE_THRESHOLD = 500;  
@@ -68,8 +70,7 @@ public class ShakeListener implements SensorEventListener {
     }  
   
     
-    public void onSensorChanged(SensorEvent event) {  
-  
+    public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() != Sensor.TYPE_ACCELEROMETER) {  
             return;  
         }  
