@@ -14,14 +14,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.ezmeal.activity.MenuFragment.MyHandler;
 import com.ezmeal.lazylist.LazyAdapter;
 import com.ezmeal.lazylist.LinearLayoutForListView;
 import com.ezmeal.main.R;
@@ -33,7 +33,8 @@ public class MyTasteActivity extends Activity implements OnClickListener, OnChec
 	private Communication_API api = new Communication_API();
 	private TextView headerTitle, resultText;
 	private Button submitBtn, backBtn;
-	private CheckBox spicyBtn, meatBtn, vegeBtn;
+	private RadioButton spicyBtn[], meatBtn[];
+	private RadioGroup spicy_group, meat_group;
 	private ProgressBar progressBar;
 	private Thread postDataThread;
 	private Handler refreshHandler = new Handler();
@@ -87,20 +88,58 @@ public class MyTasteActivity extends Activity implements OnClickListener, OnChec
         headerTitle.setText("My Taste");
         
         //get check box
-        spicyBtn = (CheckBox) findViewById(R.id.checkBoxMyTasteSpicy);
-        meatBtn = (CheckBox) findViewById(R.id.checkBoxMyTasteMeat);
-        vegeBtn = (CheckBox) findViewById(R.id.checkBoxMyTasteVege);
+/*
+        spicyBtn[2] = (RadioButton) findViewById(R.id.spicyDefault);
+        spicyBtn[1] = (RadioButton) findViewById(R.id.spicyPrefer);
+        spicyBtn[0] = (RadioButton) findViewById(R.id.spicyNotPrefer);
+         meatBtn[2] = (RadioButton) findViewById(R.id.meatDefault);
+         meatBtn[1] = (RadioButton) findViewById(R.id.meatPrefer);
+         meatBtn[0] = (RadioButton) findViewById(R.id.veganPrefer);
+         */
+        spicy_group = (RadioGroup) findViewById(R.id.spicyGroup);
+         meat_group = (RadioGroup) findViewById(R.id.meatGroup);
+//        vegeBtn = (CheckBox) findViewById(R.id.checkBoxMyTasteVege);
         
         //set check status of the check boxes
-        boolean taste[] = ((UserApp) this.getApplication()).getTaste();
-        spicyBtn.setChecked(taste[0]);
-        meatBtn.setChecked(taste[1]);
-        vegeBtn.setChecked(taste[2]);
-        
+        int taste[] = ((UserApp) this.getApplication()).getTaste();
+        switch(taste[0]){
+        case 0:
+        	spicy_group.check(R.id.spicyNotPrefer);
+        	break;
+        case 1:
+        	spicy_group.check(R.id.spicyPrefer);
+        	break;
+        default:
+        	spicy_group.check(R.id.spicyDefault);
+        	break;
+        }
+        switch(taste[1]){
+        case 0:
+        	meat_group.check(R.id.veganPrefer);
+        	break;
+        case 1:
+        	meat_group.check(R.id.meatPrefer);
+        	break;
+        default:
+        	meat_group.check(R.id.meatDefault);
+        	break;
+        }
+//        spicyBtn.setChecked();
+//        meatBtn.setChecked(taste[1]);
+//        vegeBtn.setChecked(taste[2]);
+        android.widget.RadioGroup.OnCheckedChangeListener listener = new RadioGroup.OnCheckedChangeListener(){
+
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				// TODO Auto-generated method stub
+				isChanged = true;
+				
+			}
+        	
+        };
         //set a listener to detect the change of the check boxes
-        spicyBtn.setOnCheckedChangeListener(this);
-        meatBtn.setOnCheckedChangeListener(this);
-        vegeBtn.setOnCheckedChangeListener(this);
+        spicy_group.setOnCheckedChangeListener(listener);
+         meat_group.setOnCheckedChangeListener(listener);
+//        vegeBtn.setOnCheckedChangeListener(this);
         
         //result
         progressBar = (ProgressBar) findViewById(R.id.progressBarMyTaste);
@@ -228,15 +267,17 @@ public class MyTasteActivity extends Activity implements OnClickListener, OnChec
     	final String uname = ((UserApp) this.getApplication()).getUserName();
     	final String nname = ((UserApp) this.getApplication()).getNickName();
     	final String passwd = ((UserApp) this.getApplication()).getPassword();
-    	final boolean isSpicy = spicyBtn.isChecked();
-    	final boolean isMeat = meatBtn.isChecked();
-    	final boolean isVege = vegeBtn.isChecked();
+    	int spicy_id = spicy_group.getCheckedRadioButtonId();
+    	final int isSpicy = (spicy_id==R.id.spicyDefault?2:(spicy_id==R.id.spicyPrefer?1:0));
+    	int meat_id = meat_group.getCheckedRadioButtonId();
+    	final int isMeat = (meat_id==R.id.meatDefault?2:(meat_id==R.id.meatPrefer?1:0));
+    	final int isVege = (isMeat==2?2:(isMeat==1?0:1));
     	final Activity thisActivity = this;
     	
     	postDataThread = new Thread(new Runnable() {
     		public void run() {
     			MyTasteActivity.serverResp =
-    					api.change_user_setting(uname, passwd, nname, isSpicy?1:0, isVege?1:0, isMeat?1:0);
+    					api.change_user_setting(uname, passwd, nname, isSpicy, isVege, isMeat);
     			
     			//Refresh the data of this app
     			refreshHandler.post(new Runnable() {
@@ -250,7 +291,7 @@ public class MyTasteActivity extends Activity implements OnClickListener, OnChec
     		    			resultText.setText(SUCCESSFUL);
     		    			
     		    			//change local data
-    		    			boolean[] taste = {isSpicy, isMeat, isVege};
+    		    			int[] taste = {isSpicy, isMeat, isVege};
     		    			((UserApp) thisActivity.getApplication()).setTaste(taste);
     		    			
     		    		} else {
@@ -340,6 +381,6 @@ public class MyTasteActivity extends Activity implements OnClickListener, OnChec
             	post(getDataThread); 
             }
         }
-	};
+	}
 	
 }
