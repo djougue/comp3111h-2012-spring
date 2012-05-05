@@ -23,14 +23,14 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.ezmeal.activity.MenuFragment.MyHandler;
 import com.ezmeal.lazylist.LazyAdapter;
 import com.ezmeal.main.MainActivity;
 import com.ezmeal.main.R;
@@ -65,8 +65,8 @@ public class SearchFragment extends Fragment {
 	private Spinner canteen_spinner;
 	private ArrayAdapter<String> canteen_adapter;
 	private static final String[] canteen_name={"Any Canteen","LG7 Asia Pacific","Gold Rice Bowl","McDonald","LG1 Canteen","Chinese Restaurant","Coffee Shop","Seafront"};
-	private CheckBox[] taste = new CheckBox[3];
 	private EditText dish_name_text;
+	private ImageView frame;
 	
 	private Vector<Dish> dishes;
 	private int dish_counter = 0;
@@ -84,6 +84,17 @@ public class SearchFragment extends Fragment {
 	private boolean isInit = false;
 	private int retry_counter = 0;
 	private static final int RETRY_MAX =5;
+	
+	//variable for preference
+	private LinearLayout spicyBox;
+	private ImageView spicyImage;
+	private TextView spicyText;
+	private int spicyState = 2;
+	private LinearLayout meatBox;	
+	private ImageView meatImage;
+	private TextView meatText;
+	private int meatState = 2;
+	private int veganState = 2;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -116,10 +127,11 @@ public class SearchFragment extends Fragment {
 		    	        list.setAdapter(adapter);
 
 		    	        progressBar.setVisibility(View.INVISIBLE);
-//					    	        progressBar.getLayoutParams().height=0;
 
 		    	        list.getLayoutParams().height=LayoutParams.WRAP_CONTENT;
 		    	        list.setVisibility(View.VISIBLE);
+		    			frame.setVisibility(View.VISIBLE);
+		    			frame.bringToFront();
 		    	        if(thread_state2!=INIT||thread_state2!=FETCH)
 		    	        	thread_state2 = WAIT;
 					}
@@ -156,9 +168,9 @@ public class SearchFragment extends Fragment {
     						(canteen_spinner.getSelectedItemPosition()==5)||(canteen_spinner.getSelectedItemPosition()==0),
     						(canteen_spinner.getSelectedItemPosition()==6)||(canteen_spinner.getSelectedItemPosition()==0),
     						(canteen_spinner.getSelectedItemPosition()==7)||(canteen_spinner.getSelectedItemPosition()==0),
-    						taste[0].isChecked()?1:2,
-    						taste[1].isChecked()?1:2,
-    						taste[2].isChecked()?1:2,
+    						spicyState,
+    						veganState,
+    						meatState,
     						(time_spinner.getSelectedItemPosition()==4)||(time_spinner.getSelectedItemPosition()==0),
     						(time_spinner.getSelectedItemPosition()==3)||(time_spinner.getSelectedItemPosition()==0),
     						(time_spinner.getSelectedItemPosition()==2)||(time_spinner.getSelectedItemPosition()==0),
@@ -234,6 +246,8 @@ public class SearchFragment extends Fragment {
 		no_result_text = (TextView) page2.findViewById(R.id.textNoResultSearch);
 		timeout_text = (TextView) page2.findViewById(R.id.textTimeoutSearch);
 		progressBar = (ProgressBar) page2.findViewById(R.id.progressBarSearch);
+		frame = (ImageView) page2.findViewById(R.id.frameSearch);
+		frame.setVisibility(View.INVISIBLE);
         
 		//initialize two spinner
 		time_spinner = (Spinner) page1.findViewById(R.id.spinnerTimeSearch);
@@ -251,9 +265,58 @@ public class SearchFragment extends Fragment {
 		canteen_spinner.setVisibility(View.VISIBLE);  
 		canteen_spinner.setSelection(0);
 		
-		taste[0] =(CheckBox) page1.findViewById(R.id.checkBoxSpicy);
-		taste[1] =(CheckBox) page1.findViewById(R.id.checkBoxVegan);
-		taste[2] =(CheckBox) page1.findViewById(R.id.checkBoxMeat);
+		spicyBox = (LinearLayout) page1.findViewById(R.id.spicyBox);
+		spicyText= (TextView) page1.findViewById(R.id.spicyText);
+		spicyImage=(ImageView) page1.findViewById(R.id.spicyImage);
+		meatBox = (LinearLayout) page1.findViewById(R.id.meatBox);
+		meatText= (TextView) page1.findViewById(R.id.meatText);
+		meatImage=(ImageView) page1.findViewById(R.id.meatImage);
+		spicyBox.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+            	switch(spicyState){
+            	case 2:
+            		spicyState=1;
+            		spicyText.setText("Spicy");
+            		spicyImage.setImageResource(R.drawable.icon_spicy);
+            		break;
+            	case 1:
+            		spicyState=0;
+            		spicyText.setText("No spicy");
+            		spicyImage.setImageResource(R.drawable.spicy_ban);            		
+            		break;
+            	case 0:
+            		spicyState = 2;
+            		spicyText.setText("Either");
+            		spicyImage.setImageResource(R.drawable.spicy_no_preference);
+            		break;		
+            	}
+            }
+		});
+		
+		meatBox.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+            	switch(meatState){
+            	case 2:
+            		meatState=1;
+            		veganState = 0;
+            		meatText.setText("Meat");
+            		meatImage.setImageResource(R.drawable.icon_meat);
+            		break;
+            	case 1:
+            		meatState=0;
+            		veganState=1;
+            		meatText.setText("Vegan");
+            		meatImage.setImageResource(R.drawable.icon_vega);            		
+            		break;
+            	case 0:
+            		meatState = 2;
+            		veganState = 2;
+            		meatText.setText("Either");
+            		meatImage.setImageResource(R.drawable.venga_meat);
+            		break;		
+            	}
+            }
+		});
 		
 		dish_name_text = (EditText) page1.findViewById(R.id.editTextSearchName);
 		
@@ -320,12 +383,12 @@ public class SearchFragment extends Fragment {
 	void refleshDish(){
     	list.getLayoutParams().height = 0;
     	list.setVisibility(View.INVISIBLE);
+		frame.setVisibility(View.INVISIBLE);
     	
     	no_result_text.setVisibility(View.INVISIBLE);
     	timeout_text.setVisibility(View.INVISIBLE);
     	
     	progressBar.setVisibility(View.VISIBLE);
-
     	thread_state2 = INIT;
     	myHandler.post(getDataThread);
     	Log.e("SearchFragment", "thread_state = INIT");
