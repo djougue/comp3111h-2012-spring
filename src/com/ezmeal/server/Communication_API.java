@@ -279,9 +279,9 @@ public class Communication_API {
             user.setUser_id(json_data.getInt("user_id"));
             user.setUser_name(json_data.getString("user_name"));
             user.setUser_nickname(json_data.getString("user_nickname"));
-            user.setUser_spicy((json_data.getInt("user_spicy")==1)?true:false);
-            user.setUser_vege((json_data.getInt("user_vege")==1)?true:false);
-            user.setUser_meat((json_data.getInt("user_meat")==1)?true:false);
+            user.setUser_spicy(json_data.getInt("user_spicy"));
+            user.setUser_vege(json_data.getInt("user_vege"));
+            user.setUser_meat(json_data.getInt("user_meat"));
 
 		}
 		catch(JSONException e1)
@@ -450,12 +450,12 @@ public class Communication_API {
 		return dish;
 	}
 	
-	public Dish random_dish(String username)
+	public Dish random_dish(String username,int spicy,int meat)
 	{
 		
 		Dish dish=new Dish();
 		result = null;
-		send_cmd("random_dish.php?username="+username);
+		send_cmd("random_dish.php?username="+username+"&spicy="+spicy+"&meat="+meat);
 		try
 		{
 			if(result==null) return null;
