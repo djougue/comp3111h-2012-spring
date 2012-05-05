@@ -84,10 +84,12 @@ public class MainActivity extends FragmentActivity {
 
 		mShaker = new ShakeListener(this);		
 		mShaker.setOnShakeListener(new ShakeListener.OnShakeListener() {  
-		    public void onShake() {  
-	   			Intent intent = new Intent(getApplicationContext(),
-    					com.ezmeal.activity.ShakeActivity.class);
-	   			startActivity(intent);
+		    public void onShake() {
+		    	if(((UserApp)getApplication()).isShake()){
+		   			Intent intent = new Intent(getApplicationContext(),
+	    					com.ezmeal.activity.ShakeActivity.class);
+		   			startActivity(intent);
+		    	}
 		    }  
 		});
 
